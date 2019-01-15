@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/how-much', function () {
-    return view('how-much');
+    return view('how_much');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

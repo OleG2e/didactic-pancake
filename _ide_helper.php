@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.20 on 2019-01-10 18:31:27.
+ * Generated for Laravel 5.7.20 on 2019-01-14 14:14:15.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -11,10 +11,10 @@
  * @see https://github.com/barryvdh/laravel-ide-helper
  */
 
-namespace Illuminate\Support\Facades {
+namespace Illuminate\Support\Facades { 
 
     /**
-     *
+     * 
      *
      * @see \Illuminate\Foundation\Application
      */
@@ -16020,7 +16020,7 @@ namespace {
     class Socialite extends \Laravel\Socialite\Facades\Socialite
     {
     }
-
+ 
 }
 
 

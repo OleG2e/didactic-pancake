@@ -13,7 +13,7 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Логин') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Войти') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="text"
@@ -60,8 +60,8 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Логин') }}
+                                    <button type="submit" class="btn btn-primary" dusk="login-button">
+                                        {{ __('Войти') }}
                                     </button>
 
                                     @if (Route::has('password.request'))

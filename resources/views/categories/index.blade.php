@@ -13,11 +13,6 @@
     @endforeach
     <div class="control">
         <a class="button is-primary" href="categories/create">Создать</a>
-        {{--<form method="post" action="categories/{category}">
-            @csrf TODO: add opportunity to delete selected category
-            @method('delete')
-            <button class="button is-danger">Удалить</button>
-        </form>--}}
     </div>
 @endsection
 

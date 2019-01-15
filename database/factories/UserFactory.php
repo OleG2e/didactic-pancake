@@ -37,7 +37,8 @@ $factory->define(App\Category::class, function (Faker $faker) {
 
 $factory->define(App\News::class, function (Faker $faker) {
     return [
-        'title' => $faker->words,
+        'title' => $faker->word,
+        'category_id' => '1',
         'description' => $faker->text,
     ];
 });
