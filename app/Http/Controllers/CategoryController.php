@@ -32,7 +32,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Category $category
      * @return \Illuminate\Http\Response
      */
     public function store(Category $category)
@@ -83,6 +83,7 @@ class CategoryController extends Controller
      *
      * @param  \App\Category $category
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Category $category)
     {
@@ -93,7 +94,7 @@ class CategoryController extends Controller
     protected function validateCategory()
     {
         return request()->validate([
-            'title' => 'required|unique:categories|max:255',
+            'title' => 'required|string|unique:categories|max:255',
         ]);
     }
 }
