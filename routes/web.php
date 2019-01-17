@@ -32,3 +32,10 @@ Route::delete('news/{news}', 'NewsController@destroy');
 Route::patch('news/{news}', 'NewsController@update');
 Route::get('news/{news}/edit', 'NewsController@edit');
 
+Route::get('ad', 'AdController@index');
+Route::post('ad', 'AdController@store');
+Route::get('ad/create', 'AdController@create');
+Route::get('ad/{ad}', 'AdController@show');
+Route::delete('ad/{ad}', 'AdController@destroy');
+Route::patch('ad/{ad}', 'AdController@update');
+Route::get('ad/{ad}/edit', 'AdController@edit');

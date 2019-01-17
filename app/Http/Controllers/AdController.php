@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ad;
+use App\Category;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -14,7 +15,9 @@ class AdController extends Controller
      */
     public function index()
     {
-        //
+        $ad = Ad::all();
+
+        return view('ad.index', compact('ad'));
     }
 
     /**
@@ -24,7 +27,8 @@ class AdController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('ad.create', compact('categories'));
     }
 
     /**
@@ -33,9 +37,13 @@ class AdController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Ad $ad, Category $category)
     {
-        //
+        $attributes = $this->validateAd();
+        $attributes['owner_id'] = auth()->id();
+        $ad->create($attributes);
+        flash('Объявление создано');
+        return redirect('/ad');
     }
 
     /**
@@ -46,7 +54,7 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        //
+        return view('ad.show', compact('ad'));
     }
 
     /**
@@ -55,9 +63,13 @@ class AdController extends Controller
      * @param  \App\Ad $ad
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ad $ad)
+    public function edit(Ad $ad, Category $category)
     {
-        //
+        $categories = Category::all();
+        return view('ad.edit', [
+            'ad' => $ad,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -69,7 +81,8 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
-        //
+        $ad->update($this->validateAd());
+        return redirect('/ad');
     }
 
     /**
@@ -77,9 +90,20 @@ class AdController extends Controller
      *
      * @param  \App\Ad $ad
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Ad $ad)
     {
-        //
+        $ad->delete();
+        flash('Объявление удалено');
+        return redirect('/ad');
+    }
+
+    protected function validateAd()
+    {
+        return request()->validate([
+            'category_id' => 'required|integer',
+            'description' => 'required',
+        ]);
     }
 }

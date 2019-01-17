@@ -70,8 +70,8 @@ class NewsController extends Controller
         $categories = Category::all();
         return view('news.edit', [
             'news' => $news,
-            'categories' => $categories
-        ]);// TODO: Передать текущую категорию
+            'categories' => $categories,
+        ]);
     }
 
     /**
