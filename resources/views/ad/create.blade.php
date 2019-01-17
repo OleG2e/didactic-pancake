@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    {{ Breadcrumbs::render('ad_create') }}
     <h1 class="title">Создать объявление</h1>
     <form method="post" action="/ad">
         @csrf

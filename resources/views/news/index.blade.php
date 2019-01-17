@@ -5,6 +5,7 @@
             {{session('message')}}
         </div>
     @endif
+    {{ Breadcrumbs::render('news_all') }}
     <h1 class="title">Новости:</h1>
     @foreach($news as $item)
         <li>

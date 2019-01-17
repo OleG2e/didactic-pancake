@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    {{ Breadcrumbs::render('news_edit', $news) }}
     <h1 class="title">Редактирование новости {{$news->title}}</h1>
     <form method="post" action="/news/{{$news->id}}">
         @method('patch')

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Доколе?')
 @section('content')
+    {{ Breadcrumbs::render('how_much') }}
     <div>
         <?php
         $dateOfDeparture = new DateTime();

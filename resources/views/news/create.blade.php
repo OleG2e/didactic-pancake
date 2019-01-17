@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+    {{ Breadcrumbs::render('news_create') }}
     <h1 class="title">Создать новость</h1>
     <form method="post" action="/news">
         @csrf
