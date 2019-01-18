@@ -18,7 +18,7 @@ Breadcrumbs::for('about', function ($trail) {
 
 // Home > Ad
 Breadcrumbs::for('ad_all', function ($trail) {
-    $trail->parent('home');
+    $trail->parent('main');
     $trail->push('Объявления', route('ad_all'));
 });
 
