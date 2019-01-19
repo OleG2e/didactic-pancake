@@ -24,18 +24,10 @@ Route::get('how-much', function () {
 Route::get('home', 'HomeController@index')->name('home');
 Route::resource('categories', 'CategoryController');
 
-Route::get('news', 'NewsController@index')->name('news_all');
-Route::post('news', 'NewsController@store');
-Route::get('news/create', 'NewsController@create')->name('news_create');
-Route::get('news/{news}', 'NewsController@show')->name('news_show');
-Route::delete('news/{news}', 'NewsController@destroy');
-Route::patch('news/{news}', 'NewsController@update');
-Route::get('news/{news}/edit', 'NewsController@edit')->name('news_edit');
-
-Route::get('ad', 'AdController@index')->name('ad_all');
-Route::post('ad', 'AdController@store');
-Route::get('ad/create', 'AdController@create')->name('ad_create');
-Route::get('ad/{ad}', 'AdController@show')->name('ad_show');
-Route::delete('ad/{ad}', 'AdController@destroy');
-Route::patch('ad/{ad}', 'AdController@update');
-Route::get('ad/{ad}/edit', 'AdController@edit')->name('ad_edit');
+Route::get('post', 'PostController@index')->name('post_all');
+Route::post('post', 'PostController@store');
+Route::get('post/create', 'PostController@create')->name('post_create');
+Route::get('post/{post}', 'PostController@show')->name('post_show');
+Route::delete('post/{post}', 'PostController@destroy');
+Route::patch('post/{post}', 'PostController@update');
+Route::get('post/{post}/edit', 'PostController@edit')->name('post_edit');

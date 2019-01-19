@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    {{ Breadcrumbs::render('ad_create') }}
+    {{ Breadcrumbs::render('post_create') }}
     <h1 class="title">Создать объявление</h1>
-    <form method="post" action="/ad">
+    <form method="post" action="/post">
         @csrf
         <div class="field">
             <div class="control">
@@ -15,6 +15,7 @@
                         </option>
                     @endforeach
                 </select>
+                <input name="title" required>{{old('title')}}
                 <textarea name="description" required>{{old('description')}}</textarea>
             </div>
         </div>

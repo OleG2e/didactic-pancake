@@ -16,52 +16,28 @@ Breadcrumbs::for('about', function ($trail) {
     $trail->push('About', route('about'));
 });
 
-// Home > Ad
-Breadcrumbs::for('ad_all', function ($trail) {
+// Home > Post
+Breadcrumbs::for('post_all', function ($trail) {
     $trail->parent('main');
-    $trail->push('Объявления', route('ad_all'));
+    $trail->push('Объявления', route('post_all'));
 });
 
-// Home > Ad > Create
-Breadcrumbs::for('ad_create', function ($trail) {
-    $trail->parent('ad_all');
-    $trail->push('Создать объявление', route('ad_create'));
+// Home > Post > Create
+Breadcrumbs::for('post_create', function ($trail) {
+    $trail->parent('post_all');
+    $trail->push('Создать объявление', route('post_create'));
 });
 
-// Home > Ad > Edit
-Breadcrumbs::for('ad_edit', function ($trail, $ad) {
-    $trail->parent('ad_all');
-    $trail->push('Редактировать объявление', route('ad_edit', $ad->id));
+// Home > Post > Edit
+Breadcrumbs::for('post_edit', function ($trail, $post) {
+    $trail->parent('post_all');
+    $trail->push('Редактировать объявление', route('post_edit', $post->id));
 });
 
-// Home > Ad > Show
-Breadcrumbs::for('ad_show', function ($trail, $ad) {
-    $trail->parent('ad_all');
-    $trail->push('Детали объявления', route('ad_show', $ad->id));
-});
-
-// Home > News
-Breadcrumbs::for('news_all', function ($trail) {
-    $trail->parent('main');
-    $trail->push('Новости', route('news_all'));
-});
-
-// Home > News > Create
-Breadcrumbs::for('news_create', function ($trail) {
-    $trail->parent('news_all');
-    $trail->push('Создать новость', route('news_create'));
-});
-
-// Home > News > Edit
-Breadcrumbs::for('news_edit', function ($trail, $news) {
-    $trail->parent('news_all');
-    $trail->push('Редактировать новость', route('news_edit', $news->id));
-});
-
-// Home > News > Show
-Breadcrumbs::for('news_show', function ($trail, $news) {
-    $trail->parent('news_all');
-    $trail->push('Детали новости', route('ad_show', $news->id));
+// Home > Post > Show
+Breadcrumbs::for('post_show', function ($trail, $post) {
+    $trail->parent('post_all');
+    $trail->push('Детали объявления', route('post_show', $post->id));
 });
 
 // Home > How much
@@ -70,14 +46,14 @@ Breadcrumbs::for('how_much', function ($trail) {
     $trail->push('Узнать сколько времени осталось', route('how_much'));
 });
 
-// Home > Blog > [Category]
-Breadcrumbs::for('category', function ($trail, $category) {
-    $trail->parent('blog');
-    $trail->push($category->title, route('category', $category->id));
-});
-
-// Home > Blog > [Category] > [Post]
-Breadcrumbs::for('post', function ($trail, $post) {
-    $trail->parent('category', $post->category);
-    $trail->push($post->title, route('post', $post->id));
-});
+//// Home > Blog > [Category]
+//Breadcrumbs::for('category', function ($trail, $category) {
+//    $trail->parent('blog');
+//    $trail->push($category->title, route('category', $category->id));
+//});
+//
+//// Home > Blog > [Category] > [Post]
+//Breadcrumbs::for('post', function ($trail, $post) {
+//    $trail->parent('category', $post->category);
+//    $trail->push($post->title, route('post', $post->id));
+//});

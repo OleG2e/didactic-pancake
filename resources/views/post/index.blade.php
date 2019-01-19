@@ -5,15 +5,15 @@
             {{session('message')}}
         </div>
     @endif
-    {{ Breadcrumbs::render('news_all') }}
-    <h1 class="title">Новости:</h1>
-    @foreach($news as $item)
+    {{ Breadcrumbs::render('post_all') }}
+    <h1 class="title">Объявления:</h1>
+    @foreach($post as $item)
         <li>
-            <a href="/news/{{$item->id}}">{{$item->title}}</a>
+            <a href="post/{{$item->id}}">{{$item->description}}</a>
         </li>
     @endforeach
     <div class="control">
-        <a class="button is-primary" href="news/create">Создать</a>
+        <a class="button is-primary" href="post/create">Создать</a>
     </div>
 @endsection
 

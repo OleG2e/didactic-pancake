@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
-    {{ Breadcrumbs::render('news_show', $news) }}
-    <h1 class="title">Детали новости "{{$news->title}}"</h1>
-    <span>{{$news->description}}</span>
+    {{ Breadcrumbs::render('post_show', $post) }}
+    <h1 class="title">Детали объявления</h1>
+    <span>{{$post->description}}</span>
     <div class="control "><a class="button is-warning is-hovered"
-                             href="/news/{{$news->id}}/edit">Редактировать</a>
-        <form method="post" action="/news/{{$news->id}}">
+                             href="/post/{{$post->id}}/edit">Редактировать</a>
+        <form method="post" action="/post/{{$post->id}}">
             @method('delete')
             @csrf
             <div>

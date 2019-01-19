@@ -23,23 +23,8 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Ad::class, function (Faker $faker) {
-    return [
-        'description' => $faker->text,
-    ];
-});
-
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
         'title' => $faker->word,
-    ];
-});
-
-$factory->define(App\News::class, function (Faker $faker) {
-    return [
-        'title' => $faker->word,
-        'category_id' => 1,
-        'description' => $faker->text,
-        'owner_id' => 1
     ];
 });
