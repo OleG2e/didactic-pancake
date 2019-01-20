@@ -31,3 +31,5 @@ Route::get('post/{post}', 'PostController@show')->name('post_show');
 Route::delete('post/{post}', 'PostController@destroy');
 Route::patch('post/{post}', 'PostController@update');
 Route::get('post/{post}/edit', 'PostController@edit')->name('post_edit');
+
+Route::post('reply', 'ReplyController@store');

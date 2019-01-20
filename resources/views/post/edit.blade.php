@@ -16,12 +16,11 @@
                         </option>
                     @endforeach
                 </select>
-                <input class="input" name="title">
+                <input class="input" name="title" value="{{ $post->title }}">
                 <textarea class="input {{$errors->has('title') ? 'is-danger' : ''}}" name="description"
                           required>{{$post->description}}</textarea>
             </div>
         </div>
-
         <div>
             <button type="submit" class="button is-primary">Сохранить</button>
         </div>

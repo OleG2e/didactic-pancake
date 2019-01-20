@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Reply;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -57,9 +58,9 @@ class PostController extends Controller
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post, Reply $reply)
     {
-        return view('post.show', compact('post'));
+        return view('post.show', ['post' => $post, 'reply' => $reply]);
     }
 
     /**

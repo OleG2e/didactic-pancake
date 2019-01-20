@@ -14,4 +14,15 @@
         </form>
         <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
     </div>
+    @foreach($post->replies as $reply)
+        <div>{{$reply->description}}</div>
+    @endforeach
+    <div>
+        <form action="/reply" method="post">
+            @csrf
+            <input type="hidden" name="post_id" value="{{$post->id}}">
+            <input class="input" name="description">
+            <button type="submit">Reply</button>
+        </form>
+    </div>
 @endsection

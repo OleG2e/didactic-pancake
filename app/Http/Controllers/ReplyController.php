@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Reply;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,13 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Reply $reply, Post $post)
     {
-        //
+        $attributes = $this->validateReply();
+        $attributes['owner_id'] = auth()->id();
+        $reply->create($attributes);
+        flash('Reply создан');
+        return back();
     }
 
     /**
@@ -81,5 +86,13 @@ class ReplyController extends Controller
     public function destroy(Reply $reply)
     {
         //
+    }
+
+    protected function validateReply()
+    {
+        return request()->validate([
+            'post_id' => 'required|numeric',
+            'description' => 'required',
+        ]);
     }
 }
