@@ -100,6 +100,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $replies = Reply::where('post_id', $post->id)->get();
+        foreach ($replies as $reply) {
+            $reply->delete();
+        }
         $post->delete();
         flash('Post удален');
         return redirect('/post');
