@@ -40,6 +40,30 @@ Breadcrumbs::for('post_show', function ($trail, $post) {
     $trail->push('Детали объявления', route('post_show', $post->id));
 });
 
+// Home > Trip
+Breadcrumbs::for('trip_all', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Поездки', route('trip_all'));
+});
+
+// Home > Trip > Create
+Breadcrumbs::for('trip_create', function ($trail) {
+    $trail->parent('trip_all');
+    $trail->push('Создать объявление', route('trip_create'));
+});
+
+// Home > Trip > Edit
+Breadcrumbs::for('trip_edit', function ($trail, $trip) {
+    $trail->parent('trip_all');
+    $trail->push('Редактировать объявление', route('trip_edit', $trip->id));
+});
+
+// Home > Trip > Show
+Breadcrumbs::for('trip_show', function ($trail, $trip) {
+    $trail->parent('trip_all');
+    $trail->push('Детали объявления', route('trip_show', $trip->id));
+});
+
 // Home > How much
 Breadcrumbs::for('how_much', function ($trail) {
     $trail->parent('main');

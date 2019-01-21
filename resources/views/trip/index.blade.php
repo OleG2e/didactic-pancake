@@ -5,15 +5,15 @@
             {{session('message')}}
         </div>
     @endif
-    {{ Breadcrumbs::render('post_all') }}
+    {{ Breadcrumbs::render('trip_all') }}
     <h1 class="title">Объявления:</h1>
-    @foreach($post as $item)
+    @foreach($trip as $item)
         <li>
-            <a href="post/{{$item->id}}">{{$item->description}}</a>
+            <a href="trip/{{$item->id}}">{{$item->description}}</a>
         </li>
     @endforeach
     <div class="control">
-        <a class="button is-primary" href="post/create">Создать</a>
+        <a class="button is-primary" href="trip/create">Создать</a>
     </div>
     {{--<vuejs-datepicker :language="ru"></vuejs-datepicker>--}}
 @endsection

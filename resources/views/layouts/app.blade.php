@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+{{--<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vuejs-datepicker">import {ru} from 'vuejs-datepicker/dist/locale'</script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -78,7 +80,7 @@
             </div>
         </div>
     </nav>
+    @yield('content')
 </div>
-@yield('content')
 </body>
 </html>

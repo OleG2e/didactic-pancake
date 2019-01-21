@@ -33,3 +33,11 @@ Route::patch('post/{post}', 'PostController@update');
 Route::get('post/{post}/edit', 'PostController@edit')->name('post_edit');
 
 Route::post('reply', 'ReplyController@store');
+
+Route::get('trip', 'TripController@index')->name('trip_all');
+Route::post('trip', 'TripController@store');
+Route::get('trip/create', 'TripController@create')->name('trip_create');
+Route::get('trip/{trip}', 'TripController@show')->name('trip_show');
+Route::delete('trip/{trip}', 'TripController@destroy');
+Route::patch('trip/{trip}', 'TripController@update');
+Route::get('trip/{trip}/edit', 'TripController@edit')->name('trip_edit');
