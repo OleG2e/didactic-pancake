@@ -2,7 +2,7 @@
 @section('content')
     {{ Breadcrumbs::render('post_create') }}
     <h1 class="title">Создать объявление</h1>
-    <form method="post" action="/post">
+    <form method="post" action="/posts">
         @csrf
         <div class="field">
             <div class="control">

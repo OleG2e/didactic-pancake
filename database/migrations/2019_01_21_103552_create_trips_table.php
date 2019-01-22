@@ -18,7 +18,7 @@ class CreateTripsTable extends Migration
             $table->unsignedInteger('owner_id');
             $table->unsignedInteger('category_id');
             $table->dateTime('date_time');
-            $table->text('description')->default(null);
+            $table->text('description')->nullable();
             $table->boolean('load')->default(false);
             $table->boolean('relevance')->default(true);
             $table->timestamps();

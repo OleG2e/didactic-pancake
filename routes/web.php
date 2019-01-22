@@ -23,21 +23,22 @@ Route::get('how-much', function () {
 
 Route::get('home', 'HomeController@index')->name('home');
 Route::resource('categories', 'CategoryController');
+Route::resource('towns', 'TownController');
 
-Route::get('post', 'PostController@index')->name('post_all');
-Route::post('post', 'PostController@store');
-Route::get('post/create', 'PostController@create')->name('post_create');
-Route::get('post/{post}', 'PostController@show')->name('post_show');
-Route::delete('post/{post}', 'PostController@destroy');
-Route::patch('post/{post}', 'PostController@update');
-Route::get('post/{post}/edit', 'PostController@edit')->name('post_edit');
+Route::get('posts', 'PostController@index')->name('post_all');
+Route::post('posts', 'PostController@store');
+Route::get('posts/create', 'PostController@create')->name('post_create');
+Route::get('posts/{post}', 'PostController@show')->name('post_show');
+Route::delete('posts/{post}', 'PostController@destroy');
+Route::patch('posts/{post}', 'PostController@update');
+Route::get('posts/{post}/edit', 'PostController@edit')->name('post_edit');
 
-Route::post('reply', 'ReplyController@store');
+Route::post('replies', 'ReplyController@store');
 
-Route::get('trip', 'TripController@index')->name('trip_all');
-Route::post('trip', 'TripController@store');
-Route::get('trip/create', 'TripController@create')->name('trip_create');
-Route::get('trip/{trip}', 'TripController@show')->name('trip_show');
-Route::delete('trip/{trip}', 'TripController@destroy');
-Route::patch('trip/{trip}', 'TripController@update');
-Route::get('trip/{trip}/edit', 'TripController@edit')->name('trip_edit');
+Route::get('trips', 'TripController@index')->name('trip_all');
+Route::post('trips', 'TripController@store');
+Route::get('trips/create', 'TripController@create')->name('trip_create');
+Route::get('trips/{trip}', 'TripController@show')->name('trip_show');
+Route::delete('trips/{trip}', 'TripController@destroy');
+Route::patch('trips/{trip}', 'TripController@update');
+Route::get('trips/{trip}/edit', 'TripController@edit')->name('trip_edit');

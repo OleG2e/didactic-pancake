@@ -4,8 +4,8 @@
     <h1 class="title">Детали объявления</h1>
     <span>{{$post->description}}</span>
     <div class="control "><a class="button is-warning is-hovered"
-                             href="/post/{{$post->id}}/edit">Редактировать</a>
-        <form method="post" action="/post/{{$post->id}}">
+                             href="/posts/{{$post->id}}/edit">Редактировать</a>
+        <form method="post" action="/posts/{{$post->id}}">
             @method('delete')
             @csrf
             <div>
@@ -18,7 +18,7 @@
         <div>{{$reply->description}}</div>
     @endforeach
     <div>
-        <form action="/reply" method="post">
+        <form action="/replies" method="post">
             @csrf
             <input type="hidden" name="post_id" value="{{$post->id}}">
             <input class="input" name="description">

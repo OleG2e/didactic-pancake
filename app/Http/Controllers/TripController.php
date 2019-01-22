@@ -23,7 +23,7 @@ class TripController extends Controller
     {
         $trip = Trip::all();
 
-        return view('trip.index', compact('trip'));
+        return view('trips.index', compact('trip'));
     }
 
     /**
@@ -34,7 +34,7 @@ class TripController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('trip.create', compact('categories'));
+        return view('trips.create', compact('categories'));
     }
 
     /**
@@ -49,7 +49,7 @@ class TripController extends Controller
         $attributes['owner_id'] = auth()->id();
         $trip->create($attributes);
         flash('Post создан');
-        return redirect('/trip');
+        return redirect('/trips');
     }
 
     /**
@@ -60,7 +60,7 @@ class TripController extends Controller
      */
     public function show(Trip $trip, Reply $reply)
     {
-        return view('trip.show', ['trip' => $trip, 'reply' => $reply]);
+        return view('trips.show', ['trip' => $trip, 'reply' => $reply]);
     }
 
     /**
@@ -72,7 +72,7 @@ class TripController extends Controller
     public function edit(Trip $trip)
     {
         $categories = Category::all();
-        return view('trip.edit', [
+        return view('trips.edit', [
             'trip' => $trip,
             'categories' => $categories
         ]);
@@ -88,7 +88,7 @@ class TripController extends Controller
     public function update(Request $request, Trip $trip)
     {
         $trip->update($this->validateTrip());
-        return redirect('/trip');
+        return redirect('/trips');
     }
 
     /**
@@ -105,7 +105,7 @@ class TripController extends Controller
         }
         $trip->delete();
         flash('Post удален');
-        return redirect('/trip');
+        return redirect('/trips');
     }
 
     protected function validateTrip()
