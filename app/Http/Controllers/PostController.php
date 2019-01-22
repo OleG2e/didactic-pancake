@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         $post = Post::all();
 
-        return view('post.index', compact('post'));
+        return view('posts.index', compact('post'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('post.create', compact('categories'));
+        return view('posts.create', compact('categories'));
     }
 
     /**
@@ -49,7 +49,7 @@ class PostController extends Controller
         $attributes['owner_id'] = auth()->id();
         $post->create($attributes);
         flash('Post создан');
-        return redirect('/post');
+        return redirect('/posts');
     }
 
     /**
@@ -60,7 +60,7 @@ class PostController extends Controller
      */
     public function show(Post $post, Reply $reply)
     {
-        return view('post.show', ['post' => $post, 'reply' => $reply]);
+        return view('posts.show', ['post' => $post, 'reply' => $reply]);
     }
 
     /**
@@ -72,7 +72,7 @@ class PostController extends Controller
     public function edit(Post $post, Category $category)
     {
         $categories = Category::all();
-        return view('post.edit', [
+        return view('posts.edit', [
             'post' => $post,
             'categories' => $categories
         ]);
@@ -88,7 +88,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $post->update($this->validatePost());
-        return redirect('/post');
+        return redirect('/posts');
     }
 
     /**
@@ -106,7 +106,7 @@ class PostController extends Controller
         }
         $post->delete();
         flash('Post удален');
-        return redirect('/post');
+        return redirect('/posts');
     }
 
     protected function validatePost()
