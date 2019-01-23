@@ -33,6 +33,9 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $user->about = (string)\request('about');
+        if (\request('phone')) {
+            $user->phone = (integer)\request('phone');
+        }
         $user->save();
         return back();
     }

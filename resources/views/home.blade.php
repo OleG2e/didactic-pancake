@@ -15,9 +15,11 @@
                         @endif
                         You are logged in!
                         <div> {{$user->about}}</div>
+                        <div> {{$user->phone}}</div>
                         <form method="post" action="/home" class="form-control">
                             @csrf
-                            <textarea name="about" placeholder="Обо мне"></textarea>
+                            <input type="number" name="phone" placeholder="Phone">
+                            <textarea name="about" placeholder="Обо мне">{{$user->about}}</textarea>
                             <button type="submit">Save</button>
                         </form>
                     </div>
