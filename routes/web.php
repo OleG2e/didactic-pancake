@@ -22,6 +22,7 @@ Route::get('how-much', function () {
 })->name('how_much');
 
 Route::get('home', 'HomeController@index')->name('home');
+Route::post('home', 'HomeController@store');
 Route::resource('categories', 'CategoryController');
 Route::resource('towns', 'TownController');
 

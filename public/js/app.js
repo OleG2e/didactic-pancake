@@ -48453,15 +48453,14 @@
          */
 
         var app = new Vue({
-            el: '#app'
-            /*components: {
-      vuejsDatepicker,
-      data () {
-          return {
-              ru: ru,
-          }
-      }
-  }*/
+            el: '#app' // components: {
+            //     vuejsDatepicker,
+            //     data () {
+            //         return {
+            //             ru: ru,
+            //         }
+            //     }
+            // }
 
         });
 

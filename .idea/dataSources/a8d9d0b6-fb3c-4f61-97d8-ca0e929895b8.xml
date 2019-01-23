@@ -1521,7 +1521,6 @@ tag</ColNames>
     <column id="346" parent="244" name="description">
       <Position>5</Position>
       <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="347" parent="244" name="load">
@@ -1583,41 +1582,46 @@ tag</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="357" parent="245" name="remember_token">
+    <column id="357" parent="245" name="about">
       <Position>6</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="358" parent="245" name="remember_token">
+      <Position>7</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="358" parent="245" name="created_at">
-      <Position>7</Position>
-      <DataType>timestamp|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="359" parent="245" name="updated_at">
+    <column id="359" parent="245" name="created_at">
       <Position>8</Position>
       <DataType>timestamp|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="360" parent="245" name="users_name_unique">
+    <column id="360" parent="245" name="updated_at">
+      <Position>9</Position>
+      <DataType>timestamp|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="361" parent="245" name="users_name_unique">
       <ColNames>name</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="361" parent="245" name="users_email_unique">
+    <index id="362" parent="245" name="users_email_unique">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="362" parent="245" name="PRIMARY">
+    <key id="363" parent="245" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="363" parent="245" name="users_name_unique">
+    <key id="364" parent="245" name="users_name_unique">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>users_name_unique</UnderlyingIndexName>
     </key>
-    <key id="364" parent="245" name="users_email_unique">
+    <key id="365" parent="245" name="users_email_unique">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_unique</UnderlyingIndexName>
     </key>

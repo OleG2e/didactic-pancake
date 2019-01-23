@@ -13,8 +13,13 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
                         You are logged in!
+                        <div> {{$user->about}}</div>
+                        <form method="post" action="/home" class="form-control">
+                            @csrf
+                            <textarea name="about" placeholder="Обо мне"></textarea>
+                            <button type="submit">Save</button>
+                        </form>
                     </div>
                 </div>
             </div>
