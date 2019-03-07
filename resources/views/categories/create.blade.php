@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    {{ Breadcrumbs::render('category', $category) }}
+    @isset($category)
+        {{ Breadcrumbs::render('category', $category) }}
+    @endisset
     <h1 class="title">Название категории</h1>
     <form method="post" action="/categories">
         @csrf

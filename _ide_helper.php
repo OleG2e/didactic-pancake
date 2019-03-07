@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.21 on 2019-01-23 12:03:03.
+ * Generated for Laravel 5.7.24 on 2019-02-21 11:51:52.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -108,13 +108,25 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the path to the application "app" directory.
          *
-         * @param string $path Optionally, a path to append to the app path
+         * @param string $path
          * @return string
          * @static
          */
         public static function path($path = '')
         {
             return \Illuminate\Foundation\Application::path($path);
+        }
+
+        /**
+         * Set the application directory.
+         *
+         * @param string $path
+         * @return $this
+         * @static
+         */
+        public static function useAppPath($path)
+        {
+            return \Illuminate\Foundation\Application::useAppPath($path);
         }
 
         /**
@@ -2554,7 +2566,7 @@ namespace Illuminate\Support\Facades {
     {
 
         /**
-         * Get a cache store instance by name.
+         * Get a cache store instance by name, wrapped in a repository.
          *
          * @param string|null $name
          * @return \Illuminate\Contracts\Cache\Repository
@@ -6298,7 +6310,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Queue a new e-mail message for sending.
          *
-         * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
+         * @param \Illuminate\Contracts\Mail\Mailable $view
          * @param string|null $queue
          * @return mixed
          * @throws \InvalidArgumentException
@@ -6313,7 +6325,7 @@ namespace Illuminate\Support\Facades {
          * Queue a new e-mail message for sending on the given queue.
          *
          * @param string $queue
-         * @param string|array $view
+         * @param \Illuminate\Contracts\Mail\Mailable $view
          * @return mixed
          * @static
          */
@@ -6328,7 +6340,7 @@ namespace Illuminate\Support\Facades {
          * This method didn't match rest of framework's "onQueue" phrasing. Added "onQueue".
          *
          * @param string $queue
-         * @param string|array $view
+         * @param \Illuminate\Contracts\Mail\Mailable $view
          * @return mixed
          * @static
          */
@@ -6341,7 +6353,7 @@ namespace Illuminate\Support\Facades {
          * Queue a new e-mail message for sending after (n) seconds.
          *
          * @param \DateTimeInterface|\DateInterval|int $delay
-         * @param string|array|\Illuminate\Contracts\Mail\Mailable $view
+         * @param \Illuminate\Contracts\Mail\Mailable $view
          * @param string|null $queue
          * @return mixed
          * @throws \InvalidArgumentException
@@ -6357,7 +6369,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $queue
          * @param \DateTimeInterface|\DateInterval|int $delay
-         * @param string|array $view
+         * @param \Illuminate\Contracts\Mail\Mailable $view
          * @return mixed
          * @static
          */
@@ -13421,6 +13433,165 @@ namespace Illuminate\Support\Facades {
 
 }
 
+namespace Musonza\Chat\Facades {
+
+    /**
+     *
+     *
+     */
+    class ChatFacade
+    {
+
+        /**
+         * Creates a new conversation.
+         *
+         * @param array $participants
+         * @param array $data
+         * @return \Musonza\Chat\Conversation
+         * @static
+         */
+        public static function createConversation($participants, $data = array())
+        {
+            return \Musonza\Chat\Chat::createConversation($participants, $data);
+        }
+
+        /**
+         * Sets message.
+         *
+         * @param string  | Musonza\Chat\Models\Message $message
+         * @return \Musonza\Chat\MessageService
+         * @static
+         */
+        public static function message($message)
+        {
+            return \Musonza\Chat\Chat::message($message);
+        }
+
+        /**
+         * Gets MessageService.
+         *
+         * @return \Musonza\Chat\MessageService
+         * @static
+         */
+        public static function messages()
+        {
+            return \Musonza\Chat\Chat::messages();
+        }
+
+        /**
+         * Sets Conversation.
+         *
+         * @param \Musonza\Chat\Conversation $conversation
+         * @return \Musonza\Chat\ConversationService
+         * @static
+         */
+        public static function conversation($conversation)
+        {
+            return \Musonza\Chat\Chat::conversation($conversation);
+        }
+
+        /**
+         * Gets ConversationService.
+         *
+         * @return \Musonza\Chat\ConversationService
+         * @static
+         */
+        public static function conversations()
+        {
+            return \Musonza\Chat\Chat::conversations();
+        }
+
+        /**
+         * Get unread notifications.
+         *
+         * @return \Musonza\Chat\MessageNotification
+         * @static
+         */
+        public static function unReadNotifications()
+        {
+            return \Musonza\Chat\Chat::unReadNotifications();
+        }
+
+        /**
+         * Returns the User Model class.
+         *
+         * @return string
+         * @static
+         */
+        public static function userModel()
+        {
+            return \Musonza\Chat\Chat::userModel();
+        }
+
+        /**
+         * Should the messages be broadcasted.
+         *
+         * @return boolean
+         * @static
+         */
+        public static function broadcasts()
+        {
+            return \Musonza\Chat\Chat::broadcasts();
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function sentMessageEvent()
+        {
+            return \Musonza\Chat\Chat::sentMessageEvent();
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function makeThreeOrMoreUsersPublic()
+        {
+            return \Musonza\Chat\Chat::makeThreeOrMoreUsersPublic();
+        }
+
+        /**
+         * Sets user.
+         *
+         * @param object $user
+         * @return $this
+         * @static
+         */
+        public static function for($user)
+        {
+            return \Musonza\Chat\Chat::for($user);
+        }
+
+        /**
+         * Set Sender.
+         *
+         * @param int $from
+         * @return $this
+         * @static
+         */
+        public static function from($from)
+        {
+            return \Musonza\Chat\Chat::from($from);
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function to($recipient)
+        {
+            return \Musonza\Chat\Chat::to($recipient);
+        }
+
+    }
+
+}
+
 namespace Barryvdh\Debugbar {
 
     /**
@@ -14784,7 +14955,7 @@ namespace {
          * Call the given local model scopes.
          *
          * @param array $scopes
-         * @return mixed
+         * @return static|mixed
          * @static
          */
         public static function scopes($scopes)
@@ -14795,7 +14966,7 @@ namespace {
         /**
          * Apply the scopes to the Eloquent builder instance and return it.
          *
-         * @return \Illuminate\Database\Eloquent\Builder|static
+         * @return static
          * @static
          */
         public static function applyScopes()
@@ -14974,7 +15145,7 @@ namespace {
         /**
          * Pass the query to a given callback.
          *
-         * @param \Closure $callback
+         * @param callable $callback
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -15305,7 +15476,7 @@ namespace {
          * Add a "join where" clause to the query.
          *
          * @param string $table
-         * @param string $first
+         * @param \Closure|string $first
          * @param string $operator
          * @param string $second
          * @return \Illuminate\Database\Query\Builder|static
@@ -15321,7 +15492,7 @@ namespace {
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|string $query
          * @param string $as
-         * @param string $first
+         * @param \Closure|string $first
          * @param string|null $operator
          * @param string|null $second
          * @return \Illuminate\Database\Query\Builder|static
@@ -15351,7 +15522,7 @@ namespace {
          * Add a "right join where" clause to the query.
          *
          * @param string $table
-         * @param string $first
+         * @param \Closure|string $first
          * @param string $operator
          * @param string $second
          * @return \Illuminate\Database\Query\Builder|static
@@ -15367,7 +15538,7 @@ namespace {
          *
          * @param \Closure|\Illuminate\Database\Query\Builder|string $query
          * @param string $as
-         * @param string $first
+         * @param \Closure|string $first
          * @param string|null $operator
          * @param string|null $second
          * @return \Illuminate\Database\Query\Builder|static
@@ -16787,6 +16958,10 @@ namespace {
     }
 
     class View extends \Illuminate\Support\Facades\View
+    {
+    }
+
+    class Chat extends \Musonza\Chat\Facades\ChatFacade
     {
     }
 

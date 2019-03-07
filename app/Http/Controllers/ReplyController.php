@@ -85,7 +85,9 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        //
+        $reply->delete();
+        flash('Ответ удален');
+        return back();
     }
 
     protected function validateReply()
