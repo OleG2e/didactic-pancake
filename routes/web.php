@@ -35,6 +35,8 @@ Route::patch('posts/{post}', 'PostController@update');
 Route::get('posts/{post}/edit', 'PostController@edit')->name('post_edit');
 
 Route::post('replies', 'ReplyController@store');
+Route::delete('replies/{reply}', 'ReplyController@destroy');
+Route::patch('replies/{reply}', 'ReplyController@update');
 
 Route::get('trips', 'TripController@index')->name('trip_all');
 Route::post('trips', 'TripController@store');
