@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
     <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
+        <div id="app" class="hero-body">
             <div class="container is-fluid">
                 {{ Breadcrumbs::render('post_show', $post) }}
-                <div class="box">
+                <div class="box"><input type="date">
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
@@ -14,12 +14,10 @@
                         <div class="media-content">
                             <div class="content">
                                 <p style="word-wrap: break-word;">
-
                                     <strong>{{$post->owner->name}}</strong>
                                     <small>{{$post->updated_at}}</small>
                                     <br>
                                     {{$post->description}}
-                                    {{--<p style="word-wrap: break-word;">{{$post->description}}</p>--}}
                                 </p>
                             </div>
                             <nav class="level is-mobile">
@@ -32,9 +30,9 @@
                                         </a>
                                         <a class="button" onclick="event.preventDefault();
                                         document.getElementById('delete-post-form').submit();">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-trash"></i>
-                                    </span>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
                                         </a>
                                     </div>
                                 </div>
@@ -56,19 +54,18 @@
                                             </p>
                                         </div>
                                         <div class="buttons are-small">
-                                            <a class="button"
-                                               href="/posts/{{$reply->id}}/edit">
-                                                        <span class="icon is-small">
-                                                            <i class="fas fa-edit"></i>
-                                                        </span>
+                                            <a class="button" href="/posts/{{$reply->id}}/edit">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
                                             </a>
                                             <form method="post" action="/replies/{{$reply->id}}">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="button" type="submit">
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-trash"></i>
-                                                            </span>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-trash"></i>
+                                                    </span>
                                                 </button>
                                             </form>
                                         </div>
