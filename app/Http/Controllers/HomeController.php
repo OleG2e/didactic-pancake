@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
 {
@@ -20,23 +23,55 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
         $user = Auth::user();
 
-        return view('home', compact('user'));
+        return view('home/main', compact('user'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $user = Auth::user();
-        $user->about = (string)\request('about');
-        if (\request('phone')) {
-            $user->phone = (integer)\request('phone');
+        $user->about = (string)$request['about'];
+        if ($request['phone']) {
+            $user->phone = (integer)$request['phone'];
+        } elseif ($request['phone'] == false) {
+            $user->phone = null;
         }
         $user->save();
+        return back();
+    }
+
+    public function myPosts(Post $post)
+    {
+        $user = Auth::user();
+        $myPosts = Post::where('owner_id', $user->id)->latest()->get();
+
+        return view('home/my_posts', compact('myPosts'));
+    }
+
+    public function updateRelevance(Post $post, Request $request)
+    {
+        $post->update([
+            'updated_at' => time(),
+            'relevance' => $request->has('relevance'),
+        ]);
+        return back();
+    }
+
+    /**
+     * Update the avatar for the user.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function updateAvatar(Request $request)
+    {
+        $path = $request->file('avatar')->storeAs('avatars/' . auth()->id(), 'avatar.jpg', 'public');
+        Image::make(url($path))->resize(512, 512)->save('storage/' . $path);
         return back();
     }
 }

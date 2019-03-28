@@ -7,6 +7,8 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        <p>Date: <input type="text" id="datepicker"></p>
+
                     </div>
                 </div>
             </div>
@@ -17,6 +19,9 @@
 <script>
     export default {
         mounted() {
+            $(function () {
+                $("#datepicker").datepicker();
+            });
             console.log('Component mounted.')
         }
     }

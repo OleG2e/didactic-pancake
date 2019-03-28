@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Events\ProjectCreated;
 
 /**
  * Class Project
- * @mixin \Eloquent
+ * @mixin Eloquent
  * @package Illuminate\Database\Eloquent
  */
 class Project extends Model

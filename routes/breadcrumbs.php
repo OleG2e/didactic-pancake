@@ -16,6 +16,12 @@ Breadcrumbs::for('about', function ($trail) {
     $trail->push('About', route('about'));
 });
 
+// Home > Cabinet
+Breadcrumbs::for('home', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Кабинет', route('home'));
+});
+
 // Home > Post
 Breadcrumbs::for('post_all', function ($trail) {
     $trail->parent('main');

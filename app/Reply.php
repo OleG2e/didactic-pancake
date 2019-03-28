@@ -9,6 +9,8 @@ class Reply extends Model
     protected $fillable = [
         'post_id', 'owner_id', 'description',
     ];
+    protected $with = ['owner'];
+
     public function owner()
     {
         return $this->belongsTo(User::class);

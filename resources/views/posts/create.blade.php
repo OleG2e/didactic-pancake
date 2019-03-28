@@ -1,54 +1,50 @@
 @extends('layouts.app')
 @section('content')
-    <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
-            <div class="container is-fluid">
-                {{ Breadcrumbs::render('post_create') }}
-                <div class="box">
-                    <div class="title">Создать объявление</div>
-                    <form method="post" action="/posts">
-                        @csrf
-                        <div class="field">
-                            <label class="label" for="category_id">Категория:</label>
-                            <div class="control">
-                                <div class="select is-rounded">
-                                    <select name="category_id" id="category_id" required>
-                                        <option value="">Выберете одну...</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                                {{ $category->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+    @component('components.hero')
+        {{ Breadcrumbs::render('post_create') }}
+        <div class="box">
+            <div class="title">Создать объявление</div>
+            <form method="post" action="/posts">
+                @csrf
+                <div class="field">
+                    <label class="label" for="category_id">Категория:</label>
+                    <div class="control">
+                        <div class="select is-rounded">
+                            <select name="category_id" id="category_id" required>
+                                <option value="">Выберете одну...</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->title }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="field">
-                            <div class="control">
-                                <label class="label">Заголовок:</label>
-                                <input class="input is-rounded" type="text" placeholder="Заголовок" name="title"
-                                       required>{{old('title')}}
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Текст:</label>
-                            <div class="control">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Заголовок:</label>
+                        <input class="input is-rounded" type="text" placeholder="Заголовок" name="title"
+                               required>{{old('title')}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Текст:</label>
+                    <div class="control">
                                 <textarea class="textarea" placeholder="Текст" name="description"
                                           required>{{old('description')}}</textarea>
-                            </div>
-                        </div>
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button type="submit" class="button is-link">Создать объявление</button>
-                            </div>
-                            <div class="control">
-                                <a class="button is-text" href="/posts">Отмена</a>
-                            </div>
-                        </div>
-                        @include('layouts.errors')
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Создать объявление</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-text" href="/posts">Отмена</a>
+                    </div>
+                </div>
+                @include('layouts.errors')
+            </form>
         </div>
-    </section>
+    @endcomponent
 @endsection

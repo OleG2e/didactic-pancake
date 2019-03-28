@@ -1,28 +1,118 @@
 @extends('layouts.app')
 @section('content')
-    {{ Breadcrumbs::render('trip_show', $trip) }}
-    <h1 class="title">Детали объявления</h1>
-    <span>{{$trip->description}}</span>
-    <div class="control "><a class="button is-warning is-hovered"
-                             href="/trips/{{$trip->id}}/edit">Редактировать</a>
-        <form method="post" action="/trips/{{$trip->id}}">
-            @method('delete')
-            @csrf
-            <div>
-                <button type="submit" class="button is-danger">Удалить</button>
-            </div>
-        </form>
-        <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
-    </div>
-    @foreach($trip->replies as $reply)
-        <div>{{$reply->description}}</div>
-    @endforeach
-    <div>
-        <form action="/replies" method="post">
-            @csrf
-            <input type="hidden" name="post_id" value="{{$trip->id}}">
-            <input class="input" name="description">
-            <button type="submit">Reply</button>
-        </form>
-    </div>
+    @component('components.hero')
+        {{ Breadcrumbs::render('trip_show', $trip) }}
+        <div class="box">
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <img src="{{asset('/storage/avatars/'.$trip->owner->id.'/avatar.jpg')}}">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        @php
+                            $dateTime = new DateTime($trip->date_time);
+                        @endphp
+                        <p style="word-wrap: break-word;">
+                            <strong>{{$trip->owner->name}}</strong>
+                            <small>{{$trip->updated_at->diffForHumans()}}</small>
+                            @isset($trip->description)<br> Описание: {{$trip->description}}@endisset
+                            <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
+                            @if($trip->passengers_count)<br>Осталось мест: {{$trip->passengers_count}}@endif
+                            @if($trip->load)<br>Есть место для груза@endif
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <div class="buttons are-small">
+                                <a class="button" href="/trips/{{$trip->id}}/edit">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                </a>
+                                <a class="button" onclick="event.preventDefault();
+                                        document.getElementById('delete-post-form').submit();">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                    @foreach($trip->replies as $reply)
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-48x48">
+                                    <img src="{{asset('/storage/avatars/'.$reply->owner->id.'/avatar.jpg')}}">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p style="word-wrap: break-word;">
+                                        <strong>{{$reply->owner->name}}</strong>
+                                        <small>{{$reply->updated_at}}</small>
+                                        <br>
+                                        {{$reply->description}}
+                                    </p>
+                                </div>
+                                <div class="buttons are-small">
+                                    <a class="button" href="/replies/{{$reply->id}}/edit">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                    </a>
+                                    <form method="post" action="/replies/{{$reply->id}}">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="button" type="submit">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </article>
+            <article class="media">
+                <div class="media-content">
+                    <form action="/replies" method="post">
+                        @csrf
+                        <input type="hidden" name="post_id" value="{{$trip->id}}">
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded"
+                                         src="{{asset('/storage/avatars/'.auth()->id().'/avatar.jpg')}}">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="field">
+                                    <p class="control">
+                                        <textarea class="textarea" name="description" cols="6" rows="3"
+                                                  placeholder="Комментарий..."></textarea>
+                                    </p>
+                                </div>
+                                <nav class="level">
+                                    <div class="level-left">
+                                        <div class="level-item">
+                                            <button class="button is-primary is-rounded" type="submit">Ответить</button>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </form>
+                </div>
+            </article>
+            <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
+        </div>
+    @endcomponent
+    <form id="delete-post-form" method="post" action="/trips/{{$trip->id}}">
+        @method('delete')
+        @csrf
+    </form>
 @endsection

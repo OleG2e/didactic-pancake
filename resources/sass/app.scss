@@ -1,13 +1,40 @@
-// Fonts
-//@import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
 @import 'variables';
-//@import '~bulma';
-//@import "~bulma-extensions/bulma-calendar/dist/css/bulma-calendar.min.css";
+@import '~bulma';
+//@import '~bulma-extensions/bulma-calendar/dist/css/bulma-calendar';
+@import '~jquery-ui/themes/base/all.css';
+@import '~pickadate/lib/compressed/themes/classic.css';
+@import '~pickadate/lib/compressed/themes/classic.date.css';
+@import '~pickadate/lib/compressed/themes/classic.time.css';
+
 .morecontent span {
   display: none;
 }
 
 .morelink {
   display: inline-block;
+}
+
+#button-up {
+  display: none;
+  left: 0;
+  margin: 0;
+  position: fixed;
+  bottom: 50px;
+  outline: none;
+  color: #333333;
+  line-height: 30px;
+  text-decoration: none;
+  padding: 0 2px 0 28px;
+  background: url(../svg/arrow-up-solid.svg) no-repeat top left;
+
+  border-radius: 0 4px 4px 0;
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  -o-border-radius: 0 4px 4px 0;
+
+  box-shadow: 0 2px 4px #999;
+  -webkit-box-shadow: 0 2px 4px #999;
+  -moz-box-shadow: 0 2px 4px #999;
+  -o-box-shadow: 0 2px 4px #999;
+  cursor: pointer;
 }
