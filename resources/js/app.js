@@ -7,6 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+// import Toasted from 'vue-toasted';
+// Vue.use(Toasted);
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,22 +23,21 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('custom-avatar-editor', require('./components/VueAvatar.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+//import AvatarForm from './components/AvatarForm';
+//import SaveImage from './components/SaveImage';
 const app = new Vue({
     el: '#app',
+    //components:{AvatarForm,SaveImage}
 });
 
-/**
- * Bulma-calendar
- * @source https://codepen.io/maxds/pen/jgeoA
- */
-// import bulmaCalendar from '/node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js';
+// import bulmaCalendar from '/Users/olegbiruk/Programming/forum/node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min';
 // // Initialize all input of date type.
 // const calendars = bulmaCalendar.attach('[type="date"]', options);
 //
@@ -46,22 +48,47 @@ const app = new Vue({
 //         console.log(date);
 //     });
 // });
-//
-// // To access to bulmaCalendar instance of an element
-// const element = document.querySelector('#my-element');
-// if (element) {
-//     // bulmaCalendar instance is available as element.bulmaCalendar
-//     element.bulmaCalendar.on('select', datepicker => {
-//         console.log(datepicker.data.value());
-//     });
-// }
+
+//require('/Users/olegbiruk/Programming/forum/node_modules/pickadate/lib/picker.js');
+//require('/Users/olegbiruk/Programming/forum/node_modules/jquery-ui/ui/i18n/datepicker-ru');
+//require('/Users/olegbiruk/Programming/forum/node_modules/pickadate/lib/picker.date.js');
+//$('.datepicker').pickadate();
+
+/**
+ * DateTimePicker
+ * @source https://amsul.ca/pickadate.js/
+ */
+$(function () {
+    $("#datepicker").pickadate({
+        monthsFull: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+        monthsShort: ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+        weekdaysFull: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+        weekdaysShort: ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+        today: 'сегодня',
+        clear: 'удалить',
+        close: 'закрыть',
+        firstDay: 1,
+        hiddenName: true,
+        format: 'd mmmm yyyy г.',
+        formatSubmit: 'yyyy/mm/dd'
+    });
+});
+$(function () {
+    $("#timepicker").pickatime({
+        hiddenName: true,
+        format: 'H:i',
+        clear: 'удалить'
+    });
+});
+
+
 /**
  * More/less toggle
  * @source https://codepen.io/maxds/pen/jgeoA
  */
 $(document).ready(function () {
     // Configure/customize these variables.
-    var showChar = 10;  // How many characters are shown by default
+    var showChar = 50;  // How many characters are shown by default
     var ellipsestext = "...";
     var moretext = "Раскрыть";
     var lesstext = "Скрыть";
@@ -95,3 +122,34 @@ $(document).ready(function () {
         return false;
     });
 });
+
+/**
+ * Кнопка прокрутки наверх
+ */
+$(document).ready(function () {
+    /**
+     * При прокрутке страницы, показываем или скрываем кнопку
+     */
+    $(window).scroll(function () {
+        // Если отступ сверху больше 50px то показываем кнопку "Наверх"
+        if ($(this).scrollTop() > 150) {
+            $('#button-up').fadeIn();
+        } else {
+            $('#button-up').fadeOut();
+        }
+    });
+
+    /** При нажатии на кнопку мы перемещаемся к началу страницы */
+    $('#button-up').click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 500);
+        return false;
+    });
+
+});
+
+/**
+ * Modal message
+ */
+require('./bulma-modal');
