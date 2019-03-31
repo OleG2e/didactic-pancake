@@ -12,9 +12,13 @@ Route::get('/how-much', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@store');
-Route::get('/home/posts', 'HomeController@myPosts');
-Route::patch('/home/posts/{post}', 'HomeController@updateRelevance')->name('update.relevance');
-Route::post('image/upload', 'HomeController@updateAvatar')->name('image.upload');
+Route::get('/home/posts', 'HomeController@myPosts')->name('my.posts');
+Route::get('/home/entries', 'HomeController@myEntries')->name('my.entries');
+Route::get('/home/trips', 'HomeController@myTrips')->name('my.trips');
+Route::patch('/home/posts/{post}', 'HomeController@updateRelevancePost');
+Route::patch('/home/trips/{trip}', 'HomeController@updateRelevanceTrip');
+Route::patch('/home/entries/{entry}', 'HomeController@updateRelevanceEntry');
+Route::post('/home/image/upload', 'HomeController@updateAvatar')->name('image.upload');
 
 Route::resource('categories', 'CategoryController');
 Route::resource('towns', 'TownController');
