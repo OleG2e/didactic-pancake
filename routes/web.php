@@ -39,3 +39,6 @@ Route::get('/trips/{trip}', 'TripController@show')->name('trip_show');
 Route::delete('/trips/{trip}', 'TripController@destroy');
 Route::patch('/trips/{trip}', 'TripController@update');
 Route::get('/trips/{trip}/edit', 'TripController@edit')->name('trip_edit');
+
+Route::patch('/trips/{trip}/addUser', 'TripUserController@addUser')->name('add.user');
+Route::delete('/trips/{trip}/removeUser', 'TripUserController@removeUser')->name('remove.user');
