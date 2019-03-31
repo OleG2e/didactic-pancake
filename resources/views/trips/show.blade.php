@@ -3,6 +3,11 @@
     @component('components.hero')
         {{ Breadcrumbs::render('trip_show', $trip) }}
         <div class="box">
+            @if (session('message'))
+                <div class="alert alert-success">
+                    {{session('message')}}
+                </div>
+            @endif
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
@@ -19,9 +24,43 @@
                             <small>{{$trip->updated_at->diffForHumans()}}</small>
                             @isset($trip->description)<br> Описание: {{$trip->description}}@endisset
                             <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
-                            @if($trip->passengers_count)<br>Осталось мест: {{$trip->passengers_count}}@endif
+                            @if($trip->passengers_count)<br>Осталось
+                            мест: {{$trip->passengers_count - $trip->users()->count()}}@endif
                             @if($trip->load)<br>Есть место для груза@endif
                         </p>
+                        @if (count($trip->users)==false)
+                            <form method="post" action="{{route('add.user', $trip)}}">
+                                @method('patch')
+                                @csrf
+                                <div class="field">
+                                    <div class="control">
+                                        <button type="submit" class="button is-primary">Я поеду!</button>
+                                    </div>
+                                </div>
+                            </form>
+                        @elseif(count($trip->users))
+                            @if (count($trip->users()->where('user_id',auth()->id())->get()))
+                                <form method="post" action="{{route('remove.user', $trip)}}">
+                                    @method('delete')
+                                    @csrf
+                                    <div class="field">
+                                        <div class="control">
+                                            <button type="submit" class="button is-danger">Я передумал ехать!</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @else
+                                <form method="post" action="{{route('add.user', $trip)}}">
+                                    @method('patch')
+                                    @csrf
+                                    <div class="field">
+                                        <div class="control">
+                                            <button type="submit" class="button is-primary">Я поеду!</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
+                        @endif
                     </div>
                     <nav class="level is-mobile">
                         <div class="level-left">

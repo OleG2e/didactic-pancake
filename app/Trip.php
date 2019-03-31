@@ -10,7 +10,7 @@ class Trip extends Model
         'category_id', 'owner_id', 'date_time', 'description', 'load', 'relevance', 'startpoint_id', 'endpoint_id', 'passengers_count',
     ];
 
-    protected $with = ['category', 'owner', 'startpoint', 'endpoint'];
+    protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];
 
     public function owner()
     {
@@ -35,5 +35,10 @@ class Trip extends Model
     public function endpoint()
     {
         return $this->belongsTo(Town::class, 'endpoint_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
