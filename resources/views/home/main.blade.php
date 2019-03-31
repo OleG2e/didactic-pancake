@@ -10,29 +10,7 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="tabs is-centered is-toggle is-toggle-rounded">
-                    <ul>
-                        <li class="is-active">
-                            <a>
-                                <span class="icon is-small"><i class="fas fa-user-circle" aria-hidden="true"></i></span>
-                                <span>Профиль</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <span class="icon is-small"><i class="fas fa-calendar-alt"
-                                                               aria-hidden="true"></i></span>
-                                <span>Мои записи</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/home/posts">
-                                <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
-                                <span>Мои объявления</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @include('subview.home-nav')
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-128x128">

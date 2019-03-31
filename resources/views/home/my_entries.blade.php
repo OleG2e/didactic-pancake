@@ -11,31 +11,31 @@
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title">Мои объявления:</p>
+                    <p class="title">Мои поездки:</p>
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
-                <a class="button is-primary is-rounded" href="/posts/create">Создать объявление</a>
+                <a class="button is-primary is-rounded" href="/trips/create">Создать поездку</a>
             </div>
         </nav>
         <div class="columns is-multiline">
-            @foreach($myPosts as $post)
+            @foreach($myTrips as $trip)
                 <div class="column is-narrow">
                     <div class="box"
-                         style="width: 250px; background-color: {{$post->relevance ? 'hsl(171, 100%, 41%)' : 'hsl(48, 100%, 67%)'}}">
+                         style="width: 250px; background-color: {{$trip->relevance ? 'hsl(171, 100%, 41%)' : 'hsl(48, 100%, 67%)'}}">
                         <div class="level">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <p class="title">{{$post->category->title}}</p>
+                                    <p class="title">{{$trip->category->title}}</p>
                                 </div>
                             </div>
                             <div class="level-right">
                                 <div class="level-item">
-                                    <a class="delete modal-button" data-target="modal-bis-{{$post->id}}"></a>
+                                    <a class="delete modal-button" data-target="modal-bis-{{$trip->id}}"></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal" id="modal-bis-{{$post->id}}">
+                        <div class="modal" id="modal-bis-{{$trip->id}}">
                             <div class="modal-background"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head">
@@ -43,10 +43,10 @@
                                     <button class="delete" aria-label="close"></button>
                                 </header>
                                 <section class="modal-card-body">
-                                    Удалить пост от {{$post->created_at}}?
+                                    Удалить пост от {{$trip->created_at}}?
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <form method="post" action="/posts/{{$post->id}}">
+                                    <form method="post" action="/trips/{{$trip->id}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button is-danger" type="submit">
@@ -60,20 +60,20 @@
                                 </footer>
                             </div>
                         </div>
-                        <p class="subtitle"><strong>{{$post->owner->name}}</strong>
-                            <small> {{$post->created_at}}</small>
+                        <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
+                        <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
+                            <small> {{$trip->created_at}}</small>
                         </p>
                         <div class="content">
-                            <div class="more">{{$post->description}}</div>
-                            <a href="/posts/{{$post->id}}">
+                            <a href="/trips/{{$trip->id}}">
                                 Обсудить
                             </a>
-                            <form method="post" action="/home/posts/{{$post->id}}">
+                            <form method="post" action="/home/trips/{{$trip->id}}">
                                 @method('patch')
                                 @csrf
                                 <label class="checkbox">
                                     <input type="checkbox" name="relevance"
-                                           onchange="this.form.submit()" {{$post->relevance ? 'checked' : ''}}>
+                                           onchange="this.form.submit()" {{$trip->relevance ? 'checked' : ''}}>
                                     Показывать
                                 </label>
                             </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Trip;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        return view('home/main', compact('user'));
+        return view('/home/main', compact('user'));
     }
 
     public function store(Request $request)
@@ -47,15 +48,32 @@ class HomeController extends Controller
 
     public function myPosts(Post $post)
     {
-        $user = Auth::user();
-        $myPosts = Post::where('owner_id', $user->id)->latest()->get();
+        $myPosts = Post::where('owner_id', auth()->id())->latest()->get();
 
-        return view('home/my_posts', compact('myPosts'));
+        return view('/home/my_posts', compact('myPosts'));
     }
 
-    public function updateRelevance(Post $post, Request $request)
+    public function updateRelevancePost(Post $post, Request $request)
     {
         $post->update([
+            'updated_at' => time(),
+            'relevance' => $request->has('relevance'),
+        ]);
+        return back();
+    }
+
+    public function updateRelevanceTrip(Trip $trip, Request $request)
+    {
+        $trip->update([
+            'updated_at' => time(),
+            'relevance' => $request->has('relevance'),
+        ]);
+        return back();
+    }
+
+    public function updateRelevanceEntry(Entry $entry, Request $request)
+    {
+        $entry->update([
             'updated_at' => time(),
             'relevance' => $request->has('relevance'),
         ]);
@@ -73,5 +91,17 @@ class HomeController extends Controller
         $path = $request->file('avatar')->storeAs('avatars/' . auth()->id(), 'avatar.jpg', 'public');
         Image::make(url($path))->resize(512, 512)->save('storage/' . $path);
         return back();
+    }
+
+    public function myTrips(Trip $trip)
+    {
+        $myTrips = Trip::where('owner_id', auth()->id())->latest()->get();
+        return view('/home/my_trips', compact('myTrips'));
+    }
+
+    public function myEntries(Entry $entry)
+    {
+        $myEntries = Entry::where('owner_id', auth()->id())->latest()->get();
+        return view('/home/my_entries', compact('myEntries'));
     }
 }
