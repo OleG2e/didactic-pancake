@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "2b66fd1c64d28c09016ad880d26d9650",
+  "content-hash": "7f4f856924f12d0270f8289fac729336",
   "packages": [
     {
       "name": "barryvdh/laravel-ide-helper",
@@ -1648,69 +1648,6 @@
       "time": "2019-03-15T12:39:01+00:00"
     },
     {
-      "name": "laravel/telescope",
-      "version": "v1.1",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/laravel/telescope.git",
-        "reference": "925386780c756d6aa7c18ae185bb7a756c122460"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/laravel/telescope/zipball/925386780c756d6aa7c18ae185bb7a756c122460",
-        "reference": "925386780c756d6aa7c18ae185bb7a756c122460",
-        "shasum": ""
-      },
-      "require": {
-        "ext-json": "*",
-        "laravel/framework": "~5.7.7|~5.8.0",
-        "moontoast/math": "^1.1",
-        "php": "^7.1.3",
-        "symfony/var-dumper": "^4.1"
-      },
-      "require-dev": {
-        "nunomaduro/larastan": "^0.3.7",
-        "orchestra/testbench": "~3.7"
-      },
-      "type": "library",
-      "extra": {
-        "branch-alias": {
-          "dev-master": "1.0-dev"
-        },
-        "laravel": {
-          "providers": [
-            "Laravel\\Telescope\\TelescopeServiceProvider"
-          ]
-        }
-      },
-      "autoload": {
-        "psr-4": {
-          "Laravel\\Telescope\\": "src/"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Taylor Otwell",
-          "email": "taylor@laravel.com"
-        },
-        {
-          "name": "Mohamed Said",
-          "email": "mohamed@laravel.com"
-        }
-      ],
-      "description": "An elegant debug assistant for the Laravel framework.",
-      "keywords": [
-        "debugging",
-        "laravel",
-        "monitoring"
-      ],
-      "time": "2019-02-18T22:02:39+00:00"
-    },
-    {
       "name": "laravel/tinker",
       "version": "v1.0.8",
       "source": {
@@ -2182,55 +2119,6 @@
         "psr-3"
       ],
       "time": "2018-11-05T09:00:11+00:00"
-    },
-    {
-      "name": "moontoast/math",
-      "version": "1.1.2",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/ramsey/moontoast-math.git",
-        "reference": "c2792a25df5cad4ff3d760dd37078fc5b6fccc79"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/ramsey/moontoast-math/zipball/c2792a25df5cad4ff3d760dd37078fc5b6fccc79",
-        "reference": "c2792a25df5cad4ff3d760dd37078fc5b6fccc79",
-        "shasum": ""
-      },
-      "require": {
-        "ext-bcmath": "*",
-        "php": ">=5.3.3"
-      },
-      "require-dev": {
-        "jakub-onderka/php-parallel-lint": "^0.9.0",
-        "phpunit/phpunit": "^4.7|>=5.0 <5.4",
-        "satooshi/php-coveralls": "^0.6.1",
-        "squizlabs/php_codesniffer": "^2.3"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "Moontoast\\Math\\": "src/Moontoast/Math/"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "Apache-2.0"
-      ],
-      "authors": [
-        {
-          "name": "Ben Ramsey",
-          "email": "ben@benramsey.com",
-          "homepage": "https://benramsey.com"
-        }
-      ],
-      "description": "A mathematics library, providing functionality for large numbers",
-      "homepage": "https://github.com/ramsey/moontoast-math",
-      "keywords": [
-        "bcmath",
-        "math"
-      ],
-      "time": "2017-02-16T16:54:46+00:00"
     },
     {
       "name": "nesbot/carbon",
@@ -3071,6 +2959,53 @@
         "phra"
       ],
       "time": "2015-10-13T18:44:15+00:00"
+    },
+    {
+      "name": "spatie/calendar-links",
+      "version": "1.2.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/spatie/calendar-links.git",
+        "reference": "0a5d95c6a19dbad9dfab3d64775a0d9cc7a02f30"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/spatie/calendar-links/zipball/0a5d95c6a19dbad9dfab3d64775a0d9cc7a02f30",
+        "reference": "0a5d95c6a19dbad9dfab3d64775a0d9cc7a02f30",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "spatie/phpunit-snapshot-assertions": "^1.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Spatie\\CalendarLinks\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Sebastian De Deyne",
+          "email": "sebastian@spatie.be",
+          "homepage": "https://spatie.be",
+          "role": "Developer"
+        }
+      ],
+      "description": "Generate add to calendar links for Google, iCal and other calendar systems",
+      "homepage": "https://github.com/spatie/calendar-links",
+      "keywords": [
+        "calendar-links",
+        "spatie"
+      ],
+      "time": "2019-02-14T15:43:28+00:00"
     },
     {
       "name": "swiftmailer/swiftmailer",
@@ -4951,6 +4886,68 @@
       "time": "2019-01-10T14:22:35+00:00"
     },
     {
+      "name": "laravel/telescope",
+      "version": "v2.0.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/laravel/telescope.git",
+        "reference": "eb3f6f8337050cc31fe1a1164240fe205e33b167"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/laravel/telescope/zipball/eb3f6f8337050cc31fe1a1164240fe205e33b167",
+        "reference": "eb3f6f8337050cc31fe1a1164240fe205e33b167",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "laravel/framework": "~5.8.0|~5.9.0",
+        "moontoast/math": "^1.1",
+        "php": "^7.1.3",
+        "symfony/var-dumper": "^4.1"
+      },
+      "require-dev": {
+        "orchestra/testbench": "~3.7"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "3.0-dev"
+        },
+        "laravel": {
+          "providers": [
+            "Laravel\\Telescope\\TelescopeServiceProvider"
+          ]
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Laravel\\Telescope\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Taylor Otwell",
+          "email": "taylor@laravel.com"
+        },
+        {
+          "name": "Mohamed Said",
+          "email": "mohamed@laravel.com"
+        }
+      ],
+      "description": "An elegant debug assistant for the Laravel framework.",
+      "keywords": [
+        "debugging",
+        "laravel",
+        "monitoring"
+      ],
+      "time": "2019-03-28T05:06:56+00:00"
+    },
+    {
       "name": "maximebf/debugbar",
       "version": "v1.15.0",
       "source": {
@@ -5075,6 +5072,55 @@
         "testing"
       ],
       "time": "2019-02-13T09:37:52+00:00"
+    },
+    {
+      "name": "moontoast/math",
+      "version": "1.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ramsey/moontoast-math.git",
+        "reference": "c2792a25df5cad4ff3d760dd37078fc5b6fccc79"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/ramsey/moontoast-math/zipball/c2792a25df5cad4ff3d760dd37078fc5b6fccc79",
+        "reference": "c2792a25df5cad4ff3d760dd37078fc5b6fccc79",
+        "shasum": ""
+      },
+      "require": {
+        "ext-bcmath": "*",
+        "php": ">=5.3.3"
+      },
+      "require-dev": {
+        "jakub-onderka/php-parallel-lint": "^0.9.0",
+        "phpunit/phpunit": "^4.7|>=5.0 <5.4",
+        "satooshi/php-coveralls": "^0.6.1",
+        "squizlabs/php_codesniffer": "^2.3"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Moontoast\\Math\\": "src/Moontoast/Math/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "Apache-2.0"
+      ],
+      "authors": [
+        {
+          "name": "Ben Ramsey",
+          "email": "ben@benramsey.com",
+          "homepage": "https://benramsey.com"
+        }
+      ],
+      "description": "A mathematics library, providing functionality for large numbers",
+      "homepage": "https://github.com/ramsey/moontoast-math",
+      "keywords": [
+        "bcmath",
+        "math"
+      ],
+      "time": "2017-02-16T16:54:46+00:00"
     },
     {
       "name": "myclabs/deep-copy",

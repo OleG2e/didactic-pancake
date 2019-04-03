@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\TripCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Trip extends Model
@@ -11,6 +12,10 @@ class Trip extends Model
     ];
 
     protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];
+
+    protected $dispatchesEvents = [
+        'created' => TripCreated::class,
+    ];
 
     public function owner()
     {
