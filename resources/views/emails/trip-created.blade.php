@@ -1,10 +1,9 @@
 @component('mail::message')
-# Introduction
+    # Ваше объявление было опубликовано
 
-The body of your message.
 
-@component('mail::button', ['url' => ''])
-Button Text
+    @component('mail::button', ['url' => route('trip_show', ['trips' => $trip->id])])
+        Перейти к объявлению
 @endcomponent
 
 Thanks,<br>
