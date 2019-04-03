@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\TripCreated;
+use App\Events\ReplyCreated;
 use App\Listeners\SendTripCreatedNotification;
+use App\Listeners\SendReplyCreatedNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         TripCreated::class => [
             SendTripCreatedNotification::class
+        ],
+
+        ReplyCreated::class => [
+            SendReplyCreatedNotification::class
         ],
     ];
 
