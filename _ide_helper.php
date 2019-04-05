@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.4 on 2019-04-03 08:23:38.
+ * Generated for Laravel 5.8.10 on 2019-04-04 21:58:28.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -667,6 +667,30 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Foundation\Application $instance */
             return $instance->getCachedRoutesPath();
+        }
+
+        /**
+         * Determine if the application events are cached.
+         *
+         * @return bool
+         * @static
+         */
+        public static function eventsAreCached()
+        {
+            /** @var \Illuminate\Foundation\Application $instance */
+            return $instance->eventsAreCached();
+        }
+
+        /**
+         * Get the path to the events cache file.
+         *
+         * @return string
+         * @static
+         */
+        public static function getCachedEventsPath()
+        {
+            /** @var \Illuminate\Foundation\Application $instance */
+            return $instance->getCachedEventsPath();
         }
 
         /**
@@ -3970,6 +3994,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Set the database reconnector callback.
+         *
+         * @param  callable  $reconnector
+         * @return void
+         * @static
+         */
+        public static function setReconnector($reconnector)
+        {
+            /** @var \Illuminate\Database\DatabaseManager $instance */
+            $instance->setReconnector($reconnector);
+        }
+
+        /**
          * Get a schema builder instance for the connection.
          *
          * @return \Illuminate\Database\Schema\MySqlBuilder
@@ -4405,20 +4442,6 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Database\Connection
             /** @var \Illuminate\Database\MySqlConnection $instance */
             return $instance->setReadPdo($pdo);
-        }
-
-        /**
-         * Set the reconnect instance on the connection.
-         *
-         * @param callable $reconnector
-         * @return \Illuminate\Database\MySqlConnection
-         * @static
-         */
-        public static function setReconnector($reconnector)
-        {
-            //Method inherited from \Illuminate\Database\Connection
-            /** @var \Illuminate\Database\MySqlConnection $instance */
-            return $instance->setReconnector($reconnector);
         }
 
         /**
@@ -5782,6 +5805,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Auth\Access\Gate $instance */
             return $instance->any($abilities, $arguments);
+        }
+
+        /**
+         * Determine if all of the given abilities should be denied for the current user.
+         *
+         * @param  \Illuminate\Auth\Access\iterable|string  $abilities
+         * @param  array|mixed  $arguments
+         * @return bool
+         * @static
+         */
+        public static function none($abilities, $arguments = array())
+        {
+            /** @var \Illuminate\Auth\Access\Gate $instance */
+            return $instance->none($abilities, $arguments);
         }
 
         /**
@@ -7335,6 +7372,45 @@ namespace Illuminate\Support\Facades {
             return $instance->hasSent($notifiable, $notification);
         }
 
+        /**
+         * Register a custom macro.
+         *
+         * @param  string  $name
+         * @param  object|callable  $macro
+         * @return void
+         * @static
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Support\Testing\Fakes\NotificationFake::macro($name, $macro);
+        }
+
+        /**
+         * Mix another object into the class.
+         *
+         * @param  object  $mixin
+         * @param  bool  $replace
+         * @return void
+         * @throws \ReflectionException
+         * @static
+         */
+        public static function mixin($mixin, $replace = true)
+        {
+            \Illuminate\Support\Testing\Fakes\NotificationFake::mixin($mixin, $replace);
+        }
+
+        /**
+         * Checks if macro is registered.
+         *
+         * @param  string  $name
+         * @return bool
+         * @static
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Support\Testing\Fakes\NotificationFake::hasMacro($name);
+        }
+
     }
 
     /**
@@ -7723,7 +7799,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Push a new job onto the queue after a delay.
          *
-         * @param \DateTime|int $delay
+         * @param  \DateTimeInterface|\DateInterval|int  $delay
          * @param string $job
          * @param mixed $data
          * @param string $queue
@@ -7755,7 +7831,7 @@ namespace Illuminate\Support\Facades {
          * Push a new job onto the queue after a delay.
          *
          * @param string $queue
-         * @param \DateTime|int $delay
+         * @param  \DateTimeInterface|\DateInterval|int  $delay
          * @param string $job
          * @param mixed $data
          * @return mixed
@@ -8346,7 +8422,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the client IP address.
          *
-         * @return string
+         * @return string|null
          * @static
          */
         public static function ip()
@@ -9389,7 +9465,7 @@ namespace Illuminate\Support\Facades {
          *  * $default
          *
          * @param string|null $default The default format
-         * @return string The request format
+         * @return string|null The request format
          * @static
          */
         public static function getRequestFormat($default = 'html')
@@ -10203,8 +10279,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function validate($rules, $params = null)
         {
-            /** @var \Illuminate\Http\Request $instance */
-            return $instance->__invoke($rules, $params);
+            return \Illuminate\Http\Request::validate($rules, $params);
         }
 
         /**
@@ -10212,10 +10287,9 @@ namespace Illuminate\Support\Facades {
          *
          * @static
          */
-        public static function hasValidSignature($absolute = null)
+        public static function hasValidSignature($absolute = true)
         {
-            /** @var \Illuminate\Http\Request $instance */
-            return $instance->__invoke($absolute);
+            return \Illuminate\Http\Request::hasValidSignature($absolute);
         }
 
     }
@@ -15131,7 +15205,7 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
          *
          * For backwards-compatibility with v5.0.0 and below.
          *
-         * @param string $name The name of the page.
+         * @param  string  $name The name of the page.
          * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
          *     accept additional parameters.
          * @return void
@@ -15493,7 +15567,7 @@ namespace {
         /**
          * Create and return an un-saved model instance.
          *
-         * @param array $attributes
+         * @param  array  $attributes
          * @return \Illuminate\Database\Eloquent\Model
          * @static
          */
@@ -15506,8 +15580,8 @@ namespace {
         /**
          * Register a new global scope.
          *
-         * @param string $identifier
-         * @param \Illuminate\Database\Eloquent\Scope|\Closure $scope
+         * @param  string  $identifier
+         * @param  \Illuminate\Database\Eloquent\Scope|\Closure  $scope
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15520,7 +15594,7 @@ namespace {
         /**
          * Remove a registered global scope.
          *
-         * @param \Illuminate\Database\Eloquent\Scope|string $scope
+         * @param  \Illuminate\Database\Eloquent\Scope|string  $scope
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15533,7 +15607,7 @@ namespace {
         /**
          * Remove all or passed registered global scopes.
          *
-         * @param array|null $scopes
+         * @param  array|null  $scopes
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15558,7 +15632,7 @@ namespace {
         /**
          * Add a where clause on the primary key to the query.
          *
-         * @param mixed $id
+         * @param  mixed  $id
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15571,7 +15645,7 @@ namespace {
         /**
          * Add a where clause on the primary key to the query.
          *
-         * @param mixed $id
+         * @param  mixed  $id
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15584,10 +15658,10 @@ namespace {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|array|\Closure $column
-         * @param mixed $operator
-         * @param mixed $value
-         * @param string $boolean
+         * @param  string|array|\Closure  $column
+         * @param  mixed  $operator
+         * @param  mixed  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15600,9 +15674,9 @@ namespace {
         /**
          * Add an "or where" clause to the query.
          *
-         * @param \Closure|array|string $column
-         * @param mixed $operator
-         * @param mixed $value
+         * @param  \Closure|array|string  $column
+         * @param  mixed  $operator
+         * @param  mixed  $value
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -15615,7 +15689,7 @@ namespace {
         /**
          * Add an "order by" clause for a timestamp to the query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15628,7 +15702,7 @@ namespace {
         /**
          * Add an "order by" clause for a timestamp to the query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15641,7 +15715,7 @@ namespace {
         /**
          * Create a collection of models from plain arrays.
          *
-         * @param array $items
+         * @param  array  $items
          * @return \Illuminate\Database\Eloquent\Collection
          * @static
          */
@@ -15654,8 +15728,8 @@ namespace {
         /**
          * Create a collection of models from a raw query.
          *
-         * @param string $query
-         * @param array $bindings
+         * @param  string  $query
+         * @param  array  $bindings
          * @return \Illuminate\Database\Eloquent\Collection
          * @static
          */
@@ -15668,8 +15742,8 @@ namespace {
         /**
          * Find a model by its primary key.
          *
-         * @param mixed $id
-         * @param array $columns
+         * @param  mixed  $id
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
          * @static
          */
@@ -15682,8 +15756,8 @@ namespace {
         /**
          * Find multiple models by their primary keys.
          *
-         * @param \Illuminate\Contracts\Support\Arrayable|array $ids
-         * @param array $columns
+         * @param  \Illuminate\Contracts\Support\Arrayable|array  $ids
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Collection
          * @static
          */
@@ -15696,8 +15770,8 @@ namespace {
         /**
          * Find a model by its primary key or throw an exception.
          *
-         * @param mixed $id
-         * @param array $columns
+         * @param  mixed  $id
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static|static[]
          * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
          * @static
@@ -15711,8 +15785,8 @@ namespace {
         /**
          * Find a model by its primary key or return fresh model instance.
          *
-         * @param mixed $id
-         * @param array $columns
+         * @param  mixed  $id
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model|static
          * @static
          */
@@ -15725,8 +15799,8 @@ namespace {
         /**
          * Get the first record matching the attributes or instantiate it.
          *
-         * @param array $attributes
-         * @param array $values
+         * @param  array  $attributes
+         * @param  array  $values
          * @return \Illuminate\Database\Eloquent\Model|static
          * @static
          */
@@ -15739,8 +15813,8 @@ namespace {
         /**
          * Get the first record matching the attributes or create it.
          *
-         * @param array $attributes
-         * @param array $values
+         * @param  array  $attributes
+         * @param  array  $values
          * @return \Illuminate\Database\Eloquent\Model|static
          * @static
          */
@@ -15753,8 +15827,8 @@ namespace {
         /**
          * Create or update a record matching the attributes, and fill it with values.
          *
-         * @param array $attributes
-         * @param array $values
+         * @param  array  $attributes
+         * @param  array  $values
          * @return \Illuminate\Database\Eloquent\Model|static
          * @static
          */
@@ -15767,7 +15841,7 @@ namespace {
         /**
          * Execute the query and get the first result or throw an exception.
          *
-         * @param array $columns
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model|static
          * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
          * @static
@@ -15781,8 +15855,8 @@ namespace {
         /**
          * Execute the query and get the first result or call a callback.
          *
-         * @param \Closure|array $columns
-         * @param \Closure|null $callback
+         * @param  \Closure|array  $columns
+         * @param  \Closure|null  $callback
          * @return \Illuminate\Database\Eloquent\Model|static|mixed
          * @static
          */
@@ -15795,7 +15869,7 @@ namespace {
         /**
          * Get a single column's value from the first result of a query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -15808,7 +15882,7 @@ namespace {
         /**
          * Execute the query as a "select" statement.
          *
-         * @param array $columns
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Collection|static[]
          * @static
          */
@@ -15821,7 +15895,7 @@ namespace {
         /**
          * Get the hydrated models without eager loading.
          *
-         * @param array $columns
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model[]|static[]
          * @static
          */
@@ -15834,7 +15908,7 @@ namespace {
         /**
          * Eager load the relationships for the models.
          *
-         * @param array $models
+         * @param  array  $models
          * @return array
          * @static
          */
@@ -15859,10 +15933,10 @@ namespace {
         /**
          * Chunk the results of a query by comparing numeric IDs.
          *
-         * @param int $count
-         * @param callable $callback
-         * @param string|null $column
-         * @param string|null $alias
+         * @param  int  $count
+         * @param  callable  $callback
+         * @param  string|null  $column
+         * @param  string|null  $alias
          * @return bool
          * @static
          */
@@ -15875,8 +15949,8 @@ namespace {
         /**
          * Get an array with the values of a given column.
          *
-         * @param string $column
-         * @param string|null $key
+         * @param  string  $column
+         * @param  string|null  $key
          * @return \Illuminate\Support\Collection
          * @static
          */
@@ -15889,10 +15963,10 @@ namespace {
         /**
          * Paginate the given query.
          *
-         * @param int $perPage
-         * @param array $columns
-         * @param string $pageName
-         * @param int|null $page
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
          * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
          * @throws \InvalidArgumentException
          * @static
@@ -15906,10 +15980,10 @@ namespace {
         /**
          * Paginate the given query into a simple paginator.
          *
-         * @param int $perPage
-         * @param array $columns
-         * @param string $pageName
-         * @param int|null $page
+         * @param  int  $perPage
+         * @param  array  $columns
+         * @param  string  $pageName
+         * @param  int|null  $page
          * @return \Illuminate\Contracts\Pagination\Paginator
          * @static
          */
@@ -15922,7 +15996,7 @@ namespace {
         /**
          * Save a new model and return the instance.
          *
-         * @param array $attributes
+         * @param  array  $attributes
          * @return \Illuminate\Database\Eloquent\Model|$this
          * @static
          */
@@ -15935,7 +16009,7 @@ namespace {
         /**
          * Save a new model and return the instance. Allow mass-assignment.
          *
-         * @param array $attributes
+         * @param  array  $attributes
          * @return \Illuminate\Database\Eloquent\Model|$this
          * @static
          */
@@ -15948,7 +16022,7 @@ namespace {
         /**
          * Register a replacement for the default delete function.
          *
-         * @param \Closure $callback
+         * @param  \Closure  $callback
          * @return void
          * @static
          */
@@ -15961,7 +16035,7 @@ namespace {
         /**
          * Call the given local model scopes.
          *
-         * @param array $scopes
+         * @param  array  $scopes
          * @return static|mixed
          * @static
          */
@@ -15986,7 +16060,7 @@ namespace {
         /**
          * Prevent the specified relations from being eager loaded.
          *
-         * @param mixed $relations
+         * @param  mixed  $relations
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -15999,7 +16073,7 @@ namespace {
         /**
          * Create a new instance of the model being queried.
          *
-         * @param array $attributes
+         * @param  array  $attributes
          * @return \Illuminate\Database\Eloquent\Model|static
          * @static
          */
@@ -16024,7 +16098,7 @@ namespace {
         /**
          * Set the underlying query builder instance.
          *
-         * @param \Illuminate\Database\Query\Builder $query
+         * @param  \Illuminate\Database\Query\Builder  $query
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -16061,7 +16135,7 @@ namespace {
         /**
          * Set the relationships being eagerly loaded.
          *
-         * @param array $eagerLoad
+         * @param  array  $eagerLoad
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -16086,7 +16160,7 @@ namespace {
         /**
          * Set a model instance for the model being queried.
          *
-         * @param \Illuminate\Database\Eloquent\Model $model
+         * @param  \Illuminate\Database\Eloquent\Model  $model
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -16099,7 +16173,7 @@ namespace {
         /**
          * Get the given macro by name.
          *
-         * @param string $name
+         * @param  string  $name
          * @return \Closure
          * @static
          */
@@ -16112,8 +16186,8 @@ namespace {
         /**
          * Chunk the results of the query.
          *
-         * @param int $count
-         * @param callable $callback
+         * @param  int  $count
+         * @param  callable  $callback
          * @return bool
          * @static
          */
@@ -16126,8 +16200,8 @@ namespace {
         /**
          * Execute a callback over each item while chunking.
          *
-         * @param callable $callback
-         * @param int $count
+         * @param  callable  $callback
+         * @param  int  $count
          * @return bool
          * @static
          */
@@ -16140,7 +16214,7 @@ namespace {
         /**
          * Execute the query and get the first result.
          *
-         * @param array $columns
+         * @param  array  $columns
          * @return \Illuminate\Database\Eloquent\Model|object|static|null
          * @static
          */
@@ -16153,9 +16227,9 @@ namespace {
         /**
          * Apply the callback's query changes if the given "value" is true.
          *
-         * @param mixed $value
-         * @param callable $callback
-         * @param callable $default
+         * @param  mixed  $value
+         * @param  callable  $callback
+         * @param  callable  $default
          * @return mixed|$this
          * @static
          */
@@ -16168,7 +16242,7 @@ namespace {
         /**
          * Pass the query to a given callback.
          *
-         * @param callable $callback
+         * @param  callable  $callback
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16181,9 +16255,9 @@ namespace {
         /**
          * Apply the callback's query changes if the given "value" is false.
          *
-         * @param mixed $value
-         * @param callable $callback
-         * @param callable $default
+         * @param  mixed  $value
+         * @param  callable  $callback
+         * @param  callable  $default
          * @return mixed|$this
          * @static
          */
@@ -16196,11 +16270,11 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query.
          *
-         * @param string $relation
-         * @param string $operator
-         * @param int $count
-         * @param string $boolean
-         * @param \Closure|null $callback
+         * @param  string  $relation
+         * @param  string  $operator
+         * @param  int  $count
+         * @param  string  $boolean
+         * @param  \Closure|null  $callback
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16213,9 +16287,9 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with an "or".
          *
-         * @param string $relation
-         * @param string $operator
-         * @param int $count
+         * @param  string  $relation
+         * @param  string  $operator
+         * @param  int  $count
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16228,9 +16302,9 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query.
          *
-         * @param string $relation
-         * @param string $boolean
-         * @param \Closure|null $callback
+         * @param  string  $relation
+         * @param  string  $boolean
+         * @param  \Closure|null  $callback
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16243,7 +16317,7 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with an "or".
          *
-         * @param string $relation
+         * @param  string  $relation
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16256,10 +16330,10 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with where clauses.
          *
-         * @param string $relation
-         * @param \Closure|null $callback
-         * @param string $operator
-         * @param int $count
+         * @param  string  $relation
+         * @param  \Closure|null  $callback
+         * @param  string  $operator
+         * @param  int  $count
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16272,10 +16346,10 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with where clauses and an "or".
          *
-         * @param string $relation
-         * @param \Closure $callback
-         * @param string $operator
-         * @param int $count
+         * @param  string  $relation
+         * @param  \Closure  $callback
+         * @param  string  $operator
+         * @param  int  $count
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16288,8 +16362,8 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with where clauses.
          *
-         * @param string $relation
-         * @param \Closure|null $callback
+         * @param  string  $relation
+         * @param  \Closure|null  $callback
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16302,8 +16376,8 @@ namespace {
         /**
          * Add a relationship count / exists condition to the query with where clauses and an "or".
          *
-         * @param string $relation
-         * @param \Closure $callback
+         * @param  string  $relation
+         * @param  \Closure  $callback
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16316,7 +16390,7 @@ namespace {
         /**
          * Add subselect queries to count the relations.
          *
-         * @param mixed $relations
+         * @param  mixed  $relations
          * @return \Illuminate\Database\Eloquent\Builder
          * @static
          */
@@ -16329,7 +16403,7 @@ namespace {
         /**
          * Merge the where constraints from another query to the current query.
          *
-         * @param \Illuminate\Database\Eloquent\Builder $from
+         * @param  \Illuminate\Database\Eloquent\Builder  $from
          * @return \Illuminate\Database\Eloquent\Builder|static
          * @static
          */
@@ -16342,7 +16416,7 @@ namespace {
         /**
          * Set the columns to be selected.
          *
-         * @param array|mixed $columns
+         * @param  array|mixed  $columns
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16355,8 +16429,8 @@ namespace {
         /**
          * Add a subselect expression to the query.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string $as
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
+         * @param  string  $as
          * @return \Illuminate\Database\Query\Builder|static
          * @throws \InvalidArgumentException
          * @static
@@ -16370,8 +16444,8 @@ namespace {
         /**
          * Add a new "raw" select expression to the query.
          *
-         * @param string $expression
-         * @param array $bindings
+         * @param  string  $expression
+         * @param  array  $bindings
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16384,8 +16458,8 @@ namespace {
         /**
          * Makes "from" fetch from a subquery.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string $as
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
+         * @param  string  $as
          * @return \Illuminate\Database\Query\Builder|static
          * @throws \InvalidArgumentException
          * @static
@@ -16399,8 +16473,8 @@ namespace {
         /**
          * Add a raw from clause to the query.
          *
-         * @param string $expression
-         * @param mixed $bindings
+         * @param  string  $expression
+         * @param  mixed  $bindings
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16413,7 +16487,7 @@ namespace {
         /**
          * Add a new select column to the query.
          *
-         * @param array|mixed $column
+         * @param  array|mixed  $column
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16438,7 +16512,7 @@ namespace {
         /**
          * Set the table which the query is targeting.
          *
-         * @param string $table
+         * @param  string  $table
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16451,12 +16525,12 @@ namespace {
         /**
          * Add a join clause to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
-         * @param string $type
-         * @param bool $where
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string  $type
+         * @param  bool  $where
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16469,11 +16543,11 @@ namespace {
         /**
          * Add a "join where" clause to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string $operator
-         * @param string $second
-         * @param string $type
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string  $operator
+         * @param  string  $second
+         * @param  string  $type
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16486,19 +16560,26 @@ namespace {
         /**
          * Add a subquery join clause to the query.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string $as
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
-         * @param string $type
-         * @param bool $where
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
+         * @param  string  $as
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string  $type
+         * @param  bool  $where
          * @return \Illuminate\Database\Query\Builder|static
          * @throws \InvalidArgumentException
          * @static
          */
-        public static function joinSub($query, $as, $first, $operator = null, $second = null, $type = 'inner', $where = false)
-        {
+        public static function joinSub(
+            $query,
+            $as,
+            $first,
+            $operator = null,
+            $second = null,
+            $type = 'inner',
+            $where = false
+        ) {
             /** @var \Illuminate\Database\Query\Builder $instance */
             return $instance->joinSub($query, $as, $first, $operator, $second, $type, $where);
         }
@@ -16506,10 +16587,10 @@ namespace {
         /**
          * Add a left join to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16522,10 +16603,10 @@ namespace {
         /**
          * Add a "join where" clause to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string $operator
-         * @param string $second
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string  $operator
+         * @param  string  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16538,11 +16619,11 @@ namespace {
         /**
          * Add a subquery left join to the query.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string $as
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
+         * @param  string  $as
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16555,10 +16636,10 @@ namespace {
         /**
          * Add a right join to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16571,10 +16652,10 @@ namespace {
         /**
          * Add a "right join where" clause to the query.
          *
-         * @param string $table
-         * @param \Closure|string $first
-         * @param string $operator
-         * @param string $second
+         * @param  string  $table
+         * @param  \Closure|string  $first
+         * @param  string  $operator
+         * @param  string  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16587,11 +16668,11 @@ namespace {
         /**
          * Add a subquery right join to the query.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-         * @param string $as
-         * @param \Closure|string $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
+         * @param  string  $as
+         * @param  \Closure|string  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16604,10 +16685,10 @@ namespace {
         /**
          * Add a "cross join" clause to the query.
          *
-         * @param string $table
-         * @param \Closure|string|null $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  string  $table
+         * @param  \Closure|string|null  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16620,8 +16701,8 @@ namespace {
         /**
          * Merge an array of where clauses and bindings.
          *
-         * @param array $wheres
-         * @param array $bindings
+         * @param  array  $wheres
+         * @param  array  $bindings
          * @return void
          * @static
          */
@@ -16634,9 +16715,9 @@ namespace {
         /**
          * Prepare the value and operator for a where clause.
          *
-         * @param string $value
-         * @param string $operator
-         * @param bool $useDefault
+         * @param  string  $value
+         * @param  string  $operator
+         * @param  bool  $useDefault
          * @return array
          * @throws \InvalidArgumentException
          * @static
@@ -16650,10 +16731,10 @@ namespace {
         /**
          * Add a "where" clause comparing two columns to the query.
          *
-         * @param string|array $first
-         * @param string|null $operator
-         * @param string|null $second
-         * @param string|null $boolean
+         * @param  string|array  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
+         * @param  string|null  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16666,9 +16747,9 @@ namespace {
         /**
          * Add an "or where" clause comparing two columns to the query.
          *
-         * @param string|array $first
-         * @param string|null $operator
-         * @param string|null $second
+         * @param  string|array  $first
+         * @param  string|null  $operator
+         * @param  string|null  $second
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16681,9 +16762,9 @@ namespace {
         /**
          * Add a raw where clause to the query.
          *
-         * @param string $sql
-         * @param mixed $bindings
-         * @param string $boolean
+         * @param  string  $sql
+         * @param  mixed  $bindings
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16696,8 +16777,8 @@ namespace {
         /**
          * Add a raw or where clause to the query.
          *
-         * @param string $sql
-         * @param mixed $bindings
+         * @param  string  $sql
+         * @param  mixed  $bindings
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16710,10 +16791,10 @@ namespace {
         /**
          * Add a "where in" clause to the query.
          *
-         * @param string $column
-         * @param mixed $values
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  mixed  $values
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16726,8 +16807,8 @@ namespace {
         /**
          * Add an "or where in" clause to the query.
          *
-         * @param string $column
-         * @param mixed $values
+         * @param  string  $column
+         * @param  mixed  $values
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16740,9 +16821,9 @@ namespace {
         /**
          * Add a "where not in" clause to the query.
          *
-         * @param string $column
-         * @param mixed $values
-         * @param string $boolean
+         * @param  string  $column
+         * @param  mixed  $values
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16755,8 +16836,8 @@ namespace {
         /**
          * Add an "or where not in" clause to the query.
          *
-         * @param string $column
-         * @param mixed $values
+         * @param  string  $column
+         * @param  mixed  $values
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16769,10 +16850,10 @@ namespace {
         /**
          * Add a "where in raw" clause for integer values to the query.
          *
-         * @param string $column
-         * @param \Illuminate\Contracts\Support\Arrayable|array $values
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  \Illuminate\Contracts\Support\Arrayable|array  $values
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16785,9 +16866,9 @@ namespace {
         /**
          * Add a "where not in raw" clause for integer values to the query.
          *
-         * @param string $column
-         * @param \Illuminate\Contracts\Support\Arrayable|array $values
-         * @param string $boolean
+         * @param  string  $column
+         * @param  \Illuminate\Contracts\Support\Arrayable|array  $values
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16800,9 +16881,9 @@ namespace {
         /**
          * Add a "where null" clause to the query.
          *
-         * @param string $column
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16815,7 +16896,7 @@ namespace {
         /**
          * Add an "or where null" clause to the query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16828,8 +16909,8 @@ namespace {
         /**
          * Add a "where not null" clause to the query.
          *
-         * @param string $column
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16842,10 +16923,10 @@ namespace {
         /**
          * Add a where between statement to the query.
          *
-         * @param string $column
-         * @param array $values
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  array  $values
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -16858,8 +16939,8 @@ namespace {
         /**
          * Add an or where between statement to the query.
          *
-         * @param string $column
-         * @param array $values
+         * @param  string  $column
+         * @param  array  $values
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16872,9 +16953,9 @@ namespace {
         /**
          * Add a where not between statement to the query.
          *
-         * @param string $column
-         * @param array $values
-         * @param string $boolean
+         * @param  string  $column
+         * @param  array  $values
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16887,8 +16968,8 @@ namespace {
         /**
          * Add an or where not between statement to the query.
          *
-         * @param string $column
-         * @param array $values
+         * @param  string  $column
+         * @param  array  $values
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16901,7 +16982,7 @@ namespace {
         /**
          * Add an "or where not null" clause to the query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16914,10 +16995,10 @@ namespace {
         /**
          * Add a "where date" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16930,9 +17011,9 @@ namespace {
         /**
          * Add an "or where date" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16945,10 +17026,10 @@ namespace {
         /**
          * Add a "where time" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16961,9 +17042,9 @@ namespace {
         /**
          * Add an "or where time" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16976,10 +17057,10 @@ namespace {
         /**
          * Add a "where day" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -16992,9 +17073,9 @@ namespace {
         /**
          * Add an "or where day" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17007,10 +17088,10 @@ namespace {
         /**
          * Add a "where month" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17023,9 +17104,9 @@ namespace {
         /**
          * Add an "or where month" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string $value
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17038,10 +17119,10 @@ namespace {
         /**
          * Add a "where year" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string|int $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string|int  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17054,9 +17135,9 @@ namespace {
         /**
          * Add an "or where year" statement to the query.
          *
-         * @param string $column
-         * @param string $operator
-         * @param \DateTimeInterface|string|int $value
+         * @param  string  $column
+         * @param  string  $operator
+         * @param  \DateTimeInterface|string|int  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17069,8 +17150,8 @@ namespace {
         /**
          * Add a nested where statement to the query.
          *
-         * @param \Closure $callback
-         * @param string $boolean
+         * @param  \Closure  $callback
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17095,8 +17176,8 @@ namespace {
         /**
          * Add another query builder as a nested where to the query builder.
          *
-         * @param \Illuminate\Database\Query\Builder|static $query
-         * @param string $boolean
+         * @param  \Illuminate\Database\Query\Builder|static  $query
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17109,9 +17190,9 @@ namespace {
         /**
          * Add an exists clause to the query.
          *
-         * @param \Closure $callback
-         * @param string $boolean
-         * @param bool $not
+         * @param  \Closure  $callback
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17124,8 +17205,8 @@ namespace {
         /**
          * Add an or exists clause to the query.
          *
-         * @param \Closure $callback
-         * @param bool $not
+         * @param  \Closure  $callback
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17138,8 +17219,8 @@ namespace {
         /**
          * Add a where not exists clause to the query.
          *
-         * @param \Closure $callback
-         * @param string $boolean
+         * @param  \Closure  $callback
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17152,7 +17233,7 @@ namespace {
         /**
          * Add a where not exists clause to the query.
          *
-         * @param \Closure $callback
+         * @param  \Closure  $callback
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17165,9 +17246,9 @@ namespace {
         /**
          * Add an exists clause to the query.
          *
-         * @param \Illuminate\Database\Query\Builder $query
-         * @param string $boolean
-         * @param bool $not
+         * @param  \Illuminate\Database\Query\Builder  $query
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17180,10 +17261,10 @@ namespace {
         /**
          * Adds a where condition using row values.
          *
-         * @param array $columns
-         * @param string $operator
-         * @param array $values
-         * @param string $boolean
+         * @param  array  $columns
+         * @param  string  $operator
+         * @param  array  $values
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17196,9 +17277,9 @@ namespace {
         /**
          * Adds a or where condition using row values.
          *
-         * @param array $columns
-         * @param string $operator
-         * @param array $values
+         * @param  array  $columns
+         * @param  string  $operator
+         * @param  array  $values
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17211,10 +17292,10 @@ namespace {
         /**
          * Add a "where JSON contains" clause to the query.
          *
-         * @param string $column
-         * @param mixed $value
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  mixed  $value
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17227,8 +17308,8 @@ namespace {
         /**
          * Add a "or where JSON contains" clause to the query.
          *
-         * @param string $column
-         * @param mixed $value
+         * @param  string  $column
+         * @param  mixed  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17241,9 +17322,9 @@ namespace {
         /**
          * Add a "where JSON not contains" clause to the query.
          *
-         * @param string $column
-         * @param mixed $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  mixed  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17256,8 +17337,8 @@ namespace {
         /**
          * Add a "or where JSON not contains" clause to the query.
          *
-         * @param string $column
-         * @param mixed $value
+         * @param  string  $column
+         * @param  mixed  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17270,10 +17351,10 @@ namespace {
         /**
          * Add a "where JSON length" clause to the query.
          *
-         * @param string $column
-         * @param mixed $operator
-         * @param mixed $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  mixed  $operator
+         * @param  mixed  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17286,9 +17367,9 @@ namespace {
         /**
          * Add a "or where JSON length" clause to the query.
          *
-         * @param string $column
-         * @param mixed $operator
-         * @param mixed $value
+         * @param  string  $column
+         * @param  mixed  $operator
+         * @param  mixed  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17301,8 +17382,8 @@ namespace {
         /**
          * Handles dynamic "where" clauses to the query.
          *
-         * @param string $method
-         * @param string $parameters
+         * @param  string  $method
+         * @param  string  $parameters
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17315,7 +17396,7 @@ namespace {
         /**
          * Add a "group by" clause to the query.
          *
-         * @param array $groups
+         * @param  array  $groups
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17328,10 +17409,10 @@ namespace {
         /**
          * Add a "having" clause to the query.
          *
-         * @param string $column
-         * @param string|null $operator
-         * @param string|null $value
-         * @param string $boolean
+         * @param  string  $column
+         * @param  string|null  $operator
+         * @param  string|null  $value
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17344,9 +17425,9 @@ namespace {
         /**
          * Add a "or having" clause to the query.
          *
-         * @param string $column
-         * @param string|null $operator
-         * @param string|null $value
+         * @param  string  $column
+         * @param  string|null  $operator
+         * @param  string|null  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17359,10 +17440,10 @@ namespace {
         /**
          * Add a "having between " clause to the query.
          *
-         * @param string $column
-         * @param array $values
-         * @param string $boolean
-         * @param bool $not
+         * @param  string  $column
+         * @param  array  $values
+         * @param  string  $boolean
+         * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17375,9 +17456,9 @@ namespace {
         /**
          * Add a raw having clause to the query.
          *
-         * @param string $sql
-         * @param array $bindings
-         * @param string $boolean
+         * @param  string  $sql
+         * @param  array  $bindings
+         * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17390,8 +17471,8 @@ namespace {
         /**
          * Add a raw or having clause to the query.
          *
-         * @param string $sql
-         * @param array $bindings
+         * @param  string  $sql
+         * @param  array  $bindings
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17404,8 +17485,8 @@ namespace {
         /**
          * Add an "order by" clause to the query.
          *
-         * @param string $column
-         * @param string $direction
+         * @param  string  $column
+         * @param  string  $direction
          * @return \Illuminate\Database\Query\Builder
          * @throws \InvalidArgumentException
          * @static
@@ -17419,7 +17500,7 @@ namespace {
         /**
          * Add a descending "order by" clause to the query.
          *
-         * @param string $column
+         * @param  string  $column
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17432,7 +17513,7 @@ namespace {
         /**
          * Put the query's results in random order.
          *
-         * @param string $seed
+         * @param  string  $seed
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17445,8 +17526,8 @@ namespace {
         /**
          * Add a raw "order by" clause to the query.
          *
-         * @param string $sql
-         * @param array $bindings
+         * @param  string  $sql
+         * @param  array  $bindings
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17459,7 +17540,7 @@ namespace {
         /**
          * Alias to set the "offset" value of the query.
          *
-         * @param int $value
+         * @param  int  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17472,7 +17553,7 @@ namespace {
         /**
          * Set the "offset" value of the query.
          *
-         * @param int $value
+         * @param  int  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17485,7 +17566,7 @@ namespace {
         /**
          * Alias to set the "limit" value of the query.
          *
-         * @param int $value
+         * @param  int  $value
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17498,7 +17579,7 @@ namespace {
         /**
          * Set the "limit" value of the query.
          *
-         * @param int $value
+         * @param  int  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17511,8 +17592,8 @@ namespace {
         /**
          * Set the limit and offset for a given page.
          *
-         * @param int $page
-         * @param int $perPage
+         * @param  int  $page
+         * @param  int  $perPage
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17523,11 +17604,26 @@ namespace {
         }
 
         /**
+         * Constrain the query to the previous "page" of results before a given ID.
+         *
+         * @param  int  $perPage
+         * @param  int|null  $lastId
+         * @param  string  $column
+         * @return \Illuminate\Database\Query\Builder|static
+         * @static
+         */
+        public static function forPageBeforeId($perPage = 15, $lastId = 0, $column = 'id')
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->forPageBeforeId($perPage, $lastId, $column);
+        }
+
+        /**
          * Constrain the query to the next "page" of results after a given ID.
          *
-         * @param int $perPage
-         * @param int|null $lastId
-         * @param string $column
+         * @param  int  $perPage
+         * @param  int|null  $lastId
+         * @param  string  $column
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17540,8 +17636,8 @@ namespace {
         /**
          * Add a union statement to the query.
          *
-         * @param \Illuminate\Database\Query\Builder|\Closure $query
-         * @param bool $all
+         * @param  \Illuminate\Database\Query\Builder|\Closure  $query
+         * @param  bool  $all
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17554,7 +17650,7 @@ namespace {
         /**
          * Add a union all statement to the query.
          *
-         * @param \Illuminate\Database\Query\Builder|\Closure $query
+         * @param  \Illuminate\Database\Query\Builder|\Closure  $query
          * @return \Illuminate\Database\Query\Builder|static
          * @static
          */
@@ -17567,7 +17663,7 @@ namespace {
         /**
          * Lock the selected rows in the table.
          *
-         * @param string|bool $value
+         * @param  string|bool  $value
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17616,7 +17712,7 @@ namespace {
         /**
          * Get the count of the total records for the paginator.
          *
-         * @param array $columns
+         * @param  array  $columns
          * @return int
          * @static
          */
@@ -17629,8 +17725,8 @@ namespace {
         /**
          * Concatenate values of a given column as a string.
          *
-         * @param string $column
-         * @param string $glue
+         * @param  string  $column
+         * @param  string  $glue
          * @return string
          * @static
          */
@@ -17667,7 +17763,7 @@ namespace {
         /**
          * Retrieve the "count" result of the query.
          *
-         * @param string $columns
+         * @param  string  $columns
          * @return int
          * @static
          */
@@ -17680,7 +17776,7 @@ namespace {
         /**
          * Retrieve the minimum value of a given column.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -17693,7 +17789,7 @@ namespace {
         /**
          * Retrieve the maximum value of a given column.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -17706,7 +17802,7 @@ namespace {
         /**
          * Retrieve the sum of the values of a given column.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -17719,7 +17815,7 @@ namespace {
         /**
          * Retrieve the average of the values of a given column.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -17732,7 +17828,7 @@ namespace {
         /**
          * Alias for the "avg" method.
          *
-         * @param string $column
+         * @param  string  $column
          * @return mixed
          * @static
          */
@@ -17745,8 +17841,8 @@ namespace {
         /**
          * Execute an aggregate function on the database.
          *
-         * @param string $function
-         * @param array $columns
+         * @param  string  $function
+         * @param  array  $columns
          * @return mixed
          * @static
          */
@@ -17759,8 +17855,8 @@ namespace {
         /**
          * Execute a numeric aggregate function on the database.
          *
-         * @param string $function
-         * @param array $columns
+         * @param  string  $function
+         * @param  array  $columns
          * @return float|int
          * @static
          */
@@ -17773,7 +17869,7 @@ namespace {
         /**
          * Insert a new record into the database.
          *
-         * @param array $values
+         * @param  array  $values
          * @return bool
          * @static
          */
@@ -17786,8 +17882,8 @@ namespace {
         /**
          * Insert a new record and get the value of the primary key.
          *
-         * @param array $values
-         * @param string|null $sequence
+         * @param  array  $values
+         * @param  string|null  $sequence
          * @return int
          * @static
          */
@@ -17800,8 +17896,8 @@ namespace {
         /**
          * Insert new records into the table using a subquery.
          *
-         * @param array $columns
-         * @param \Closure|\Illuminate\Database\Query\Builder|string $query
+         * @param  array  $columns
+         * @param  \Closure|\Illuminate\Database\Query\Builder|string  $query
          * @return bool
          * @static
          */
@@ -17814,8 +17910,8 @@ namespace {
         /**
          * Insert or update a record matching the attributes, and fill it with values.
          *
-         * @param array $attributes
-         * @param array $values
+         * @param  array  $attributes
+         * @param  array  $values
          * @return bool
          * @static
          */
@@ -17840,7 +17936,7 @@ namespace {
         /**
          * Create a raw database expression.
          *
-         * @param mixed $value
+         * @param  mixed  $value
          * @return \Illuminate\Database\Query\Expression
          * @static
          */
@@ -17877,8 +17973,8 @@ namespace {
         /**
          * Set the bindings on the query builder.
          *
-         * @param array $bindings
-         * @param string $type
+         * @param  array  $bindings
+         * @param  string  $type
          * @return \Illuminate\Database\Query\Builder
          * @throws \InvalidArgumentException
          * @static
@@ -17892,8 +17988,8 @@ namespace {
         /**
          * Add a binding to the query.
          *
-         * @param mixed $value
-         * @param string $type
+         * @param  mixed  $value
+         * @param  string  $type
          * @return \Illuminate\Database\Query\Builder
          * @throws \InvalidArgumentException
          * @static
@@ -17907,7 +18003,7 @@ namespace {
         /**
          * Merge an array of bindings into our bindings.
          *
-         * @param \Illuminate\Database\Query\Builder $query
+         * @param  \Illuminate\Database\Query\Builder  $query
          * @return \Illuminate\Database\Query\Builder
          * @static
          */
@@ -17956,7 +18052,7 @@ namespace {
         /**
          * Clone the query without the given properties.
          *
-         * @param array $properties
+         * @param  array  $properties
          * @return static
          * @static
          */
@@ -17969,7 +18065,7 @@ namespace {
         /**
          * Clone the query without the given bindings.
          *
-         * @param array $except
+         * @param  array  $except
          * @return static
          * @static
          */
@@ -17982,8 +18078,8 @@ namespace {
         /**
          * Register a custom macro.
          *
-         * @param string $name
-         * @param object|callable $macro
+         * @param  string  $name
+         * @param  object|callable  $macro
          * @return void
          * @static
          */
@@ -17995,8 +18091,8 @@ namespace {
         /**
          * Mix another object into the class.
          *
-         * @param object $mixin
-         * @param bool $replace
+         * @param  object  $mixin
+         * @param  bool  $replace
          * @return void
          * @throws \ReflectionException
          * @static
@@ -18009,7 +18105,7 @@ namespace {
         /**
          * Checks if macro is registered.
          *
-         * @param string $name
+         * @param  string  $name
          * @return bool
          * @static
          */
@@ -18021,8 +18117,8 @@ namespace {
         /**
          * Dynamically handle calls to the class.
          *
-         * @param string $method
-         * @param array $parameters
+         * @param  string  $method
+         * @param  array  $parameters
          * @return mixed
          * @throws \BadMethodCallException
          * @static

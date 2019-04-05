@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('trip_all') }}
+        {{ Breadcrumbs::render('trip.all') }}
         <nav class="level">
             <div class="level-item level-left field is-grouped">
                 <div class="control">
-                    <a class="button is-primary is-rounded" href="/trips/create">Создать поездку</a></div>
+                    <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a></div>
                 <div class="control">
                     <a class="button is-info is-rounded" href="http://komiavtotrans.ru/" target="_blank">Купить билет на
                         автобус</a>

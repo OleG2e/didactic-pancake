@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('trip_show', $trip) }}
+        {{ Breadcrumbs::render('trip.show', $trip) }}
         <div class="box">
             @if (session('message'))
                 <div class="alert alert-success">
@@ -65,13 +65,13 @@
                     <nav class="level is-mobile">
                         <div class="level-left">
                             <div class="buttons are-small">
-                                <a class="button" href="/trips/{{$trip->id}}/edit">
+                                <a class="button" href="{{route('trip.edit',$trip)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
                                 </a>
                                 <a class="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-post-form').submit();">
+                                        document.getElementById('delete-trip-form').submit();">
                                     <span class="icon is-small">
                                         <i class="fas fa-trash"></i>
                                     </span>
@@ -96,12 +96,12 @@
                                     </p>
                                 </div>
                                 <div class="buttons are-small">
-                                    <a class="button" href="/replies/{{$reply->id}}/edit">
+                                    <a class="button" href="{{route('reply.trip.edit',$reply)}}">
                                         <span class="icon is-small">
                                             <i class="fas fa-edit"></i>
                                         </span>
                                     </a>
-                                    <form method="post" action="/replies/{{$reply->id}}">
+                                    <form method="post" action="{{route('reply.trip.destroy',$reply)}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button" type="submit">
@@ -118,9 +118,9 @@
             </article>
             <article class="media">
                 <div class="media-content">
-                    <form action="/replies" method="post">
+                    <form action="{{route('reply.trip.store')}}" method="post">
                         @csrf
-                        <input type="hidden" name="post_id" value="{{$trip->id}}">
+                        <input type="hidden" name="trip_id" value="{{$trip->id}}">
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-64x64">
@@ -150,7 +150,7 @@
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent
-    <form id="delete-post-form" method="post" action="/trips/{{$trip->id}}">
+    <form id="delete-trip-form" method="post" action="{{route('trip.destroy',$trip)}}">
         @method('delete')
         @csrf
     </form>

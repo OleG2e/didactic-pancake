@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_edit', $post) }}
+        {{ Breadcrumbs::render('post.edit', $post) }}
         <h1 class="title">Редактирование объявления {{$post->title}}</h1>
-        <form method="post" action="/posts/{{$post->id}}">
+        <form method="post" action="{{route('post.update', $post)}}">
             @method('patch')
             @csrf
             <div class="field">

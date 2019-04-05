@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entry;
 use App\Category;
-use App\Reply;
+use App\ReplyPost;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -60,7 +60,7 @@ class EntryController extends Controller
      * @param Post $post
      * @return Response
      */
-    public function show(Entry $entry, Reply $reply)
+    public function show(Entry $entry, ReplyPost $reply)
     {
         return view('entries.show', compact(['entry', 'reply']));
     }
@@ -99,7 +99,7 @@ class EntryController extends Controller
      */
     public function destroy(Entry $entry)
     {
-        $replies = Reply::where('post_id', $entry->id)->get();
+        $replies = ReplyPost::where('post_id', $entry->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }

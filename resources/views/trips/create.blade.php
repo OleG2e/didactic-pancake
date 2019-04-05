@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('trip_create') }}
+        {{ Breadcrumbs::render('trip.create') }}
         <div class="title">Создать поездку</div>
-        <form method="post" action="/trips">
+        <form method="post" action="{{route('trip.all')}}">
             @csrf
             <div class="field is-horizontal">
                 <div class="field-body">

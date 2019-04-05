@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_show', $post) }}
+        {{ Breadcrumbs::render('post.show', $post) }}
         <div class="box">
             <article class="media">
                 <figure class="media-left">
@@ -21,7 +21,7 @@
                     <nav class="level is-mobile">
                         <div class="level-left">
                             <div class="buttons are-small">
-                                <a class="button" href="/posts/{{$post->id}}/edit">
+                                <a class="button" href="{{route('post.edit', $post)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
@@ -52,12 +52,12 @@
                                     </p>
                                 </div>
                                 <div class="buttons are-small">
-                                    <a class="button" href="/posts/{{$reply->id}}/edit">
+                                    <a class="button" href="{{route('reply.post.edit', $reply)}}">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
                                     </a>
-                                    <form method="post" action="/replies/{{$reply->id}}">
+                                    <form method="post" action="{{route('reply.trip.destroy', $reply)}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button" type="submit">
@@ -74,7 +74,7 @@
             </article>
             <article class="media">
                 <div class="media-content">
-                    <form action="/replies" method="post">
+                    <form action="{{route('reply.post.store')}}" method="post">
                         @csrf
                         <input type="hidden" name="post_id" value="{{$post->id}}">
                         <article class="media">
@@ -106,7 +106,7 @@
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent
-    <form id="delete-post-form" method="post" action="/posts/{{$post->id}}">
+    <form id="delete-post-form" method="post" action="{{route('post.destroy', $post)}}">
         @method('delete')
         @csrf
     </form>
