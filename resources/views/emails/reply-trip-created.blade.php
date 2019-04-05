@@ -2,7 +2,7 @@
     # Появился новый комментарий к твоему объявлению
 
 
-    @component('mail::button', ['url' => route('post_show', ['posts' => $reply->post->id])])
+    @component('mail::button', ['url' => route('trip.show', ['trips' => $reply->trip->id])])
         Перейти к объявлению
     @endcomponent
 

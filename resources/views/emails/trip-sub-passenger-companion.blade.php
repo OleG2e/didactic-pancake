@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Ваше объявление было опубликовано
+    # Вы отказались от поездки
 
 
     @component('mail::button', ['url' => route('trip.show', ['trips' => $trip->id])])

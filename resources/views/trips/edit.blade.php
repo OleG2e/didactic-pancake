@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('trip_edit', $trip) }}
+        {{ Breadcrumbs::render('trip.edit', $trip) }}
         <h1 class="title">Редактирование объявления {{$trip->title}}</h1>
         <form method="post" action="/trips/{{$trip->id}}">
             @method('patch')

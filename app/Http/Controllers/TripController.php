@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Town;
 use App\Trip;
-use App\Reply;
+use App\ReplyTrip;
 use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Http\Response;
@@ -44,8 +44,9 @@ class TripController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Trip  $trip
      * @return Response
+     * @throws \Exception
      */
     public function store(Trip $trip)
     {
@@ -66,7 +67,7 @@ class TripController extends Controller
      * @param Trip $trip
      * @return Response
      */
-    public function show(Trip $trip, Reply $reply)
+    public function show(Trip $trip, ReplyTrip $reply)
     {
         return view('trips.show', compact(['trip', 'reply']));
     }
@@ -104,7 +105,7 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        $replies = Reply::where('post_id', $trip->id)->get();
+        $replies = ReplyTrip::where('trip_id', $trip->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }

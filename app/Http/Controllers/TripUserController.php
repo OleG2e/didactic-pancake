@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TripAddPassengerCompanion;
+use App\Events\TripAddPassengerOwner;
+use App\Events\TripSubPassengerOwner;
+use App\Events\TripSubPassengerCompanion;
 use App\Trip;
 use App\User;
 use Illuminate\Http\Request;
@@ -13,15 +17,19 @@ class TripUserController extends Controller
         if (!$this->availability($trip)) {
             return back()->with(flash('Мест нет'));
         }
-        $authUser = auth()->user();
-        $authUser->trips()->attach($trip);
+        $user = auth()->user();
+        $user->trips()->attach($trip);
+        event(new TripAddPassengerOwner($trip, $user));
+        event(new TripAddPassengerCompanion($trip, $user));
         return back();
     }
 
     public function removeUser(Trip $trip)
     {
-        $authUser = auth()->user();
-        $authUser->trips()->detach($trip);
+        $user = auth()->user();
+        $user->trips()->detach($trip);
+        event(new TripSubPassengerOwner($trip, $user));
+        event(new TripSubPassengerCompanion($trip, $user));
         return back();
     }
 

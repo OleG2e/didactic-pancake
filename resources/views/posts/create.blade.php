@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_create') }}
+        {{ Breadcrumbs::render('post.create') }}
         <div class="box">
             <div class="title">Создать объявление</div>
-            <form method="post" action="/posts">
+            <form method="post" action="{{route('post.store')}}">
                 @csrf
                 <div class="field">
                     <label class="label" for="category_id">Категория:</label>
@@ -40,7 +40,7 @@
                         <button type="submit" class="button is-link">Создать объявление</button>
                     </div>
                     <div class="control">
-                        <a class="button is-text" href="/posts">Отмена</a>
+                        <a class="button is-text" href="{{route('post.all')}}">Отмена</a>
                     </div>
                 </div>
                 @include('layouts.errors')

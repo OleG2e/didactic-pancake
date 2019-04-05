@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_all') }}
+        {{ Breadcrumbs::render('post.all') }}
         <nav class="level">
             <div class="level-item level-left">
-                <a class="button is-primary is-rounded" href="/posts/create">Создать объявление</a>
+                <a class="button is-primary is-rounded" href="{{route('post.create')}}">Создать объявление</a>
             </div>
         </nav>
         @if (session('message'))
@@ -22,7 +22,7 @@
                         </p>
                         <div class="content">
                             <div class="more">{{$post->description}}</div>
-                            <a href="/posts/{{$post->id}}">
+                            <a href="{{route('post.show', $post)}}">
                                 Обсудить
                             </a>
                         </div>

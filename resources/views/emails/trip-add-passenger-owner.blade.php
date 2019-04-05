@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Ваше объявление было опубликовано
+    # У вас появился новый пассажир
 
 
     @component('mail::button', ['url' => route('trip.show', ['trips' => $trip->id])])

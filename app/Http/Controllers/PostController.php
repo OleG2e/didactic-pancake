@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
-use App\Reply;
+use App\ReplyPost;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -60,7 +60,7 @@ class PostController extends Controller
      * @param Post $post
      * @return Response
      */
-    public function show(Post $post, Reply $reply)
+    public function show(Post $post, ReplyPost $reply)
     {
         return view('posts.show', ['post' => $post, 'reply' => $reply]);
     }
@@ -102,7 +102,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $replies = Reply::where('post_id', $post->id)->get();
+        $replies = ReplyPost::where('post_id', $post->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }

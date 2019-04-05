@@ -23,51 +23,51 @@ Breadcrumbs::for('home', function ($trail) {
 });
 
 // Home > Post
-Breadcrumbs::for('post_all', function ($trail) {
+Breadcrumbs::for('post.all', function ($trail) {
     $trail->parent('main');
-    $trail->push('Объявления', route('post_all'));
+    $trail->push('Объявления', route('post.all'));
 });
 
 // Home > Post > Create
-Breadcrumbs::for('post_create', function ($trail) {
-    $trail->parent('post_all');
-    $trail->push('Создать объявление', route('post_create'));
+Breadcrumbs::for('post.create', function ($trail) {
+    $trail->parent('post.all');
+    $trail->push('Создать объявление', route('post.create'));
 });
 
 // Home > Post > Edit
-Breadcrumbs::for('post_edit', function ($trail, $post) {
-    $trail->parent('post_all');
-    $trail->push('Редактировать объявление', route('post_edit', $post->id));
+Breadcrumbs::for('post.edit', function ($trail, $post) {
+    $trail->parent('post.all');
+    $trail->push('Редактировать объявление', route('post.edit', $post));
 });
 
 // Home > Post > Show
-Breadcrumbs::for('post_show', function ($trail, $post) {
-    $trail->parent('post_all');
-    $trail->push('Детали объявления', route('post_show', $post->id));
+Breadcrumbs::for('post.show', function ($trail, $post) {
+    $trail->parent('post.all');
+    $trail->push('Детали объявления', route('post.show', $post));
 });
 
 // Home > Trip
-Breadcrumbs::for('trip_all', function ($trail) {
+Breadcrumbs::for('trip.all', function ($trail) {
     $trail->parent('main');
-    $trail->push('Поездки', route('trip_all'));
+    $trail->push('Поездки', route('trip.all'));
 });
 
 // Home > Trip > Create
-Breadcrumbs::for('trip_create', function ($trail) {
-    $trail->parent('trip_all');
-    $trail->push('Создать объявление', route('trip_create'));
+Breadcrumbs::for('trip.create', function ($trail) {
+    $trail->parent('trip.all');
+    $trail->push('Создать объявление', route('trip.create'));
 });
 
 // Home > Trip > Edit
-Breadcrumbs::for('trip_edit', function ($trail, $trip) {
-    $trail->parent('trip_all');
-    $trail->push('Редактировать объявление', route('trip_edit', $trip->id));
+Breadcrumbs::for('trip.edit', function ($trail, $trip) {
+    $trail->parent('trip.all');
+    $trail->push('Редактировать объявление', route('trip.edit', $trip));
 });
 
 // Home > Trip > Show
-Breadcrumbs::for('trip_show', function ($trail, $trip) {
-    $trail->parent('trip_all');
-    $trail->push('Детали объявления', route('trip_show', $trip->id));
+Breadcrumbs::for('trip.show', function ($trail, $trip) {
+    $trail->parent('trip.all');
+    $trail->push('Детали объявления', route('trip.show', $trip));
 });
 
 // Home > How much
