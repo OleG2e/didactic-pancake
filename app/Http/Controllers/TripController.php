@@ -24,7 +24,7 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trips = Trip::where('relevance', true)->oldest('date_time')->get();
+        $trips = Trip::where('relevance', true)->where('passengers_count', '>', 0)->oldest('date_time')->get();
 
         return view('trips.index', compact('trips'));
     }
