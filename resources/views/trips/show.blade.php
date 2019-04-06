@@ -25,7 +25,7 @@
                             @isset($trip->description)<br> Описание: {{$trip->description}}@endisset
                             <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
                             @if($trip->passengers_count)<br>Осталось
-                            мест: {{$trip->passengers_count - $trip->users()->count()}}@endif
+                            мест: {{$trip->passengers_count}}@endif
                             @if($trip->load)<br>Есть место для груза@endif
                         </p>
                         @if (count($trip->users)==false)

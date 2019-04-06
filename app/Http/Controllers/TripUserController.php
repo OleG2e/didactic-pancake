@@ -19,6 +19,8 @@ class TripUserController extends Controller
         }
         $user = auth()->user();
         $user->trips()->attach($trip);
+        $trip->decrement('passengers_count');
+        $trip->save();
         event(new TripAddPassengerOwner($trip, $user));
         event(new TripAddPassengerCompanion($trip, $user));
         return back();
@@ -28,6 +30,7 @@ class TripUserController extends Controller
     {
         $user = auth()->user();
         $user->trips()->detach($trip);
+        $trip->increment('passengers_count');
         event(new TripSubPassengerOwner($trip, $user));
         event(new TripSubPassengerCompanion($trip, $user));
         return back();
