@@ -4,8 +4,11 @@
         {{ Breadcrumbs::render('trip.all') }}
         <nav class="level">
             <div class="level-item level-left field is-grouped">
-                <div class="control">
-                    <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a></div>
+                @auth
+                    <div class="control">
+                        <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a>
+                    </div>
+                @endauth
                 <div class="control">
                     <a class="button is-info is-rounded" href="http://komiavtotrans.ru/" target="_blank">Купить билет на
                         автобус</a>

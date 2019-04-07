@@ -2,11 +2,13 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.all') }}
-        <nav class="level">
-            <div class="level-item level-left">
-                <a class="button is-primary is-rounded" href="{{route('post.create')}}">Создать объявление</a>
-            </div>
-        </nav>
+        @auth
+            <nav class="level">
+                <div class="level-item level-left">
+                    <a class="button is-primary is-rounded" href="{{route('post.create')}}">Создать объявление</a>
+                </div>
+            </nav>
+        @endauth
         @if (session('message'))
             <div class="alert alert-success">
                 {{session('message')}}

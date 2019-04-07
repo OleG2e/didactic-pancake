@@ -18,23 +18,25 @@
                             {{$post->description}}
                         </p>
                     </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <div class="buttons are-small">
-                                <a class="button" href="{{route('post.edit', $post)}}">
+                    @can('update', $post)
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                <div class="buttons are-small">
+                                    <a class="button" href="{{route('post.edit', $post)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
-                                </a>
-                                <a class="button" onclick="event.preventDefault();
+                                    </a>
+                                    <a class="button" onclick="event.preventDefault();
                                         document.getElementById('delete-post-form').submit();">
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
                                             </span>
-                                </a>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </nav>
+                        </nav>
+                    @endcan
                     @foreach($post->replies as $reply)
                         <article class="media">
                             <figure class="media-left">
@@ -51,27 +53,30 @@
                                         {{$reply->description}}
                                     </p>
                                 </div>
-                                <div class="buttons are-small">
-                                    <a class="button" href="{{route('reply.post.edit', $reply)}}">
+                                @can('update', $post)
+                                    <div class="buttons are-small">
+                                        <a class="button" href="{{route('reply.post.edit', $reply)}}">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
-                                    </a>
-                                    <form method="post" action="{{route('reply.trip.destroy', $reply)}}">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="button" type="submit">
+                                        </a>
+                                        <form method="post" action="{{route('reply.trip.destroy', $reply)}}">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="button" type="submit">
                                                     <span class="icon is-small">
                                                         <i class="fas fa-trash"></i>
                                                     </span>
-                                        </button>
-                                    </form>
-                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endcan
                             </div>
                         </article>
                     @endforeach
                 </div>
             </article>
+            @auth
             <article class="media">
                 <div class="media-content">
                     <form action="{{route('reply.post.store')}}" method="post">
@@ -103,6 +108,8 @@
                     </form>
                 </div>
             </article>
+            @endauth
+            <br>
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent
