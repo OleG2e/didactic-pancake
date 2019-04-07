@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entry;
 use App\Post;
 use App\Trip;
 use Illuminate\Contracts\Support\Renderable;
@@ -29,7 +30,6 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         return view('/home/main', compact('user'));
     }
 

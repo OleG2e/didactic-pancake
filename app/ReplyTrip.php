@@ -18,11 +18,11 @@ class ReplyTrip extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 
     public function trip()
     {
-        return $this->belongsTo(Trip::class);
+        return $this->belongsTo(Trip::class)->withDefault();
     }
 }

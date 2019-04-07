@@ -1,11 +1,11 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Policies;
 
-use NamespacedDummyUserModel;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DummyClass
+class HomePolicy
 {
     use HandlesAuthorization;
 
@@ -18,4 +18,6 @@ class DummyClass
     {
         //
     }
+
+
 }

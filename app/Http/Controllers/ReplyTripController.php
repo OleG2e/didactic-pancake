@@ -9,6 +9,11 @@ use Illuminate\Http\Response;
 
 class ReplyTripController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -32,7 +37,8 @@ class ReplyTripController extends Controller
      */
     public function edit(ReplyTrip $reply)
     {
-        dd(phpinfo());
+        $this->authorize('update', $reply);
+        return view(''); //TODO: make view
     }
 
     /**
@@ -44,7 +50,8 @@ class ReplyTripController extends Controller
      */
     public function update(Request $request, ReplyTrip $reply)
     {
-        //
+        $this->authorize('update', $reply);
+        //TODO: make view
     }
 
     /**
@@ -55,6 +62,7 @@ class ReplyTripController extends Controller
      */
     public function destroy(ReplyTrip $reply)
     {
+        $this->authorize('delete', $reply);
         $reply->delete();
         flash('Ответ удален');
         return back();

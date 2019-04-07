@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'show']);
     }
 
     /**
@@ -73,6 +73,7 @@ class PostController extends Controller
      */
     public function edit(Post $post, Category $category)
     {
+        $this->authorize('update', $post);
         $categories = Category::all();
         return view('posts.edit', [
             'post' => $post,
@@ -89,6 +90,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
         $post->update($this->validatePost());
         return redirect('/posts');
     }
@@ -102,6 +104,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $replies = ReplyPost::where('post_id', $post->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();

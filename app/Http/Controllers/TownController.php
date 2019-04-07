@@ -10,7 +10,7 @@ class TownController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -20,6 +20,7 @@ class TownController extends Controller
      */
     public function index()
     {
+        $this->authorize('create', auth()->user());
         $towns = Town::all();
 
         return view('towns.index', compact('towns'));
@@ -32,6 +33,7 @@ class TownController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', auth()->user());
         return view('towns.create');
     }
 
@@ -43,6 +45,7 @@ class TownController extends Controller
      */
     public function store(Town $town)
     {
+        $this->authorize('create', auth()->user());
         $attributes = $this->validateTown();
         $town->create($attributes);
         flash('Town created');
@@ -57,6 +60,7 @@ class TownController extends Controller
      */
     public function show(Town $town)
     {
+        $this->authorize('create', auth()->user());
         return view('towns.show', compact('town'));
     }
 
@@ -68,6 +72,7 @@ class TownController extends Controller
      */
     public function edit(Town $town)
     {
+        $this->authorize('create', auth()->user());
         return view('towns.edit', compact('town'));
     }
 
@@ -80,6 +85,7 @@ class TownController extends Controller
      */
     public function update(Request $request, Town $town)
     {
+        $this->authorize('create', auth()->user());
         $town->update($this->validateTown());
         return redirect('/towns');
     }
@@ -92,12 +98,14 @@ class TownController extends Controller
      */
     public function destroy(Town $town)
     {
+        $this->authorize('create', auth()->user());
         $town->delete();
         return redirect('/towns');
     }
 
     protected function validateTown()
     {
+        $this->authorize('create', auth()->user());
         return request()->validate([
             'title' => 'required|string|unique:towns|max:255',
         ]);

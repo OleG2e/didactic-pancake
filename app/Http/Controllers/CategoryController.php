@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', auth()->user());
         $categories = Category::all();
-
         return view('categories.index', compact('categories'));
     }
 
@@ -32,6 +32,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', auth()->user());
         return view('categories.create');
     }
 
@@ -43,6 +44,7 @@ class CategoryController extends Controller
      */
     public function store(Category $category)
     {
+        $this->authorize('update', auth()->user());
         $attributes = $this->validateCategory();
         $category->create($attributes);
         flash(true);
@@ -57,6 +59,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        $this->authorize('view', auth()->user());
         return view('categories.show', compact('category'));
     }
 
@@ -68,6 +71,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $this->authorize('update', auth()->user());
         return view('categories.edit', compact('category'));
     }
 
@@ -80,6 +84,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $this->authorize('update', auth()->user());
         $category->update($this->validateCategory());
         return redirect('/categories');
     }
@@ -93,6 +98,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->authorize('delete', auth()->user());
         $category->delete();
         return redirect('/categories');
     }
