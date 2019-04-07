@@ -28,28 +28,8 @@
                             мест: {{$trip->passengers_count}}@endif
                             @if($trip->load)<br>Есть место для груза@endif
                         </p>
-                        @if (count($trip->users)==false)
-                            <form method="post" action="{{route('add.user', $trip)}}">
-                                @method('patch')
-                                @csrf
-                                <div class="field">
-                                    <div class="control">
-                                        <button type="submit" class="button is-primary">Я поеду!</button>
-                                    </div>
-                                </div>
-                            </form>
-                        @elseif(count($trip->users))
-                            @if (count($trip->users()->where('user_id',auth()->id())->get()))
-                                <form method="post" action="{{route('remove.user', $trip)}}">
-                                    @method('delete')
-                                    @csrf
-                                    <div class="field">
-                                        <div class="control">
-                                            <button type="submit" class="button is-danger">Я передумал ехать!</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            @else
+                        @auth
+                            @if (count($trip->users)==false)
                                 <form method="post" action="{{route('add.user', $trip)}}">
                                     @method('patch')
                                     @csrf
@@ -59,26 +39,51 @@
                                         </div>
                                     </div>
                                 </form>
+                            @elseif(count($trip->users))
+                                @if (count($trip->users()->where('user_id',auth()->id())->get()))
+                                    <form method="post" action="{{route('remove.user', $trip)}}">
+                                        @method('delete')
+                                        @csrf
+                                        <div class="field">
+                                            <div class="control">
+                                                <button type="submit" class="button is-danger">Я передумал ехать!
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @else
+                                    <form method="post" action="{{route('add.user', $trip)}}">
+                                        @method('patch')
+                                        @csrf
+                                        <div class="field">
+                                            <div class="control">
+                                                <button type="submit" class="button is-primary">Я поеду!</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endif
                             @endif
-                        @endif
+                        @endauth
                     </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <div class="buttons are-small">
-                                <a class="button" href="{{route('trip.edit',$trip)}}">
+                    @can('update', $trip)
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                <div class="buttons are-small">
+                                    <a class="button" href="{{route('trip.edit',$trip)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
-                                </a>
-                                <a class="button" onclick="event.preventDefault();
+                                    </a>
+                                    <a class="button" onclick="event.preventDefault();
                                         document.getElementById('delete-trip-form').submit();">
                                     <span class="icon is-small">
                                         <i class="fas fa-trash"></i>
                                     </span>
-                                </a>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </nav>
+                        </nav>
+                    @endcan
                     @foreach($trip->replies as $reply)
                         <article class="media">
                             <figure class="media-left">
@@ -95,58 +100,64 @@
                                         {{$reply->description}}
                                     </p>
                                 </div>
-                                <div class="buttons are-small">
-                                    <a class="button" href="{{route('reply.trip.edit',$reply)}}">
+                                @can('update', $reply)
+                                    <div class="buttons are-small">
+                                        <a class="button" href="{{route('reply.trip.edit',$reply)}}">
                                         <span class="icon is-small">
                                             <i class="fas fa-edit"></i>
                                         </span>
-                                    </a>
-                                    <form method="post" action="{{route('reply.trip.destroy',$reply)}}">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="button" type="submit">
+                                        </a>
+                                        <form method="post" action="{{route('reply.trip.destroy',$reply)}}">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="button" type="submit">
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
                                             </span>
-                                        </button>
-                                    </form>
-                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endcan
                             </div>
                         </article>
                     @endforeach
                 </div>
             </article>
-            <article class="media">
-                <div class="media-content">
-                    <form action="{{route('reply.trip.store')}}" method="post">
-                        @csrf
-                        <input type="hidden" name="trip_id" value="{{$trip->id}}">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img class="is-rounded"
-                                         src="{{asset('/storage/avatars/'.auth()->id().'/avatar.jpg')}}">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="field">
-                                    <p class="control">
+                @auth
+                    <article class="media">
+                        <div class="media-content">
+                            <form action="{{route('reply.trip.store')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="trip_id" value="{{$trip->id}}">
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <p class="image is-64x64">
+                                            <img class="is-rounded"
+                                                 src="{{asset('/storage/avatars/'.auth()->id().'/avatar.jpg')}}">
+                                        </p>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="field">
+                                            <p class="control">
                                         <textarea class="textarea" name="description" cols="6" rows="3"
                                                   placeholder="Комментарий..."></textarea>
-                                    </p>
-                                </div>
-                                <nav class="level">
-                                    <div class="level-left">
-                                        <div class="level-item">
-                                            <button class="button is-primary is-rounded" type="submit">Ответить</button>
+                                            </p>
                                         </div>
+                                        <nav class="level">
+                                            <div class="level-left">
+                                                <div class="level-item">
+                                                    <button class="button is-primary is-rounded" type="submit">Ответить
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </nav>
                                     </div>
-                                </nav>
-                            </div>
-                        </article>
-                    </form>
-                </div>
-            </article>
+                                </article>
+                            </form>
+                        </div>
+                    </article>
+                @endauth
+                <br>
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent
