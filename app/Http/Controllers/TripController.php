@@ -14,7 +14,7 @@ class TripController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'show']);
     }
 
     /**
@@ -24,7 +24,7 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trips = Trip::where('relevance', true)->where('passengers_count', '>', 0)->oldest('date_time')->get();
+        $trips = Trip::whereRelevance(true)->where('passengers_count', '>', 0)->oldest('date_time')->get();
 
         return view('trips.index', compact('trips'));
     }
@@ -80,6 +80,7 @@ class TripController extends Controller
      */
     public function edit(Trip $trip)
     {
+        $this->authorize('update', $trip);
         $categories = Category::all();
         return view('trips.edit', compact(['trip', 'categories']));
     }
@@ -93,6 +94,7 @@ class TripController extends Controller
      */
     public function update(Request $request, Trip $trip)
     {
+        $this->authorize('update', $trip);
         $trip->update($this->validateTrip());
         return redirect('/trips');
     }
@@ -105,6 +107,7 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
+        $this->authorize('delete', $trip);
         $replies = ReplyTrip::where('trip_id', $trip->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();

@@ -19,12 +19,12 @@ class Trip extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id')->withDefault();
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->withDefault();
     }
 
     public function replies()
@@ -34,12 +34,12 @@ class Trip extends Model
 
     public function startpoint()
     {
-        return $this->belongsTo(Town::class, 'startpoint_id');
+        return $this->belongsTo(Town::class, 'startpoint_id')->withDefault();
     }
 
     public function endpoint()
     {
-        return $this->belongsTo(Town::class, 'endpoint_id');
+        return $this->belongsTo(Town::class, 'endpoint_id')->withDefault();
     }
 
     public function users()

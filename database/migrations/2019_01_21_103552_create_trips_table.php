@@ -25,6 +25,8 @@ class CreateTripsTable extends Migration
             $table->boolean('load')->default(false);
             $table->boolean('relevance')->default(true);
             $table->timestamps();
+
+            //$table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -7,11 +7,15 @@ use App\Events\TripAddPassengerOwner;
 use App\Events\TripSubPassengerOwner;
 use App\Events\TripSubPassengerCompanion;
 use App\Trip;
-use App\User;
 use Illuminate\Http\Request;
 
 class TripUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function addUser(Trip $trip)
     {
         if (!$this->availability($trip)) {
