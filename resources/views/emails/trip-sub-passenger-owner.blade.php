@@ -1,5 +1,5 @@
 @component('mail::message')
-    # От поездки отказался пассажир
+    # От поездки отказался пассажир {{$user->name}}
 
 
     @component('mail::button', ['url' => route('trip.show', ['trips' => $trip->id])])
