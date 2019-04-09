@@ -23,32 +23,29 @@
                                 <strong>{{$user->name}}</strong>
                                 <small>{{$user->email}}</small>
                                 <br>
-                                @isset($user->about)
-                                    <span>Обо мне: <br>{{$user->about}}</span>
-                                @endisset
-                                @isset($user->phone)
+                                @isset($user->link)
                                     <br>
-                                    <span>Номер телефона: <br> {{$user->phone}}</span>
+                                    <span>Данные для связи: <br> {{$user->link}}</span>
                                 @endisset
                             </p>
                         </div>
                     </div>
                 </article>
                 <article class="media">
-                    <form method="post" action="/home">
+                    <form method="post" action="{{route('home.store')}}">
                         @csrf
+                        {{--                        <div class="field">--}}
+                        {{--                            <label class="label">Данные для связи:</label>--}}
+                        {{--                            <div class="control">--}}
+                        {{--                                <input class="input" type="text" name="link" placeholder="Соц.профиль или номер телефона"--}}
+                        {{--                                       value="{{$user->link}}">--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                         <div class="field">
-                            <label class="label">Телефон:</label>
+                            <label class="label">Данные для связи:</label>
                             <div class="control">
-                                <input class="input" type="number" name="phone" placeholder="Номер телефона"
-                                       value="{{$user->phone}}">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label class="label">Обо мне:</label>
-                            <div class="control">
-                                <textarea class="textarea" name="about"
-                                          placeholder="Обо мне">{{$user->about}}</textarea>
+                                <textarea class="textarea" name="link"
+                                          placeholder="Соц.профиль или номер телефона">{{$user->link}}</textarea>
                             </div>
                         </div>
                         <div class="field">

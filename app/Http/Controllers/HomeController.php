@@ -36,12 +36,12 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $user->about = (string)$request['about'];
-        if ($request['phone']) {
-            $user->phone = (integer)$request['phone'];
-        } elseif ($request['phone'] == false) {
-            $user->phone = null;
-        }
+        $user->link = (string) $request['link'];
+//        if ($request['phone']) {
+//            $user->phone = (integer)$request['phone'];
+//        } elseif ($request['phone'] == false) {
+//            $user->phone = null;
+//        }
         $user->save();
         return back();
     }

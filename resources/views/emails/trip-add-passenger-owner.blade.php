@@ -1,5 +1,6 @@
 @component('mail::message')
-    # У вас появился новый пассажир
+    # У вас появился новый пассажир {{$user->name}}.
+    @isset($user->link) Связаться: {{$user->link}}@endisset
 
 
     @component('mail::button', ['url' => route('trip.show', ['trips' => $trip->id])])
