@@ -26,7 +26,7 @@ class SendTripAddPassengerNotificationCompanion
      */
     public function handle(TripAddPassengerCompanion $event)
     {
-        Mail::to($event->trip->owner->email)->send(
+        Mail::to($event->user->email)->send(
             new TripAddPassengerMail($event->trip, $event->user)
         );
     }

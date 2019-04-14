@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Trip;
 use App\User;
+use DateTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -32,10 +33,12 @@ class TripAddPassengerOwner extends Mailable
      * Build the message.
      *
      * @return $this
+     * @throws \Exception
      */
     public function build()
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->markdown('emails.trip-add-passenger-owner');
+            ->markdown('emails.trip-add-passenger-owner')
+            ->with(['date' => new DateTime($this->trip->date_time)]);
     }
 }

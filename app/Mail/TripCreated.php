@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use DateInterval;
+use DateTime;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -44,6 +45,7 @@ class TripCreated extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
             ->markdown('emails.trip-created')
-            ->attachData($this->attachCalendar(), 'event.ics');
+            ->attachData($this->attachCalendar(), 'event.ics')
+            ->with(['date' => $this->trip->date_time]);
     }
 }

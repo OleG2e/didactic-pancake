@@ -50,6 +50,7 @@ class TripAddPassengerCompanion extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
             ->markdown('emails.trip-add-passenger-companion')
+            ->with(['date' => new DateTime($this->trip->date_time)])
             ->attachData($this->attachCalendar(), 'event.ics');
     }
 }
