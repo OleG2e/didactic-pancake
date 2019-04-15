@@ -1,24 +1,26 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class DummyClass extends Notification
+class CustomResetPasswordNotification extends ResetPasswordNotification
 {
     use Queueable;
+    public $token;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -40,7 +42,7 @@ class DummyClass extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown('DummyView');
+        return (new MailMessage)->markdown('emails.reset-password', ['token' => $this->token]);
     }
 
     /**
