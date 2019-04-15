@@ -2,6 +2,11 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.all') }}
+        @if (session('message'))
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
+        @endif
         @auth
             <nav class="level">
                 <div class="level-item level-left">
@@ -9,11 +14,6 @@
                 </div>
             </nav>
         @endauth
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
-            </div>
-        @endif
         <div class="columns is-multiline">
             @foreach($posts as $post)
                 <div class="column is-narrow">

@@ -17,7 +17,7 @@ class ReplyPostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  ReplyPost  $reply
      * @return Response
      */
     public function store(ReplyPost $reply)
@@ -25,7 +25,7 @@ class ReplyPostController extends Controller
         $attributes = $this->validateReply();
         $attributes['owner_id'] = auth()->id();
         $reply->create($attributes);
-        flash('Reply создан');
+        flash('Ответ создан');
         return back();
     }
 
@@ -33,7 +33,8 @@ class ReplyPostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  ReplyPost  $reply
-     * @return Response
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(ReplyPost $reply)
     {
@@ -46,7 +47,8 @@ class ReplyPostController extends Controller
      *
      * @param  Request  $request
      * @param  ReplyPost  $reply
-     * @return Response
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, ReplyPost $reply)
     {
@@ -59,6 +61,7 @@ class ReplyPostController extends Controller
      *
      * @param  ReplyPost  $reply
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(ReplyPost $reply)
     {

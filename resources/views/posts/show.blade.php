@@ -2,6 +2,11 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.show', $post) }}
+        @if (session('message'))
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
+        @endif
         <div class="box">
             <article class="media">
                 <figure class="media-left">

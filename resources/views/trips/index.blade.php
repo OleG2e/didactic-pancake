@@ -2,6 +2,11 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.all') }}
+        @if (session('message'))
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
+        @endif
         <nav class="level">
             <div class="level-item level-left field is-grouped">
                 @auth
@@ -21,11 +26,6 @@
                 </div>
             </div>
         </nav>
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
-            </div>
-        @endif
         <div class="title">Актуальные поездки:</div>
         <div class="columns is-multiline">
             @foreach($trips as $trip)

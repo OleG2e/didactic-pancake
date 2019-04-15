@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_all') }}
+        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
             <div class="alert alert-success">
                 {{session('message')}}

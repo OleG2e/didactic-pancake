@@ -2,12 +2,12 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.show', $trip) }}
+        @if (session('message'))
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
+        @endif
         <div class="box">
-            @if (session('message'))
-                <div class="alert alert-success">
-                    {{session('message')}}
-                </div>
-            @endif
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
