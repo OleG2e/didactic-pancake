@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_all') }}
+        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
-            </div>
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
         @endif
         @include('subview.home-nav')
         <nav class="level">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
-                <a class="button is-primary is-rounded" href="/trips/create">Создать поездку</a>
+                <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a>
             </div>
         </nav>
         <div class="columns is-multiline">
@@ -46,7 +46,7 @@
                                     Удалить пост от {{$trip->created_at}}?
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <form method="post" action="/trips/{{$trip->id}}">
+                                    <form method="post" action="{{route('trip.destroy', $trip)}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button is-danger" type="submit">
@@ -65,10 +65,10 @@
                             <small> {{$trip->created_at}}</small>
                         </p>
                         <div class="content">
-                            <a href="/trips/{{$trip->id}}">
+                            <a href="{{route('trip.show', $trip)}}">
                                 Обсудить
                             </a>
-                            <form method="post" action="/home/trips/{{$trip->id}}">
+                            <form method="post" action="{{route('update.relevance.trip', $trip)}}">
                                 @method('patch')
                                 @csrf
                                 <label class="checkbox">

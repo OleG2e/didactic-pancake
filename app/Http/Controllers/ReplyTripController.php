@@ -17,7 +17,7 @@ class ReplyTripController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  ReplyTrip  $reply
      * @return Response
      */
     public function store(ReplyTrip $reply)
@@ -25,7 +25,7 @@ class ReplyTripController extends Controller
         $attributes = $this->validateReply();
         $attributes['owner_id'] = auth()->id();
         $reply->create($attributes);
-        flash('Reply создан');
+        flash('Ответ создан');
         return back();
     }
 
@@ -34,6 +34,7 @@ class ReplyTripController extends Controller
      *
      * @param  ReplyTrip  $reply
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(ReplyTrip $reply)
     {
@@ -45,8 +46,9 @@ class ReplyTripController extends Controller
      * Update the specified resource in storage.
      *
      * @param  Request  $request
-     * @param  ReplyPost  $reply
-     * @return Response
+     * @param  ReplyTrip  $reply
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, ReplyTrip $reply)
     {
@@ -57,8 +59,9 @@ class ReplyTripController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  ReplyPost  $reply
+     * @param  ReplyTrip  $reply
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(ReplyTrip $reply)
     {

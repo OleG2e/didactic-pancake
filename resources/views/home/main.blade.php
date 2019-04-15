@@ -1,14 +1,13 @@
 @extends('layouts.app')
-
 @section('content')
     <section class="hero is-fullheight-with-navbar">
         <div class="hero-body">
             <article class="container is-fluid box">
                 {{ Breadcrumbs::render('home') }}
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
+                @if (session('message'))
+                    @component('components.flash_message', ['type'=>'is-success'])
+                        {{ session('message') }}
+                    @endcomponent
                 @endif
                 @include('subview.home-nav')
                 <article class="media">

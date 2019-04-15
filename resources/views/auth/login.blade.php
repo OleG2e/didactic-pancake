@@ -11,7 +11,7 @@
                                 <label class="label">Логин</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="text"
-                                           placeholder="Логин или e-mail" name="name" value="{{ old('name') }}" required
+                                           placeholder="Имя пользователя" name="name" value="{{ old('name') }}" required
                                            autofocus>
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>

@@ -27,6 +27,7 @@ class TripUserController extends Controller
         $trip->save();
         event(new TripAddPassengerOwner($trip, $user));
         event(new TripAddPassengerCompanion($trip, $user));
+        flash('Вы присоединились к поездке');
         return back();
     }
 
@@ -37,6 +38,7 @@ class TripUserController extends Controller
         $trip->increment('passengers_count');
         event(new TripSubPassengerOwner($trip, $user));
         event(new TripSubPassengerCompanion($trip, $user));
+        flash('Вы отказались от поездки');
         return back();
     }
 

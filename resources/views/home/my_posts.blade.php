@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post_all') }}
+        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
-            </div>
+            @component('components.flash_message', ['type'=>'is-success'])
+                {{ session('message') }}
+            @endcomponent
         @endif
         @include('subview.home-nav')
         <nav class="level">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
-                <a class="button is-primary is-rounded" href="/posts/create">Создать объявление</a>
+                <a class="button is-primary is-rounded" href="{{route('post.create')}}">Создать объявление</a>
             </div>
         </nav>
         <div class="columns is-multiline">
@@ -46,7 +46,7 @@
                                     Удалить пост от {{$post->created_at}}?
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <form method="post" action="/posts/{{$post->id}}">
+                                    <form method="post" action="{{route('post.destroy', $post)}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button is-danger" type="submit">
@@ -65,10 +65,10 @@
                         </p>
                         <div class="content">
                             <div class="more">{{$post->description}}</div>
-                            <a href="/posts/{{$post->id}}">
+                            <a href="{{route('post.show', $post)}}">
                                 Обсудить
                             </a>
-                            <form method="post" action="/home/posts/{{$post->id}}">
+                            <form method="post" action="{{route('update.relevance.post', $post)}}">
                                 @method('patch')
                                 @csrf
                                 <label class="checkbox">
