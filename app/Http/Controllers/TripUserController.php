@@ -13,7 +13,7 @@ class TripUserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware(['auth', 'verified', 'throttle:5,5']);
     }
 
     public function addUser(Trip $trip)
