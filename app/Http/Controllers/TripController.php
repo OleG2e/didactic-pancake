@@ -124,6 +124,7 @@ class TripController extends Controller
             'startpoint_id' => 'required|integer',
             'endpoint_id' => 'required|integer',
             'passengers_count' => 'nullable|integer',
+            'price' => 'required|string',
             'date' => 'required',
             'time' => 'required',
             'description' => 'string|nullable',

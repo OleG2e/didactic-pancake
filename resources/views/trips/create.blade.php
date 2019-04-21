@@ -76,6 +76,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="field">
+                        <label class="label">Стоимость:</label>
+                        <div class="control has-icons-left">
+                            <div class="select is-rounded">
+                                <select name="price">
+                                    <option value="По-братски">По-братски</option>
+                                    <option value="Как договоримся">Как договоримся</option>
+                                    <option value="Рыночная">Рыночная</option>
+                                </select>
+                            </div>
+                            <div class="icon is-small is-left">
+                                <i class="fas fa-ruble-sign"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="field is-horizontal">
