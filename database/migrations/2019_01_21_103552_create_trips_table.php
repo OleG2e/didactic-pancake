@@ -20,8 +20,10 @@ class CreateTripsTable extends Migration
             $table->unsignedInteger('startpoint_id');
             $table->unsignedInteger('endpoint_id');
             $table->unsignedInteger('passengers_count');
+            $table->unsignedInteger('price_id');
             $table->dateTime('date_time');
             $table->text('description')->nullable();
+            $table->text('price');
             $table->boolean('load')->default(false);
             $table->boolean('relevance')->default(true);
             $table->timestamps();

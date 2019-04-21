@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Trip extends Model
 {
     protected $fillable = [
-        'category_id', 'owner_id', 'date_time', 'description', 'load', 'relevance', 'startpoint_id', 'endpoint_id', 'passengers_count',
+        'category_id', 'owner_id', 'date_time', 'description', 'load', 'relevance', 'startpoint_id', 'endpoint_id',
+        'passengers_count', 'price',
     ];
 
     protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];

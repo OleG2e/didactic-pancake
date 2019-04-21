@@ -27,6 +27,7 @@
                             @if($trip->passengers_count)<br>Осталось
                             мест: {{$trip->passengers_count}}@endif
                             @if($trip->load)<br>Есть место для груза@endif
+                            <br> Стоимость: {{$trip->price}}
                         </p>
                         @auth
                             @if (count($trip->users)==false)
