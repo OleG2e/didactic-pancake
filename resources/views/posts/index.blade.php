@@ -15,22 +15,30 @@
             </nav>
         @endauth
         <div class="columns is-multiline">
-            @foreach($posts as $post)
-                <div class="column is-narrow">
-                    <div class="box" style="width: 250px">
-                        <p class="title">{{$post->category->title}}</p>
-                        <p class="subtitle"><strong>{{$post->owner->name}}</strong>
-                            <small> {{$post->updated_at->diffForHumans()}}</small>
-                        </p>
-                        <div class="content">
-                            <div class="more">{{$post->description}}</div>
-                            <a href="{{route('post.show', $post)}}">
-                                Обсудить
-                            </a>
+            @if(count($posts))
+                @foreach($posts as $post)
+                    <div class="column is-narrow">
+                        <div class="box" style="width: 250px">
+                            <p class="title">{{$post->category->title}}</p>
+                            <p class="subtitle"><strong>{{$post->owner->name}}</strong>
+                                <small> {{$post->updated_at->diffForHumans()}}</small>
+                            </p>
+                            <div class="content">
+                                <div class="more">{{$post->description}}</div>
+                                <a href="{{route('post.show', $post)}}">
+                                    Обсудить
+                                </a>
+                            </div>
                         </div>
                     </div>
+                @endforeach
+            @else
+                <div class="container">
+                    <div class="notification has-text-centered">
+                        <span class="is-center">Объявлений пока что нет...</span>
+                    </div>
                 </div>
-            @endforeach
+            @endif
         </div>
     @endcomponent
 @endsection

@@ -28,28 +28,36 @@
         </nav>
         <div class="title">Актуальные поездки:</div>
         <div class="columns is-multiline">
-            @foreach($trips as $trip)
-                <div class="column is-narrow">
-                    <div class="box" style="width: 250px">
-                        <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
-                        <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
-                            <small> {{$trip->updated_at->diffForHumans()}}</small>
-                        </p>
-                        <div class="content">
-                            @php
-                                $dateTime = new DateTime($trip->date_time);
-                            @endphp
-                            <p> Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
-                                @if($trip->passengers_count)<br>Осталось мест:
-                                <strong>{{$trip->passengers_count}}</strong>@endif
-                                @if($trip->load)<br>Есть место для груза@endif</p>
-                            <a href="/trips/{{$trip->id}}">
-                                Обсудить
-                            </a>
+            @if (count($trips))
+                @foreach($trips as $trip)
+                    <div class="column is-narrow">
+                        <div class="box" style="width: 250px">
+                            <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
+                            <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
+                                <small> {{$trip->updated_at->diffForHumans()}}</small>
+                            </p>
+                            <div class="content">
+                                @php
+                                    $dateTime = new DateTime($trip->date_time);
+                                @endphp
+                                <p> Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
+                                    @if($trip->passengers_count)<br>Осталось мест:
+                                    <strong>{{$trip->passengers_count}}</strong>@endif
+                                    @if($trip->load)<br>Есть место для груза@endif</p>
+                                <a href="/trips/{{$trip->id}}">
+                                    Обсудить
+                                </a>
+                            </div>
                         </div>
                     </div>
+                @endforeach
+            @else
+                <div class="container">
+                    <div class="notification has-text-centered">
+                        <span class="is-center">Объявлений пока что нет...</span>
+                    </div>
                 </div>
-            @endforeach
+            @endif
         </div>
     @endcomponent
 @endsection
