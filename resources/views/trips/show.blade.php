@@ -11,7 +11,7 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="{{asset('/storage/avatars/'.$trip->owner->id.'/avatar.jpg')}}">
+                        <img src="{{$trip->owner->avatar()}}" alt="{{$trip->owner->name}}">
                     </p>
                 </figure>
                 <div class="media-content">
@@ -89,7 +89,7 @@
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-48x48">
-                                    <img src="{{asset('/storage/avatars/'.$reply->owner->id.'/avatar.jpg')}}">
+                                    <img src="{{$reply->owner->avatar()}}" alt="{{$reply->owner->name}}">
                                 </p>
                             </figure>
                             <div class="media-content">
@@ -124,41 +124,41 @@
                     @endforeach
                 </div>
             </article>
-                @auth
-                    <article class="media">
-                        <div class="media-content">
-                            <form action="{{route('reply.trip.store')}}" method="post">
-                                @csrf
-                                <input type="hidden" name="trip_id" value="{{$trip->id}}">
-                                <article class="media">
-                                    <figure class="media-left">
-                                        <p class="image is-64x64">
-                                            <img class="is-rounded"
-                                                 src="{{asset('/storage/avatars/'.auth()->id().'/avatar.jpg')}}">
-                                        </p>
-                                    </figure>
-                                    <div class="media-content">
-                                        <div class="field">
-                                            <p class="control">
+            @auth
+                <article class="media">
+                    <div class="media-content">
+                        <form action="{{route('reply.trip.store')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="trip_id" value="{{$trip->id}}">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img class="is-rounded"
+                                             src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="field">
+                                        <p class="control">
                                         <textarea class="textarea" name="description" cols="6" rows="3"
                                                   placeholder="Комментарий..."></textarea>
-                                            </p>
-                                        </div>
-                                        <nav class="level">
-                                            <div class="level-left">
-                                                <div class="level-item">
-                                                    <button class="button is-primary is-rounded" type="submit">Ответить
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </nav>
+                                        </p>
                                     </div>
-                                </article>
-                            </form>
-                        </div>
-                    </article>
-                @endauth
-                <br>
+                                    <nav class="level">
+                                        <div class="level-left">
+                                            <div class="level-item">
+                                                <button class="button is-primary is-rounded" type="submit">Ответить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </form>
+                    </div>
+                </article>
+            @endauth
+            <br>
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent

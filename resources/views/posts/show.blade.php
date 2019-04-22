@@ -11,7 +11,7 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="{{asset('/storage/avatars/'.$post->owner->id.'/avatar.jpg')}}">
+                        <img src="{{$post->owner->avatar()}}" alt="{{$post->owner->name}}">
                     </p>
                 </figure>
                 <div class="media-content">
@@ -46,7 +46,7 @@
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-48x48">
-                                    <img src="{{asset('/storage/avatars/'.$reply->owner->id.'/avatar.jpg')}}">
+                                    <img src="{{$reply->owner->avatar()}}" alt="{{$reply->owner->name}}">
                                 </p>
                             </figure>
                             <div class="media-content">
@@ -91,7 +91,7 @@
                             <figure class="media-left">
                                 <p class="image is-64x64">
                                     <img class="is-rounded"
-                                         src="https://bulma.io/images/placeholders/128x128.png">
+                                         src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
                                 </p>
                             </figure>
                             <div class="media-content">
