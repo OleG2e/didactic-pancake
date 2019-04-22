@@ -41,6 +41,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Trip::class);
     }
 
+    public function avatar()
+    {
+        $path = '/storage/avatars/'.$this->id.'/avatar.jpg';
+
+        return asset(file_exists($path) ? $path : 'avatars/user-circle-solid.svg');
+    }
+
     /**
      * Send the password reset notification.
      *

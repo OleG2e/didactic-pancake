@@ -13,7 +13,7 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-128x128">
-                            <img src="{{asset('/storage/avatars/'.auth()->id().'/avatar.jpg')}}">
+                            <img src="{{Auth::user()->avatar()}}">
                         </p>
                     </figure>
                     <div class="media-content">
