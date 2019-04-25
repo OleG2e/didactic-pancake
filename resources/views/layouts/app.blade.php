@@ -46,15 +46,15 @@
                   <span class="icon is-small">
                     <i class="fa fa-user"></i>
                   </span>
-                                    Кабинет
+                                    Мой кабинет
                                 </div>
                             </a>
-                            <a class="navbar-item">
+                            <a class="navbar-item" href="{{ route('feedback.form') }}">
                                 <div>
                   <span class="icon is-small">
-                    <i class="fa fa-bug"></i>
+                    <i class="fa fa-envelope"></i>
                   </span>
-                                    Report bug
+                                    Написать админу
                                 </div>
                             </a>
                             <a class="navbar-item" href="{{ route('logout') }}"

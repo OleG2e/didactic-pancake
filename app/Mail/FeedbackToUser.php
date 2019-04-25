@@ -2,26 +2,24 @@
 
 namespace App\Mail;
 
-use App\Reply;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ReplyCreated extends Mailable
+class FeedbackToUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-
-    public $reply;
+    public $message;
 
     /**
      * Create a new message instance.
      *
-     * @param $reply
+     * @param $message
      */
-    public function __construct(Reply $reply)
+    public function __construct($message)
     {
-        $this->reply = $reply;
+        $this->message = $message;
     }
 
     /**
@@ -31,7 +29,7 @@ class ReplyCreated extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->markdown('emails.reply-created');
+        return $this->from(env('ADMIN_MAIL'))
+            ->markdown('emails.admin.feedback-to-user');
     }
 }

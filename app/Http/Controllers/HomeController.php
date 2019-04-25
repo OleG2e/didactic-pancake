@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Entry;
+use App\Mail\FeedbackFromUser;
 use App\Post;
 use App\Trip;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
@@ -37,16 +39,11 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $user->link = (string) $request['link'];
-//        if ($request['phone']) {
-//            $user->phone = (integer)$request['phone'];
-//        } elseif ($request['phone'] == false) {
-//            $user->phone = null;
-//        }
         $user->save();
         return back();
     }
 
-    public function myPosts(Post $post)
+    public function myPosts()
     {
         $myPosts = Post::where('owner_id', auth()->id())->latest()->get();
 
@@ -83,17 +80,17 @@ class HomeController extends Controller
     /**
      * Update the avatar for the user.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return Response
      */
     public function updateAvatar(Request $request)
     {
-        $path = $request->file('avatar')->storeAs('avatars/' . auth()->id(), 'avatar.jpg', 'public');
-        Image::make(url($path))->resize(512, 512)->save('storage/' . $path);
+        $path = $request->file('avatar')->storeAs('avatars/'.auth()->id(), 'avatar.jpg', 'public');
+        Image::make(url($path))->resize(512, 512)->save('storage/'.$path);
         return back();
     }
 
-    public function myTrips(Trip $trip)
+    public function myTrips()
     {
         $myTrips = Trip::where('owner_id', auth()->id())->latest()->get();
         return view('/home/my_trips', compact('myTrips'));
@@ -103,5 +100,18 @@ class HomeController extends Controller
     {
         $myEntries = Entry::where('owner_id', auth()->id())->latest()->get();
         return view('/home/my_entries', compact('myEntries'));
+    }
+
+    public function feedbackForm()
+    {
+        return view('home.feedback');
+    }
+
+    public function feedbackSubmit(Request $request)
+    {
+        $message = (string) $request['message'];
+        Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));
+        flash('Твоё сообщение было отправлено админу');
+        return back();
     }
 }

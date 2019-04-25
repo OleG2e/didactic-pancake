@@ -10,10 +10,16 @@ Breadcrumbs::for('main', function ($trail) {
     $trail->push('Главная', route('main'));
 });
 
+// Home > admin
+Breadcrumbs::for('admin.feedback.form', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Написать юзеру', route('admin.feedback.form'));
+});
+
 // Home > About
-Breadcrumbs::for('about', function ($trail) {
+Breadcrumbs::for('feedback.form', function ($trail) {
     $trail->parent('home');
-    $trail->push('About', route('about'));
+    $trail->push('Написать админу', route('feedback.form'));
 });
 
 // Home > Cabinet
