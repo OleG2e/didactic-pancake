@@ -10,11 +10,16 @@ Route::get('/how-much', function () {
     return view('how_much');
 })->name('how_much');
 
+Route::get('/admin/mail', 'AdminController@feedbackForm')->name('admin.feedback.form');
+Route::post('/admin/mail', 'AdminController@feedbackSubmit')->name('admin.feedback.submit');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@store')->name('home.store');
 Route::get('/home/posts', 'HomeController@myPosts')->name('my.posts');
 Route::get('/home/entries', 'HomeController@myEntries')->name('my.entries');
 Route::get('/home/trips', 'HomeController@myTrips')->name('my.trips');
+Route::get('/home/feedback', 'HomeController@feedbackForm')->name('feedback.form');
+Route::post('/home/feedback', 'HomeController@feedbackSubmit')->name('feedback.submit');
 Route::patch('/home/posts/{post}', 'HomeController@updateRelevancePost')->name('update.relevance.post');
 Route::patch('/home/trips/{trip}', 'HomeController@updateRelevanceTrip')->name('update.relevance.trip');
 Route::patch('/home/entries/{entry}', 'HomeController@updateRelevanceEntry')->name('update.relevance.entry');

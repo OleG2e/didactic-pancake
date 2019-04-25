@@ -49,8 +49,8 @@ class AuthServiceProvider extends ServiceProvider
 //            return $user->id == $trip->user_id;
 //        });
 
-//        Gate::before(function ($user){
-//            return $user->id == 1; // this is admin id
-//        });
+        Gate::before(function (User $user) {
+            return $user->id == 1; // this is admin id
+        });
     }
 }
