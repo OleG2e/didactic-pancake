@@ -73,4 +73,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    protected function registered(User $user)
+    {
+        $user->roles()->attach(2); // member role id=2
+    }
 }

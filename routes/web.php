@@ -10,8 +10,10 @@ Route::get('/how-much', function () {
     return view('how_much');
 })->name('how_much');
 
-Route::get('/admin/mail', 'AdminController@feedbackForm')->name('admin.feedback.form');
-Route::post('/admin/mail', 'AdminController@feedbackSubmit')->name('admin.feedback.submit');
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/admin/mail', 'AdminController@feedbackForm')->name('admin.feedback.form');
+    Route::post('/admin/mail', 'AdminController@feedbackSubmit')->name('admin.feedback.submit');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@store')->name('home.store');

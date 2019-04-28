@@ -5,9 +5,7 @@ namespace App;
 use App\Notifications\CustomResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -33,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posts()
     {
-        $this->hasMany(Post::class, 'owner_id');
+        return $this->hasMany(Post::class, 'owner_id');
     }
 
     public function trips()
@@ -46,6 +44,12 @@ class User extends Authenticatable implements MustVerifyEmail
         $path = '/storage/avatars/'.$this->id.'/avatar.jpg';
 
         return asset(file_exists($path) ? $path : 'avatars/user-circle-solid.svg');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)
+            ->as('role');
     }
 
     /**
