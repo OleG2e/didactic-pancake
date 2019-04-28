@@ -45,8 +45,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function (User $user) {
-            return isAdmin();
+        Gate::before(function () {
+            if (isAdmin()) {
+                return true;
+            }
         });
     }
 }
