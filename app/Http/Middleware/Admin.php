@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
-use Illuminate\Support\Facades\Gate;
 use Closure;
 
 class Admin
@@ -17,8 +15,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $user = auth()->user();
-        if ($user->roles->contains('title', 'admin')) {
+        if (isAdmin()) {
             return $next($request);
         }
 

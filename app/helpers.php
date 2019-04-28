@@ -14,3 +14,9 @@ function flash($message)
 {
     session()->flash('message', $message);
 }
+
+function isAdmin()
+{
+    $user = auth()->user();
+    return $user->roles->contains('title', 'admin');
+}
