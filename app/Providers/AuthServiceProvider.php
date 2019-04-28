@@ -45,12 +45,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-//        Gate::define('addUser-trip', function ($user, $trip) {
-//            return $user->id == $trip->user_id;
-//        });
-
-//        Gate::before(function (User $user) {
-//            return $user->id == 1; // this is admin id
-//        });
+        Gate::before(function (User $user) {
+            return $user->roles->contains('title', 'admin');
+        });
     }
 }
