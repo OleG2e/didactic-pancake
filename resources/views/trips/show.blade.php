@@ -30,7 +30,7 @@
                             <br> Стоимость: {{$trip->price}}
                         </p>
                         @auth
-                            @if (count($trip->users)==false)
+                            @if (count($trip->users)==false and $trip->owner->id !== auth()->id())
                                 <form method="post" action="{{route('add.user', $trip)}}">
                                     @method('patch')
                                     @csrf
@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            @elseif(count($trip->users))
+                            @elseif(count($trip->users) and $trip->owner->id !== auth()->id())
                                 @if (count($trip->users()->where('user_id',auth()->id())->get()))
                                     <form method="post" action="{{route('remove.user', $trip)}}">
                                         @method('delete')
