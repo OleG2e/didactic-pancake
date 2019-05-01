@@ -34,6 +34,7 @@ Route::get('/posts', 'PostController@index')->name('post.all');
 Route::post('/posts', 'PostController@store')->name('post.store');
 Route::get('/posts/create', 'PostController@create')->name('post.create');
 Route::post('/posts/create/image/upload', 'PostController@imageUpload')->name('post.image.upload');
+Route::get('/posts/{post}/link', 'PostController@linkRequest')->name('post.link.request');
 Route::get('/posts/{post}', 'PostController@show')->name('post.show');
 Route::delete('/posts/{post}', 'PostController@destroy')->name('post.destroy');
 Route::patch('/posts/{post}', 'PostController@update')->name('post.update');
@@ -43,11 +44,13 @@ Route::post('/replies-post', 'ReplyPostController@store')->name('reply.post.stor
 Route::delete('/replies-post/{reply}', 'ReplyPostController@destroy')->name('reply.post.destroy');
 Route::patch('/replies-post/{reply}', 'ReplyPostController@update')->name('reply.post.update');
 Route::get('/replies-post/{reply}/edit', 'ReplyPostController@edit')->name('reply.post.edit');
+Route::get('/replies-post/{reply}/link', 'ReplyPostController@linkRequest')->name('reply.post.link.request');
 
 Route::post('/replies-trip', 'ReplyTripController@store')->name('reply.trip.store');
 Route::delete('/replies-trip/{reply}', 'ReplyTripController@destroy')->name('reply.trip.destroy');
 Route::patch('/replies-trip/{reply}', 'ReplyTripController@update')->name('reply.trip.update');
 Route::get('/replies-trip/{reply}/edit', 'ReplyTripController@edit')->name('reply.trip.edit');
+Route::get('/replies-trip/{reply}/link', 'ReplyTripController@linkRequest')->name('reply.trip.link.request');
 
 Route::get('/trips', 'TripController@index')->name('trip.all');
 Route::post('/trips', 'TripController@store')->name('trip.store');

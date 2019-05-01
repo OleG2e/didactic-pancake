@@ -1,24 +1,26 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Auth;
 
-class DummyClass extends Mailable
+class RequestLinkFromUserPost extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $post;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $post
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -28,6 +30,7 @@ class DummyClass extends Mailable
      */
     public function build()
     {
-        return $this->markdown('DummyView');
+        return $this->from(config('mail.from.address'))
+            ->markdown('emails.post-link-request-owner');
     }
 }

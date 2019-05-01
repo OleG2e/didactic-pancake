@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RequestLinkFromUserPost;
+use App\Mail\ResponseLinkToUser;
 use App\Post;
 use App\Category;
 use App\ReplyPost;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -148,5 +151,12 @@ class PostController extends Controller
             'title' => 'required',
             'description' => 'required',
         ]);
+    }
+
+    public function linkRequest(Post $post)
+    {
+        Mail::to($post->owner->email)->send(new RequestLinkFromUserPost($post));
+        flash("Запрос отправлен {$post->owner->name}");
+        return back();
     }
 }
