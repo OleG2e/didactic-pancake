@@ -33,6 +33,7 @@ Route::resource('towns', 'TownController');
 Route::get('/posts', 'PostController@index')->name('post.all');
 Route::post('/posts', 'PostController@store')->name('post.store');
 Route::get('/posts/create', 'PostController@create')->name('post.create');
+Route::post('/posts/create/image/upload', 'PostController@imageUpload')->name('post.image.upload');
 Route::get('/posts/{post}', 'PostController@show')->name('post.show');
 Route::delete('/posts/{post}', 'PostController@destroy')->name('post.destroy');
 Route::patch('/posts/{post}', 'PostController@update')->name('post.update');

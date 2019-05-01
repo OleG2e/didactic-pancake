@@ -8,6 +8,8 @@ use App\ReplyPost;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -24,7 +26,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('relevance', true)->latest()->get();
-
         return view('posts.index', compact('posts'));
     }
 
@@ -42,13 +43,15 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return Response
      */
-    public function store(Post $post, Category $category)
+    public function store(Post $post, Request $request)
     {
+        $images = json_encode($this->imageUpload($request));
         $attributes = $this->validatePost();
         $attributes['owner_id'] = auth()->id();
+        $attributes['images'] = $images;
         $post->create($attributes);
         flash('Post создан');
         return redirect('/posts');
@@ -57,18 +60,23 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Response
      */
     public function show(Post $post, ReplyPost $reply)
     {
-        return view('posts.show', ['post' => $post, 'reply' => $reply]);
+        if (isset($post->images)) {
+            $imagesAll = json_decode($post->images);
+
+            return view('posts.show', compact(['reply', 'post', 'imagesAll']));
+        }
+        return view('posts.show', compact(['reply', 'post']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Response
      */
     public function edit(Post $post, Category $category)
@@ -84,8 +92,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Post $post
+     * @param  Request  $request
+     * @param  Post  $post
      * @return Response
      */
     public function update(Request $request, Post $post)
@@ -98,7 +106,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Response
      * @throws Exception
      */
@@ -112,6 +120,25 @@ class PostController extends Controller
         $post->delete();
         flash('Post удален');
         return back();
+    }
+
+    protected function imageUpload(Request $request)
+    {
+        $path = 'posts/'.auth()->id();
+        $pathAllFiles = [];
+        $allImages = $request->allFiles();
+        foreach ($allImages as $image) {
+            $i = count($allImages['image']) - 1;
+            while (isset($image[$i])) {
+                $pathImagesFull = $image[$i]->store($path, 'public');
+                $pathImagesPreview = $image[$i]->store('preview/'.$path, 'public');
+                Image::make($image[$i]->getRealPath())->fit(256)->save(public_path('storage/'.$pathImagesPreview), 70);
+                $pathAllFiles['full'][] = $pathImagesFull;
+                $pathAllFiles['preview'][] = $pathImagesPreview;
+                $i--;
+            }
+        }
+        return $pathAllFiles;
     }
 
     protected function validatePost()

@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('owner_id');
             $table->unsignedInteger('category_id');
             $table->string('title');
+            $table->json('images');
             $table->text('description');
             $table->boolean('relevance')->default(true);
             $table->timestamps();

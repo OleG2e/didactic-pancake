@@ -27,12 +27,12 @@
                         <nav class="level is-mobile">
                             <div class="level-left">
                                 <div class="buttons are-small">
-                                    <a class="button" href="{{route('post.edit', $post)}}">
+                                    <a title="Редактировать" class="button" href="{{route('post.edit', $post)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
                                     </span>
                                     </a>
-                                    <a class="button" onclick="event.preventDefault();
+                                    <a title="Удалить" class="button" onclick="event.preventDefault();
                                         document.getElementById('delete-post-form').submit();">
                                             <span class="icon is-small">
                                                 <i class="fas fa-trash"></i>
@@ -42,6 +42,14 @@
                             </div>
                         </nav>
                     @endcan
+                    @if (isset($post->images))
+                        @for ($i = 0; $i < count($imagesAll->full); $i++)
+                            <figure class="image is-128x128" style="display: inline-block">
+                                <a href="{{asset($imagesAll->full[$i])}}">
+                                    <img src="{{asset($imagesAll->preview[$i])}}"></a>
+                            </figure>
+                        @endfor
+                    @endif
                     @foreach($post->replies as $reply)
                         <article class="media">
                             <figure class="media-left">
@@ -82,37 +90,38 @@
                 </div>
             </article>
             @auth
-            <article class="media">
-                <div class="media-content">
-                    <form action="{{route('reply.post.store')}}" method="post">
-                        @csrf
-                        <input type="hidden" name="post_id" value="{{$post->id}}">
-                        <article class="media">
-                            <figure class="media-left">
-                                <p class="image is-64x64">
-                                    <img class="is-rounded"
-                                         src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="field">
-                                    <p class="control">
+                <article class="media">
+                    <div class="media-content">
+                        <form action="{{route('reply.post.store')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{$post->id}}">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        <img class="is-rounded"
+                                             src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="field">
+                                        <p class="control">
                                             <textarea class="textarea" name="description" cols="6" rows="3"
                                                       placeholder="Комментарий..."></textarea>
-                                    </p>
-                                </div>
-                                <nav class="level">
-                                    <div class="level-left">
-                                        <div class="level-item">
-                                            <button class="button is-primary is-rounded" type="submit">Ответить</button>
-                                        </div>
+                                        </p>
                                     </div>
-                                </nav>
-                            </div>
-                        </article>
-                    </form>
-                </div>
-            </article>
+                                    <nav class="level">
+                                        <div class="level-left">
+                                            <div class="level-item">
+                                                <button class="button is-primary is-rounded" type="submit">Ответить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </form>
+                    </div>
+                </article>
             @endauth
             <br>
             <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>

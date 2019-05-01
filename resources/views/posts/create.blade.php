@@ -4,7 +4,7 @@
         {{ Breadcrumbs::render('post.create') }}
         <div class="box">
             <div class="title">Создать объявление</div>
-            <form method="post" action="{{route('post.store')}}">
+            <form method="post" action="{{route('post.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="field">
                     <label class="label" for="category_id">Категория:</label>
@@ -35,9 +35,17 @@
                                           required>{{old('description')}}</textarea>
                     </div>
                 </div>
+                <div class="field">
+                    <label class="label">Фотографии</label>
+                    <div class="control">
+                        <input type="file" name="image[]" accept="image/*" multiple>
+                    </div>
+                </div>
                 <div class="field is-grouped">
                     <div class="control">
-                        <button type="submit" class="button is-link">Создать объявление</button>
+                        <button type="submit" class="button is-link" onclick="$(this).addClass('is-loading');">Создать
+                            объявление
+                        </button>
                     </div>
                     <div class="control">
                         <a class="button is-text" href="{{route('post.all')}}">Отмена</a>
