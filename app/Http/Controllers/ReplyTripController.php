@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RequestLinkFromUserReplyPost;
+use App\Mail\RequestLinkFromUserReplyTrip;
 use App\Trip;
 use App\ReplyTrip;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class ReplyTripController extends Controller
 {
@@ -77,5 +80,12 @@ class ReplyTripController extends Controller
             'trip_id' => 'required|numeric',
             'description' => 'required',
         ]);
+    }
+
+    public function linkRequest(ReplyTrip $reply)
+    {
+        Mail::to($reply->owner->email)->send(new RequestLinkFromUserReplyTrip($reply));
+        flash("Запрос отправлен {$reply->owner->name}");
+        return back();
     }
 }

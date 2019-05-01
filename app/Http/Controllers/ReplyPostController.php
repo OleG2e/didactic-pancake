@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RequestLinkFromUserReplyPost;
 use App\Post;
 use App\ReplyPost;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class ReplyPostController extends Controller
 {
@@ -77,5 +79,12 @@ class ReplyPostController extends Controller
             'post_id' => 'required|numeric',
             'description' => 'required',
         ]);
+    }
+
+    public function linkRequest(ReplyPost $reply)
+    {
+        Mail::to($reply->owner->email)->send(new RequestLinkFromUserReplyPost($reply));
+        flash("Запрос отправлен {$reply->owner->name}");
+        return back();
     }
 }

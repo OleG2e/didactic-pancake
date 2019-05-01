@@ -19,14 +19,22 @@
                         <p style="word-wrap: break-word;">
                             <strong>{{$post->owner->name}}</strong>
                             <small>{{$post->updated_at->diffForHumans()}}</small>
+                            @auth
+                                <a title="Связаться" class="button is-small"
+                                   href="{{route('post.link.request', $post)}}">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-link"></i>
+                                    </span>
+                                </a>
+                            @endauth
                             <br>
                             {{$post->description}}
                         </p>
                     </div>
-                    @can('update', $post)
-                        <nav class="level is-mobile">
-                            <div class="level-left">
-                                <div class="buttons are-small">
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <div class="buttons are-small">
+                                @can('update', $post)
                                     <a title="Редактировать" class="button" href="{{route('post.edit', $post)}}">
                                     <span class="icon is-small">
                                         <i class="fas fa-edit"></i>
@@ -38,10 +46,10 @@
                                                 <i class="fas fa-trash"></i>
                                             </span>
                                     </a>
-                                </div>
+                                @endcan
                             </div>
-                        </nav>
-                    @endcan
+                        </div>
+                    </nav>
                     @if (isset($post->images))
                         @for ($i = 0; $i < count($imagesAll->full); $i++)
                             <figure class="image is-128x128" style="display: inline-block">
@@ -62,13 +70,22 @@
                                     <p style="word-wrap: break-word;">
                                         <strong>{{$reply->owner->name}}</strong>
                                         <small>{{$reply->updated_at}}</small>
+                                        @auth
+                                            <a title="Связаться" class="button is-small"
+                                               href="{{route('reply.post.link.request', $reply)}}">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-link"></i>
+                                            </span>
+                                            </a>
+                                        @endauth
                                         <br>
                                         {{$reply->description}}
                                     </p>
                                 </div>
-                                @can('update', $post)
-                                    <div class="buttons are-small">
-                                        <a class="button" href="{{route('reply.post.edit', $reply)}}">
+                                <div class="buttons are-small">
+                                    @can('update', $post)
+                                        <a title="Редактировать" class="button"
+                                           href="{{route('reply.post.edit', $reply)}}">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-edit"></i>
                                                 </span>
@@ -76,14 +93,14 @@
                                         <form method="post" action="{{route('reply.trip.destroy', $reply)}}">
                                             @method('delete')
                                             @csrf
-                                            <button class="button" type="submit">
+                                            <button title="Удалить" class="button" type="submit">
                                                     <span class="icon is-small">
                                                         <i class="fas fa-trash"></i>
                                                     </span>
                                             </button>
                                         </form>
-                                    </div>
-                                @endcan
+                                    @endcan
+                                </div>
                             </div>
                         </article>
                     @endforeach
@@ -124,7 +141,7 @@
                 </article>
             @endauth
             <br>
-            <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
+            <a class="button is-info is-hovered" href="{{route('post.all')}}">Назад</a>
         </div>
     @endcomponent
     <form id="delete-post-form" method="post" action="{{route('post.destroy', $post)}}">

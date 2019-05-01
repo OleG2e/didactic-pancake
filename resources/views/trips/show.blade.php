@@ -97,7 +97,14 @@
                                     <p style="word-wrap: break-word;">
                                         <strong>{{$reply->owner->name}}</strong>
                                         <small>{{$reply->updated_at}}</small>
-                                        <br>
+                                        @auth
+                                            <a title="Связаться" class="button is-small"
+                                               href="{{route('reply.trip.link.request', $reply)}}">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-link"></i>
+                                            </span>
+                                            </a>
+                                        @endauth<br>
                                         {{$reply->description}}
                                     </p>
                                 </div>
