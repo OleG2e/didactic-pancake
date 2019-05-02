@@ -10,6 +10,10 @@ Route::get('/how-much', function () {
     return view('how_much');
 })->name('how_much');
 
+Route::get('/bus-schedule', function () {
+    return view('entries.bus-schedule');
+})->name('bus.schedule');
+
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/admin/mail', 'AdminController@feedbackForm')->name('admin.feedback.form');
     Route::post('/admin/mail', 'AdminController@feedbackSubmit')->name('admin.feedback.submit');

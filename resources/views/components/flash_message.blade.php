@@ -1,5 +1,3 @@
-<article class="message {{$type}}">
-    <div class="message-body">
+<div class="notification {{$type}}">
         {{$slot}}
-    </div>
-</article>
+</div>
