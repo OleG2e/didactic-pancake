@@ -24,11 +24,13 @@ Route::post('/home', 'HomeController@store')->name('home.store');
 Route::get('/home/posts', 'HomeController@myPosts')->name('my.posts');
 Route::get('/home/entries', 'HomeController@myEntries')->name('my.entries');
 Route::get('/home/trips', 'HomeController@myTrips')->name('my.trips');
+Route::get('/home/deliveries', 'HomeController@myDeliveries')->name('my.deliveries');
 Route::get('/home/feedback', 'HomeController@feedbackForm')->name('feedback.form');
 Route::post('/home/feedback', 'HomeController@feedbackSubmit')->name('feedback.submit');
 Route::patch('/home/posts/{post}', 'HomeController@updateRelevancePost')->name('update.relevance.post');
 Route::patch('/home/trips/{trip}', 'HomeController@updateRelevanceTrip')->name('update.relevance.trip');
 Route::patch('/home/entries/{entry}', 'HomeController@updateRelevanceEntry')->name('update.relevance.entry');
+Route::patch('/home/deliveries/{trip}', 'HomeController@updateRelevanceDelivery')->name('update.relevance.delivery');
 Route::post('/home/image/upload', 'HomeController@updateAvatar')->name('image.upload');
 
 Route::resource('categories', 'CategoryController');
@@ -63,6 +65,15 @@ Route::get('/trips/{trip}', 'TripController@show')->name('trip.show');
 Route::delete('/trips/{trip}', 'TripController@destroy')->name('trip.destroy');
 Route::patch('/trips/{trip}', 'TripController@update')->name('trip.update');
 Route::get('/trips/{trip}/edit', 'TripController@edit')->name('trip.edit');
+
+Route::get('/deliveries', 'DeliveryController@index')->name('delivery.all');
+Route::post('/deliveries', 'DeliveryController@store')->name('delivery.store');
+Route::get('/deliveries/create', 'DeliveryController@create')->name('delivery.create');
+Route::get('/deliveries/{trip}', 'DeliveryController@show')->name('delivery.show');
+Route::delete('/deliveries/{trip}', 'DeliveryController@destroy')->name('delivery.destroy');
+Route::patch('/deliveries/{trip}', 'DeliveryController@update')->name('delivery.update');
+Route::get('/deliveries/{trip}/edit', 'DeliveryController@edit')->name('delivery.edit');
+Route::get('/deliveries/{trip}/link', 'DeliveryController@linkRequest')->name('delivery.link.request');
 
 Route::patch('/trips/{trip}/addUser', 'TripUserController@addUser')->name('add.user');
 Route::delete('/trips/{trip}/removeUser', 'TripUserController@removeUser')->name('remove.user');

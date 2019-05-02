@@ -119,14 +119,14 @@
                     <textarea class="textarea" name="description" placeholder="Комментарий к поездке"></textarea>
                 </p>
             </div>
-            <div class="field">
-                <div class="control">
-                    <label class="checkbox">
-                        <input type="checkbox" name="load" value="1">
-                        Возьму груз
-                    </label>
-                </div>
-            </div>
+            {{--            <div class="field">--}}
+            {{--                <div class="control">--}}
+            {{--                    <label class="checkbox">--}}
+            {{--                        <input type="checkbox" name="load" value="1">--}}
+            {{--                        Возьму груз--}}
+            {{--                    </label>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <div class="control">
                 <button class="button is-primary is-rounded" type="submit">Создать поездку</button>
             </div>

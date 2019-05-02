@@ -68,6 +68,15 @@ class HomeController extends Controller
         return back();
     }
 
+    public function updateRelevanceDelivery(Trip $trip, Request $request)
+    {
+        $trip->update([
+            'updated_at' => time(),
+            'relevance' => $request->has('relevance'),
+        ]);
+        return back();
+    }
+
     public function updateRelevanceEntry(Entry $entry, Request $request)
     {
         $entry->update([
@@ -92,8 +101,14 @@ class HomeController extends Controller
 
     public function myTrips()
     {
-        $myTrips = Trip::where('owner_id', auth()->id())->latest()->get();
+        $myTrips = Trip::where('owner_id', auth()->id())->where('category_id', '=', 1)->latest()->get();
         return view('/home/my_trips', compact('myTrips'));
+    }
+
+    public function myDeliveries()
+    {
+        $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', '=', 2)->latest()->get();
+        return view('/home/my_deliveries', compact('myDeliveries'));
     }
 
     public function myEntries(Entry $entry)

@@ -22,6 +22,29 @@ Breadcrumbs::for('bus.schedule', function ($trail) {
     $trail->push('Расписание движения автобусов', route('bus.schedule'));
 });
 
+// Home > Delivery
+Breadcrumbs::for('delivery.all', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Передачки', route('delivery.all'));
+});
+
+// Home > Delivery > Create
+Breadcrumbs::for('delivery.create', function ($trail) {
+    $trail->parent('delivery.all');
+    $trail->push('Создать передачку', route('delivery.create'));
+});
+
+// Home > Delivery > Edit
+Breadcrumbs::for('delivery.edit', function ($trail, $delivery) {
+    $trail->parent('delivery.all');
+    $trail->push('Редактировать передачку', route('delivery.edit', $delivery));
+});
+
+// Home > Delivery > Show
+Breadcrumbs::for('delivery.show', function ($trail, $delivery) {
+    $trail->parent('delivery.all');
+    $trail->push('Детали передачки', route('delivery.show', $delivery));
+});
 // Home > About
 Breadcrumbs::for('feedback.form', function ($trail) {
     $trail->parent('home');
