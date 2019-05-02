@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +32,47 @@
                 {{ config('app.name', 'Laravel') }} </a>
         </div>
         <div class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Категории
+                    </a>
+                    <div class="navbar-dropdown is-right is-boxed">
+                        <a class="navbar-item" href="{{ route('post.all') }}">
+                            <div>
+                  <span class="icon is-small">
+                    <i class="fa fa-table"></i>
+                  </span>
+                                Объявления
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="{{route('trip.all')}}">
+                            <div>
+                  <span class="icon is-small">
+                    <i class="fa fa-car"></i>
+                  </span>
+                                Поездки
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="{{ route('post.all') }}">
+                            <div>
+                  <span class="icon is-small">
+                    <i class="fa fa-cube"></i>
+                  </span>
+                                Передачки
+                            </div>
+                        </a>
+                        <a class="navbar-item" href="{{ route('bus.schedule') }}">
+                            <div>
+                  <span class="icon is-small">
+                    <i class="fa fa-bus"></i>
+                  </span>
+                                Расписание
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="navbar-end">
                 @guest
                     <a class="navbar-item" href="{{ route('login') }}">Войти</a>
@@ -43,7 +84,7 @@
                         <div class="navbar-dropdown is-right is-boxed">
                             <a class="navbar-item" href="{{ route('home') }}">
                                 <div>
-                  <span class="icon is-small">
+                                    <span class="icon is-small">
                     <i class="fa fa-user"></i>
                   </span>
                                     Мой кабинет
@@ -51,17 +92,18 @@
                             </a>
                             <a class="navbar-item" href="{{ route('feedback.form') }}">
                                 <div>
-                  <span class="icon is-small">
+                                    <span class="icon is-small">
                     <i class="fa fa-envelope"></i>
                   </span>
                                     Написать админу
                                 </div>
                             </a>
+                            <hr class="navbar-divider">
                             <a class="navbar-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <div>
-                  <span class="icon is-small">
+                                    <span class="icon is-small">
                     <i class="fa fa-sign-out-alt"></i>
                   </span>
                                     Выйти

@@ -16,6 +16,12 @@ Breadcrumbs::for('admin.feedback.form', function ($trail) {
     $trail->push('Написать юзеру', route('admin.feedback.form'));
 });
 
+// Home > Bus
+Breadcrumbs::for('bus.schedule', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Расписание движения автобусов', route('bus.schedule'));
+});
+
 // Home > About
 Breadcrumbs::for('feedback.form', function ($trail) {
     $trail->parent('home');
