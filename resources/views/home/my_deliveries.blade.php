@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.all') }}
+        {{ Breadcrumbs::render('delivery.all') }}
         @if (session('message'))
             @component('components.flash_message', ['type'=>'is-success'])
                 {{ session('message') }}
@@ -11,15 +11,15 @@
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title">Мои поездки:</p>
+                    <p class="title">Мои передачки:</p>
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
-                <a class="button is-primary is-rounded" href="/trips/create">Создать поездку</a>
+                <a class="button is-primary is-rounded" href="{{route('delivery.create')}}">Создать передачку</a>
             </div>
         </nav>
         <div class="columns is-multiline">
-            @foreach($myTrips as $trip)
+            @foreach($myDeliveries as $trip)
                 <div class="column is-narrow">
                     <div class="box"
                          style="width: 250px; background-color: {{$trip->relevance ? 'hsl(171, 100%, 41%)' : 'hsl(48, 100%, 67%)'}}">
@@ -39,14 +39,14 @@
                             <div class="modal-background"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head">
-                                    <p class="modal-card-title">Подтверди удаление</p>
+                                    <p class="modal-card-title">Подтвердите удаление</p>
                                     <button class="delete" aria-label="close"></button>
                                 </header>
                                 <section class="modal-card-body">
                                     Удалить пост от {{$trip->created_at}}?
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <form method="post" action="/trips/{{$trip->id}}">
+                                    <form method="post" action="{{route('trip.destroy', $trip)}}">
                                         @method('delete')
                                         @csrf
                                         <button class="button is-danger" type="submit">
@@ -68,7 +68,7 @@
                             <a href="/trips/{{$trip->id}}">
                                 Обсудить
                             </a>
-                            <form method="post" action="/home/trips/{{$trip->id}}">
+                            <form method="post" action="{{route('update.relevance.trip', $trip)}}">
                                 @method('patch')
                                 @csrf
                                 <label class="checkbox">

@@ -54,7 +54,7 @@
                                 Поездки
                             </div>
                         </a>
-                        <a class="navbar-item" href="{{ route('post.all') }}">
+                        <a class="navbar-item" href="{{ route('delivery.all') }}">
                             <div>
                   <span class="icon is-small">
                     <i class="fa fa-cube"></i>

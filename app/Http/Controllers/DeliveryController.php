@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Category;
+use App\Mail\RequestLinkFromUserTrip;
+use App\Town;
+use App\Trip;
+use App\ReplyTrip;
+use Illuminate\Http\Request;
+use DateTime;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+
+class DeliveryController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified'])->except(['index', 'show']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $deliveries = Trip::whereRelevance(true)->where('category_id', '=', 2)->oldest('date_time')->get();
+
+        return view('deliveries.index', compact('deliveries'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $towns = Town::all();
+        return view('deliveries.create', compact(['towns']));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Trip  $trip
+     * @return Response
+     * @throws \Exception
+     */
+    public function store(Trip $trip)
+    {
+        $attributes = $this->validateTrip();
+        $attributes['date_time'] = $attributes['date'];
+        $attributes['category_id'] = 2;
+        $attributes['passengers_count'] = 0;
+        $attributes['price'] = 0;
+        unset($attributes['date']);
+        $attributes['date_time'] = new DateTime($attributes['date_time']);
+        $attributes['owner_id'] = auth()->id();
+        $trip->create($attributes);
+        flash('Передачка создана');
+        return redirect('/deliveries');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Trip  $trip
+     * @return Response
+     */
+    public function show(Trip $trip)
+    {
+        return view('deliveries.show', compact(['trip']));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  Trip  $trip
+     * @return Response
+     */
+    public function edit(Trip $trip)
+    {
+        $this->authorize('update', $trip);
+        return view('deliveries.edit', compact(['trip']));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  Trip  $trip
+     * @return Response
+     */
+    public function update(Request $request, Trip $trip)
+    {
+        $this->authorize('update', $trip);
+        $trip->update($this->validateTrip());
+        return redirect('/deliveries');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Trip  $trip
+     * @return Response
+     */
+    public function destroy(Trip $trip)
+    {
+        $this->authorize('delete', $trip);
+        $replies = ReplyTrip::where('trip_id', $trip->id)->get();
+        foreach ($replies as $reply) {
+            $reply->delete();
+        }
+        $trip->delete();
+        flash('Post удален');
+        return redirect('/deliveries');
+    }
+
+    protected function validateTrip()
+    {
+        return request()->validate([
+            'startpoint_id' => 'required|integer',
+            'endpoint_id' => 'required|integer',
+            'date' => 'required',
+            'description' => 'string|nullable',
+        ]);
+    }
+
+    public function linkRequest(Trip $trip)
+    {
+        Mail::to($trip->owner->email)->send(new RequestLinkFromUserTrip($trip));
+        flash("Запрос отправлен {$trip->owner->name}");
+        return back();
+    }
+}
