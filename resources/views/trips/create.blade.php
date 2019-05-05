@@ -8,27 +8,10 @@
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
-                        <label class="label">Тип поездки:</label>
-                        <div class="control has-icons-left">
-                            <div class="select is-rounded">
-                                <select name="category_id">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="icon is-small is-left">
-                                <i class="fas fa-columns"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
                         <label class="label">Откуда:</label>
                         <div class="control has-icons-left">
                             <div class="select is-rounded">
-                                <select name="startpoint_id">
+                                <select name="startpoint_id" required>
                                     @foreach ($towns as $town)
                                         <option value="{{ $town->id }}" {{ old('town_id') == $town->id ? 'selected' : '' }}>
                                             {{ $town->title }}
@@ -37,7 +20,7 @@
                                 </select>
                             </div>
                             <div class="icon is-small is-left">
-                                <i class="fas fa-city"></i>
+                                <i class="fa fa-city"></i>
                             </div>
                         </div>
                     </div>
@@ -59,11 +42,10 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">Возьму пассажиров:</label>
+                        <label class="label">Количество пассажиров:</label>
                         <div class="control has-icons-left">
                             <div class="select is-rounded">
                                 <select name="passengers_count">
-                                    <option value="">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -72,7 +54,7 @@
                                 </select>
                             </div>
                             <div class="icon is-small is-left">
-                                <i class="fas fa-users"></i>
+                                <i class="fa fa-users"></i>
                             </div>
                         </div>
                     </div>
@@ -87,7 +69,7 @@
                                 </select>
                             </div>
                             <div class="icon is-small is-left">
-                                <i class="fas fa-ruble-sign"></i>
+                                <i class="fa fa-ruble-sign"></i>
                             </div>
                         </div>
                     </div>
@@ -99,7 +81,7 @@
                         <p class="control is-expanded has-icons-left">
                             <input class="input" type="date" id="datepicker" name="date" placeholder="Дата" required>
                             <span class="icon is-left">
-                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
                     </div>
@@ -107,7 +89,7 @@
                         <p class="control is-expanded has-icons-left">
                             <input class="input" type="time" id="timepicker" name="time" placeholder="Время" required>
                             <span class="icon is-small is-left">
-                                <i class="fas fa-clock"></i>
+                                <i class="fa fa-clock"></i>
                             </span>
                         </p>
                     </div>
@@ -119,14 +101,6 @@
                     <textarea class="textarea" name="description" placeholder="Комментарий к поездке"></textarea>
                 </p>
             </div>
-            {{--            <div class="field">--}}
-            {{--                <div class="control">--}}
-            {{--                    <label class="checkbox">--}}
-            {{--                        <input type="checkbox" name="load" value="1">--}}
-            {{--                        Возьму груз--}}
-            {{--                    </label>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
             <div class="control">
                 <button class="button is-primary is-rounded" type="submit">Создать поездку</button>
             </div>

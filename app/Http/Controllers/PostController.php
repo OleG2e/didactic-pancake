@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\RequestLinkFromUserPost;
-use App\Mail\ResponseLinkToUser;
+use App\Mail\RequestLinkFromUser;
 use App\Post;
 use App\Category;
-use App\ReplyPost;
+use App\Reply;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -29,6 +28,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('relevance', true)->latest()->get();
+
         return view('posts.index', compact('posts'));
     }
 
@@ -40,6 +40,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+
         return view('posts.create', compact('categories'));
     }
 
@@ -51,12 +52,13 @@ class PostController extends Controller
      */
     public function store(Post $post, Request $request)
     {
-        $images = json_encode($this->imageUpload($request));
+        $images = $this->imageUpload($request);
         $attributes = $this->validatePost();
         $attributes['owner_id'] = auth()->id();
         $attributes['images'] = $images;
         $post->create($attributes);
-        flash('Post создан');
+        flash('Объявление создано');
+
         return redirect('/posts');
     }
 
@@ -66,13 +68,14 @@ class PostController extends Controller
      * @param  Post  $post
      * @return Response
      */
-    public function show(Post $post, ReplyPost $reply)
+    public function show(Post $post)
     {
         if (isset($post->images)) {
             $imagesAll = json_decode($post->images);
 
             return view('posts.show', compact(['reply', 'post', 'imagesAll']));
         }
+
         return view('posts.show', compact(['reply', 'post']));
     }
 
@@ -85,7 +88,9 @@ class PostController extends Controller
     public function edit(Post $post, Category $category)
     {
         $this->authorize('update', $post);
+
         $categories = Category::all();
+
         return view('posts.edit', [
             'post' => $post,
             'categories' => $categories
@@ -102,8 +107,14 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->authorize('update', $post);
-        $post->update($this->validatePost());
-        return redirect('/posts');
+
+        $images = $this->imageUpload($request);
+        $attributes = $this->validatePost();
+        $attributes['images'] = $images;
+        $post->update($attributes);
+        flash('Объявление изменено');
+
+        return redirect(route('post.show', $post));
     }
 
     /**
@@ -116,13 +127,15 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-        $replies = ReplyPost::where('post_id', $post->id)->get();
+
+        $replies = Reply::where('post_id', $post->id)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }
         $post->delete();
-        flash('Post удален');
-        return back();
+        flash('Объявление удалено');
+
+        return redirect(route('post.all'));
     }
 
     protected function imageUpload(Request $request)
@@ -141,7 +154,8 @@ class PostController extends Controller
                 $i--;
             }
         }
-        return $pathAllFiles;
+
+        return json_encode($pathAllFiles);
     }
 
     protected function validatePost()
@@ -155,8 +169,10 @@ class PostController extends Controller
 
     public function linkRequest(Post $post)
     {
-        Mail::to($post->owner->email)->send(new RequestLinkFromUserPost($post));
+        $route = route('post.show', ['posts' => $post->id]);
+        Mail::to($post->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$post->owner->name}");
+
         return back();
     }
 }

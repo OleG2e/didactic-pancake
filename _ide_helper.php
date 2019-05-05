@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.10 on 2019-04-04 21:58:28.
+ * Generated for Laravel 5.8.10 on 2019-04-15 12:22:37.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15205,8 +15205,8 @@ namespace DaveJamesMiller\Breadcrumbs\Facades {
          *
          * For backwards-compatibility with v5.0.0 and below.
          *
-         * @param  string  $name The name of the page.
-         * @param callable $callback The callback, which should accept a Generator instance as the first parameter and may
+         * @param  string  $name  The name of the page.
+         * @param  callable  $callback The callback, which should accept a Generator instance as the first parameter and may
          *     accept additional parameters.
          * @return void
          * @throws \DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException If the given name has already been

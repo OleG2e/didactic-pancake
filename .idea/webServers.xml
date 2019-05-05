@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="1bb79f93-707e-422c-aa8a-8183ccf35bc4" name="webhost.com" url="http://files.000webhost.com">
-        <fileTransfer host="files.000webhost.com" port="21">
+      <webServer id="744eff45-d898-403c-a967-3a59c89daf81" name="reg.ru" url="http://37.140.192.75">
+        <fileTransfer host="37.140.192.75" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -30,7 +30,7 @@ class Trip extends Model
 
     public function replies()
     {
-        return $this->hasMany(ReplyTrip::class);
+        return $this->hasMany(Reply::class, 'post_id')->where('category_id', $this->category->id)->get();
     }
 
     public function startpoint()

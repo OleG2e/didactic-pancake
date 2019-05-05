@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('/home/main', compact('user'));
+        return view('home.main', compact('user'));
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class HomeController extends Controller
     {
         $myPosts = Post::where('owner_id', auth()->id())->latest()->get();
 
-        return view('/home/my_posts', compact('myPosts'));
+        return view('home.my_posts', compact('myPosts'));
     }
 
     public function updateRelevancePost(Post $post, Request $request)
@@ -101,20 +101,22 @@ class HomeController extends Controller
 
     public function myTrips()
     {
-        $myTrips = Trip::where('owner_id', auth()->id())->where('category_id', '=', 1)->latest()->get();
-        return view('/home/my_trips', compact('myTrips'));
+        $user = auth()->user();
+        $myTrips = $user->trips;
+
+        return view('home.my_trips', compact('myTrips'));
     }
 
     public function myDeliveries()
     {
-        $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', '=', 2)->latest()->get();
-        return view('/home/my_deliveries', compact('myDeliveries'));
+        $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', 3)->latest()->get();
+        return view('home.my_deliveries', compact('myDeliveries'));
     }
 
     public function myEntries(Entry $entry)
     {
         $myEntries = Entry::where('owner_id', auth()->id())->latest()->get();
-        return view('/home/my_entries', compact('myEntries'));
+        return view('home.my_entries', compact('myEntries'));
     }
 
     public function feedbackForm()
@@ -127,6 +129,7 @@ class HomeController extends Controller
         $message = (string) $request['message'];
         Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));
         flash('Твоё сообщение было отправлено админу');
+
         return back();
     }
 }

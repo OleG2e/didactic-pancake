@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ReplyCreated;
-use App\Mail\ReplyCreated as ReplyCreatedMail;
+use App\Mail\ReplyCreatedOwner as ReplyCreatedMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
@@ -23,7 +23,7 @@ class SendReplyCreatedNotification
     /**
      * Handle the event.
      *
-     * @param ReplyCreated $event
+     * @param  ReplyCreated  $event
      * @return void
      */
     public function handle(ReplyCreated $event)

@@ -30,22 +30,18 @@
                             @php
                                 $dateTime = new DateTime($trip->date_time);
                             @endphp
-                            Описание: {{$trip->description}}
-                            <br>
-                            <span> Дата: {{$dateTime->format('d.m.Y')}}
-                                    <a href="{{route('delivery.show', $trip)}}">
-                                        Посмотреть
-                                    </a>
-                                </span>
+                            <span> Дата: {{$dateTime->format('d.m.Y')}}</span>
+                            <br>Описание: {{$trip->description}}
+                            <br><a href="{{route('delivery.show', $trip)}}">
+                                Посмотреть
+                            </a>
                         </div>
                     </div>
                 @endforeach
             @else
-                <div class="container">
-                    <div class="notification has-text-centered">
-                        <span class="is-center">Объявлений пока что нет...</span>
-                    </div>
-                </div>
+                @component('components.empty-records')
+                    Передачек нет
+                @endcomponent
             @endif
         </div>
     @endcomponent
