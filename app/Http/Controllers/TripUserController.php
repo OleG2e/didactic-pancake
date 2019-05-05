@@ -24,10 +24,15 @@ class TripUserController extends Controller
         $user = auth()->user();
         $user->trips()->attach($trip);
         $trip->decrement('passengers_count');
+        if ($trip->passengers_count === 0) {
+            $trip->relevance = false;
+        }
         $trip->save();
+
         event(new TripAddPassengerOwner($trip, $user));
         event(new TripAddPassengerCompanion($trip, $user));
         flash('Вы присоединились к поездке');
+
         return back();
     }
 
@@ -39,11 +44,12 @@ class TripUserController extends Controller
         event(new TripSubPassengerOwner($trip, $user));
         event(new TripSubPassengerCompanion($trip, $user));
         flash('Вы отказались от поездки');
+
         return back();
     }
 
     private function availability(Trip $trip)
     {
-        return ($trip->passengers_count - $trip->users()->count()) > 0 ? true : false;
+        return ($trip->passengers_count - $trip->users()->count()) >= 0 ? true : false;
     }
 }

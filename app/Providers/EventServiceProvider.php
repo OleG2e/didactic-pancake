@@ -2,15 +2,13 @@
 
 namespace App\Providers;
 
-use App\Events\ReplyPostCreated;
-use App\Events\ReplyTripCreated;
+use App\Events\ReplyCreated;
 use App\Events\TripCreated;
 use App\Events\TripAddPassengerOwner;
 use App\Events\TripAddPassengerCompanion;
 use App\Events\TripSubPassengerOwner;
 use App\Events\TripSubPassengerCompanion;
-use App\Listeners\SendReplyCreatedNotificationTrip;
-use App\Listeners\SendReplyCreatedNotificationPost;
+use App\Listeners\SendReplyCreatedNotification;
 use App\Listeners\SendTripCreatedNotification;
 use App\Listeners\SendTripAddPassengerNotificationOwner;
 use App\Listeners\SendTripAddPassengerNotificationCompanion;
@@ -37,12 +35,8 @@ class EventServiceProvider extends ServiceProvider
             SendTripCreatedNotification::class
         ],
 
-        ReplyTripCreated::class => [
-            SendReplyCreatedNotificationTrip::class
-        ],
-
-        ReplyPostCreated::class => [
-            SendReplyCreatedNotificationPost::class
+        ReplyCreated::class => [
+            SendReplyCreatedNotification::class
         ],
 
         TripAddPassengerCompanion::class => [

@@ -2,7 +2,7 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('delivery.create') }}
-        <div class="title">Создать поездку</div>
+        <div class="title">Создать передачку</div>
         <form method="post" action="{{route('delivery.store')}}">
             @csrf
             <div class="field is-horizontal">
@@ -20,7 +20,7 @@
                                 </select>
                             </div>
                             <div class="icon is-small is-left">
-                                <i class="fas fa-city"></i>
+                                <i class="fa fa-city"></i>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                 </select>
                             </div>
                             <div class="icon is-small is-left">
-                                <i class="fas fa-city"></i>
+                                <i class="fa fa-city"></i>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <p class="control is-expanded has-icons-left">
                             <input class="input" type="date" id="datepicker" name="date" placeholder="Дата" required>
                             <span class="icon is-left">
-                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
                     </div>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Mail\RequestLinkFromUser;
 use App\Mail\RequestLinkFromUserTrip;
+use App\Reply;
 use App\Town;
 use App\Trip;
 use App\ReplyTrip;
@@ -26,7 +28,7 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $deliveries = Trip::whereRelevance(true)->where('category_id', '=', 2)->oldest('date_time')->get();
+        $deliveries = Trip::whereRelevance(true)->where('category_id', 3)->oldest('date_time')->get();
 
         return view('deliveries.index', compact('deliveries'));
     }
@@ -39,6 +41,7 @@ class DeliveryController extends Controller
     public function create()
     {
         $towns = Town::all();
+
         return view('deliveries.create', compact(['towns']));
     }
 
@@ -53,7 +56,7 @@ class DeliveryController extends Controller
     {
         $attributes = $this->validateTrip();
         $attributes['date_time'] = $attributes['date'];
-        $attributes['category_id'] = 2;
+        $attributes['category_id'] = 3;
         $attributes['passengers_count'] = 0;
         $attributes['price'] = 0;
         unset($attributes['date']);
@@ -61,6 +64,7 @@ class DeliveryController extends Controller
         $attributes['owner_id'] = auth()->id();
         $trip->create($attributes);
         flash('Передачка создана');
+
         return redirect('/deliveries');
     }
 
@@ -80,11 +84,16 @@ class DeliveryController extends Controller
      *
      * @param  Trip  $trip
      * @return Response
+     * @throws \Exception
      */
     public function edit(Trip $trip)
     {
         $this->authorize('update', $trip);
-        return view('deliveries.edit', compact(['trip']));
+
+        $towns = Town::all();
+        $dateTime = new DateTime($trip->date_time);
+
+        return view('deliveries.edit', compact(['trip', 'towns', 'dateTime']));
     }
 
     /**
@@ -93,12 +102,20 @@ class DeliveryController extends Controller
      * @param  Request  $request
      * @param  Trip  $trip
      * @return Response
+     * @throws \Exception
      */
     public function update(Request $request, Trip $trip)
     {
         $this->authorize('update', $trip);
-        $trip->update($this->validateTrip());
-        return redirect('/deliveries');
+
+        $attributes = $this->validateTrip();
+        $attributes['date_time'] = $attributes['date'];
+        unset($attributes['date']);
+        $attributes['date_time'] = new DateTime($attributes['date_time']);
+        $trip->update($attributes);
+        flash('Передачка изменена');
+
+        return redirect(route('delivery.show', $trip));
     }
 
     /**
@@ -110,13 +127,14 @@ class DeliveryController extends Controller
     public function destroy(Trip $trip)
     {
         $this->authorize('delete', $trip);
-        $replies = ReplyTrip::where('trip_id', $trip->id)->get();
+        $replies = Reply::where('post_id', $trip->id)->where('category_id', 3)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }
         $trip->delete();
-        flash('Post удален');
-        return redirect('/deliveries');
+        flash('Передачка удалена');
+
+        return redirect(route('delivery.all'));
     }
 
     protected function validateTrip()
@@ -131,8 +149,10 @@ class DeliveryController extends Controller
 
     public function linkRequest(Trip $trip)
     {
-        Mail::to($trip->owner->email)->send(new RequestLinkFromUserTrip($trip));
+        $route = route('delivery.show', ['posts' => $trip->id]);
+        Mail::to($trip->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$trip->owner->name}");
+
         return back();
     }
 }

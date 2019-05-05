@@ -33,11 +33,9 @@
                     </div>
                 @endforeach
             @else
-                <div class="container">
-                    <div class="notification has-text-centered">
-                        <span class="is-center">Объявлений пока что нет...</span>
-                    </div>
-                </div>
+                @component('components.empty-records')
+                    Объявлений пока что нет...
+                @endcomponent
             @endif
         </div>
     @endcomponent

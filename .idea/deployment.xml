@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="demo">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/../forum" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="reg.ru">
+        <serverdata>
+          <mappings>
+            <mapping deploy="www/app" local="$PROJECT_DIR$/../forum" web="/www/mikun.info" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

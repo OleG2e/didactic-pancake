@@ -2,100 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RequestLinkFromUser;
 use App\Post;
 use App\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class ReplyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  Reply  $reply
      * @return Response
      */
-    public function store(Reply $reply, Post $post)
+    public function store(Reply $reply)
     {
-        $attributes = $this->validateReply();
+        $attributes = request()->validate([
+            'post_id' => 'required|numeric',
+            'category_id' => 'required|numeric',
+            'description' => 'required|string',
+        ]);
         $attributes['owner_id'] = auth()->id();
         $reply->create($attributes);
-        flash('Reply создан');
-        return back();
-    }
+        flash('Ответ создан');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Reply $reply
-     * @return Response
-     */
-    public function show(Reply $reply)
-    {
-        //
+        return back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Reply $reply
-     * @return Response
+     * @param  Reply  $reply
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Reply $reply)
     {
-        dd(phpinfo());
+        $this->authorize('update', $reply);
+
+        return view('subview.reply-edit-form', compact('reply'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Reply $reply
-     * @return Response
+     * @param  Request  $request
+     * @param  Reply  $reply
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Reply $reply)
     {
-        //
+        $this->authorize('update', $reply);
+
+        $reply->update(['description' => $request->validate(['description' => 'required|string'])]);
+        switch ($reply->category_id) {
+            case 1:
+                return redirect(route('post.show', $reply->post));
+                break;
+            case 2:
+                return redirect(route('trip.show', $reply->post));
+                break;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Reply $reply
+     * @param  Reply  $reply
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Reply $reply)
     {
+        $this->authorize('delete', $reply);
+
         $reply->delete();
         flash('Ответ удален');
+
         return back();
     }
 
-    protected function validateReply()
+    public function linkRequest(Reply $reply)
     {
-        return request()->validate([
-            'post_id' => 'required|numeric',
-            'description' => 'required',
-        ]);
+        $route = route('post.show', ['posts' => $reply->post->id]);
+        Mail::to($reply->owner->email)->send(new RequestLinkFromUser($route));
+        flash("Запрос отправлен {$reply->owner->name}");
+        return back();
     }
 }

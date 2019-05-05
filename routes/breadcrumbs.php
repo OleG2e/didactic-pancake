@@ -35,15 +35,15 @@ Breadcrumbs::for('delivery.create', function ($trail) {
 });
 
 // Home > Delivery > Edit
-Breadcrumbs::for('delivery.edit', function ($trail, $delivery) {
+Breadcrumbs::for('delivery.edit', function ($trail, $trip) {
     $trail->parent('delivery.all');
-    $trail->push('Редактировать передачку', route('delivery.edit', $delivery));
+    $trail->push('Редактировать передачку', route('delivery.edit', $trip));
 });
 
 // Home > Delivery > Show
-Breadcrumbs::for('delivery.show', function ($trail, $delivery) {
+Breadcrumbs::for('delivery.show', function ($trail, $trip) {
     $trail->parent('delivery.all');
-    $trail->push('Детали передачки', route('delivery.show', $delivery));
+    $trail->push('Детали передачки', route('delivery.show', $trip));
 });
 // Home > About
 Breadcrumbs::for('feedback.form', function ($trail) {

@@ -26,7 +26,7 @@
                                 <a title="Связаться" class="button is-small"
                                    href="{{route('delivery.link.request', $trip)}}">
                                     <span class="icon is-small">
-                                        <i class="fas fa-link"></i>
+                                        <i class="fa fa-link"></i>
                                     </span>
                                 </a>
                             @endauth
@@ -40,28 +40,30 @@
                         <nav class="level is-mobile">
                             <div class="level-left">
                                 <div class="buttons are-small">
-                                    <a class="button" href="{{route('trip.edit',$trip)}}">
+                                    <a class="button" href="{{route('delivery.edit',$trip)}}">
                                     <span class="icon is-small">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fa fa-edit"></i>
                                     </span>
                                     </a>
                                     <a class="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-trip-form').submit();">
+                                        document.getElementById('delete-delivery-form').submit();">
                                     <span class="icon is-small">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="fa fa-trash"></i>
                                     </span>
                                     </a>
                                 </div>
                             </div>
                         </nav>
                     @endcan
+                    @include('subview.reply', ['post'=> $trip])
                 </div>
             </article>
+            @include('subview.reply-form', ['post' => $trip])
             <br>
             <a class="button is-info is-hovered" href="{{route('delivery.all')}}">Назад</a>
         </div>
     @endcomponent
-    <form id="delete-trip-form" method="post" action="{{route('trip.destroy',$trip)}}">
+    <form id="delete-delivery-form" method="post" action="{{route('delivery.destroy',$trip)}}">
         @method('delete')
         @csrf
     </form>

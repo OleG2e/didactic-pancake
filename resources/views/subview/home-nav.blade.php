@@ -28,7 +28,7 @@
         </li>
         <li class="{{(request()->getRequestUri() == '/home/posts') ? 'is-active' : ''}}">
             <a href="{{route('my.posts')}}">
-                <span class="icon is-small"><i class="fa fa-file-alt" aria-hidden="true"></i></span>
+                <span class="icon is-small"><i class="fa fa-table" aria-hidden="true"></i></span>
                 <span>Мои объявления</span>
             </a>
         </li>
