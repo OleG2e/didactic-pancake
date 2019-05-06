@@ -30,8 +30,13 @@
         <div class="navbar-brand">
             <a class="navbar-item" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }} </a>
+            <div id="navbar-burger-id" class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-        <div class="navbar-menu">
+        <div class="navbar-menu" id="navbar-menu-id">
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
