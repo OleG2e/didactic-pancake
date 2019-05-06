@@ -32,6 +32,7 @@
                         </div>
                     </div>
                 @endforeach
+                <footer class="container">{{ $posts->links() }}</footer>
             @else
                 @component('components.empty-records')
                     Объявлений пока что нет...

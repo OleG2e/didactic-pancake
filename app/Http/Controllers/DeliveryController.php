@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Mail\RequestLinkFromUser;
-use App\Mail\RequestLinkFromUserTrip;
 use App\Reply;
 use App\Town;
 use App\Trip;
-use App\ReplyTrip;
 use Illuminate\Http\Request;
 use DateTime;
 use Illuminate\Http\Response;

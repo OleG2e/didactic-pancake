@@ -7,20 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
-class RequestLinkFromUserPost extends Mailable
+class RequestLinkFromUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $post;
+    public $route;
 
     /**
      * Create a new message instance.
      *
      * @param $post
      */
-    public function __construct($post)
+    public function __construct($route)
     {
-        $this->post = $post;
+        $this->route = $route;
     }
 
     /**
@@ -31,6 +31,6 @@ class RequestLinkFromUserPost extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'))
-            ->markdown('emails.post-link-request-owner');
+            ->markdown('emails.link-request-owner');
     }
 }

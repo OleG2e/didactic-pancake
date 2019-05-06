@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('relevance', true)->latest()->get();
+        $posts = Post::where('relevance', true)->paginate(25);
 
         return view('posts.index', compact('posts'));
     }
