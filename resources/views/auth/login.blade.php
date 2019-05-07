@@ -11,8 +11,8 @@
                                 <label class="label">Логин</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="text"
-                                           placeholder="Имя пользователя" name="name" value="{{ old('name') }}" required
-                                           autofocus>
+                                           placeholder="Имя пользователя" name="login"
+                                           value="{{ old('name') ?: old('email') }}" required autofocus>
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>
                                     </span>
