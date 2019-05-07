@@ -41,6 +41,8 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->hourly();
+
+        $schedule->command('backup:run')->daily();
     }
 
     /**
