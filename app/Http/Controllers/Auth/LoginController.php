@@ -50,6 +50,7 @@ class LoginController extends Controller
     /**
      * Get the login username to be used by the controller.
      *
+     * @source https://tutsforweb.com/laravel-auth-login-email-username-one-field/
      * @return string
      */
     public function findUsername()

@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Reply;
+use App\Trip;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,13 +22,25 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param Schedule $schedule
+     * @param  Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            $trips = Trip::all();
+            foreach ($trips as $trip) {
+                $date = Carbon::parse($trip->date_time);
+                if ($date < Carbon::now()) {
+                    $replies = Reply::where('post_id', $trip->id)->get();
+                    $trip->users()->detach();
+                    foreach ($replies as $reply) {
+                        $reply->delete();
+                    }
+                    $trip->delete();
+                }
+            }
+        })->hourly();
     }
 
     /**
@@ -35,7 +50,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }
