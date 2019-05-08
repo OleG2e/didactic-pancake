@@ -21,8 +21,7 @@
             @if(count($myDeliveries))
                 @foreach($myDeliveries as $trip)
                     <div class="column is-narrow">
-                        <div class="box"
-                             style="width: 250px; background-color: {{$trip->relevance ? 'hsl(171, 100%, 41%)' : 'hsl(48, 100%, 67%)'}}">
+                        <div class="box">
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
@@ -73,11 +72,11 @@
                                 <form method="post" action="{{route('update.relevance.delivery', $trip)}}">
                                     @method('patch')
                                     @csrf
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="relevance"
+                                    <div class="field">
+                                        <input id="switch-{{$trip->id}}" type="checkbox" name="relevance" class="switch"
                                                onchange="this.form.submit()" {{$trip->relevance ? 'checked' : ''}}>
-                                        Показывать
-                                    </label>
+                                        <label for="switch-{{$trip->id}}">Показ</label>
+                                    </div>
                                 </form>
                             </div>
                         </div>

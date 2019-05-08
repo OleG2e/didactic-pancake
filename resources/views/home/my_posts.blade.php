@@ -21,8 +21,7 @@
             @if(count($myPosts))
                 @foreach($myPosts as $post)
                     <div class="column is-narrow">
-                        <div class="box"
-                             style="width: 250px; background-color: {{$post->relevance ? 'hsl(171, 100%, 41%)' : 'hsl(48, 100%, 67%)'}}">
+                        <div class="box">
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
@@ -70,11 +69,11 @@
                                 <form method="post" action="{{route('update.relevance.post', $post)}}">
                                     @method('patch')
                                     @csrf
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="relevance"
+                                    <div class="field">
+                                        <input id="switch-{{$post->id}}" type="checkbox" name="relevance" class="switch"
                                                onchange="this.form.submit()" {{$post->relevance ? 'checked' : ''}}>
-                                        Показывать
-                                    </label>
+                                        <label for="switch-{{$post->id}}">Показ</label>
+                                    </div>
                                 </form>
                             </div>
                         </div>
