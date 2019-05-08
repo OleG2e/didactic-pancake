@@ -61,9 +61,10 @@
                     @include('subview.reply', $post)
                 </div>
             </article>
-            @include('subview.reply-form', $post)
-            <br>
-            <a class="button is-info is-hovered" href="{{route('post.all')}}">Назад</a>
+            <section class="section">
+                @include('subview.reply-form', $post)
+            </section>
+            <div class="container">{{ $post->replies()->links() }}</div>
         </div>
     @endcomponent
     <form id="delete-post-form" method="post" action="{{route('post.destroy', $post)}}">
