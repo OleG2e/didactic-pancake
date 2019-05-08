@@ -24,6 +24,6 @@ class Post extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class)->where('category_id', $this->category->id)->get();
+        return $this->hasMany(Reply::class)->where('category_id', $this->category->id)->paginate(10);
     }
 }
