@@ -19,7 +19,7 @@ class Post extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class)->withDefault();
+        return $this->belongsTo(CategoryPost::class)->withDefault();
     }
 
     public function replies()

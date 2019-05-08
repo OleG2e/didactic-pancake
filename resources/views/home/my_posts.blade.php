@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
             @component('components.flash_message', ['type'=>'is-success'])
                 {{ session('message') }}
@@ -27,7 +26,7 @@
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title">{{$post->category->title}}</p>
+                                        <h4 class="title is-4">{{$post->category->title}}</h4>
                                     </div>
                                 </div>
                                 <div class="level-right">
@@ -61,9 +60,8 @@
                                     </footer>
                                 </div>
                             </div>
-                            <p class="subtitle"><strong>{{$post->owner->name}}</strong>
-                                <small> {{$post->created_at}}</small>
-                            </p>
+                            <h6 class="subtitle is-6">Дата:
+                                <br>{{$post->created_at}}</h6>
                             <div class="content">
                                 <div class="more">{{$post->description}}</div>
                                 <a href="{{route('post.show', $post)}}">

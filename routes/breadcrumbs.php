@@ -57,27 +57,27 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Кабинет', route('home'));
 });
 
-// Home > Post
-Breadcrumbs::for('post.all', function ($trail) {
-    $trail->parent('main');
-    $trail->push('Объявления', route('post.all'));
-});
+//// Home > Post
+//Breadcrumbs::for('post.all', function ($trail) {
+//    $trail->parent('main');
+//    $trail->push('Объявления', route('post.all'));
+//});
 
 // Home > Post > Create
 Breadcrumbs::for('post.create', function ($trail) {
-    $trail->parent('post.all');
+    $trail->parent('main');
     $trail->push('Создать объявление', route('post.create'));
 });
 
 // Home > Post > Edit
 Breadcrumbs::for('post.edit', function ($trail, $post) {
-    $trail->parent('post.all');
+    $trail->parent('main');
     $trail->push('Редактировать объявление', route('post.edit', $post));
 });
 
 // Home > Post > Show
 Breadcrumbs::for('post.show', function ($trail, $post) {
-    $trail->parent('post.all');
+    $trail->parent('main');
     $trail->push('Детали объявления', route('post.show', $post));
 });
 

@@ -48,7 +48,7 @@
                         </button>
                     </div>
                     <div class="control">
-                        <a class="button is-text" href="{{route('post.all')}}">Отмена</a>
+                        <a class="button is-text" href="{{back()->getTargetUrl()}}">Отмена</a>
                     </div>
                 </div>
                 @include('layouts.errors')

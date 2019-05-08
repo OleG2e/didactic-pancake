@@ -36,9 +36,14 @@ Route::post('/home/image/upload', 'HomeController@updateAvatar')->name('image.up
 Route::resource('categories', 'CategoryController');
 Route::resource('towns', 'TownController');
 
-Route::get('/posts', 'PostController@index')->name('post.all');
 Route::post('/posts', 'PostController@store')->name('post.store');
 Route::get('/posts/create', 'PostController@create')->name('post.create');
+Route::get('/posts/buy', 'PostController@index')->name('post.buy');
+Route::get('/posts/sell', 'PostController@index')->name('post.sell');
+Route::get('/posts/help', 'PostController@index')->name('post.help');
+Route::get('/posts/pets', 'PostController@index')->name('post.pets');
+Route::get('/posts/service', 'PostController@index')->name('post.service');
+Route::get('/posts/loss', 'PostController@index')->name('post.loss');
 Route::get('/posts/{post}', 'PostController@show')->name('post.show');
 Route::delete('/posts/{post}', 'PostController@destroy')->name('post.destroy');
 Route::patch('/posts/{post}', 'PostController@update')->name('post.update');
