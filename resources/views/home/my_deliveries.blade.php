@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('delivery.all') }}
         @if (session('message'))
             @component('components.flash_message', ['type'=>'is-success'])
                 {{ session('message') }}

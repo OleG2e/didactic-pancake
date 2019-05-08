@@ -43,13 +43,14 @@
                         Категории
                     </a>
                     <div class="navbar-dropdown is-right is-boxed">
-                        <a class="navbar-item" href="{{ route('post.all') }}">
+                        <a class="navbar-item" href="{{ route('post.help') }}">
                             <div>
                   <span class="icon is-small">
                     <i class="fa fa-table"></i>
                   </span>
                                 Объявления
                             </div>
+
                         </a>
                         <a class="navbar-item" href="{{route('trip.all')}}">
                             <div>

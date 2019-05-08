@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
             @component('components.flash_message', ['type'=>'is-success'])
                 {{ session('message') }}
@@ -27,7 +26,7 @@
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title">{{$trip->category->title}}</p>
+                                        <h4 class="title is-4">{{$trip->category->title}}</h4>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -65,10 +64,9 @@
                                     </div>
                                 </div>
                             @endcan
-                            <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
-                            <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
-                                <small> {{$trip->created_at}}</small>
-                            </p>
+                            <h4 class="title is-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
+                            <h6 class="subtitle is-6">Дата:
+                                <br>{{$trip->created_at}}</h6>
                             <div class="content">
                                 <a href="{{route('trip.show', $trip)}}">
                                     Обсудить

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.all') }}
         @if (session('message'))
             @component('components.flash_message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
+        @include('subview.posts-nav')
         @auth
             <nav class="level">
                 <div class="level-item level-left">
@@ -19,7 +19,6 @@
                 @foreach($posts as $post)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            <p class="title">{{$post->category->title}}</p>
                             <p class="subtitle"><strong>{{$post->owner->name}}</strong>
                                 <small> {{$post->updated_at->diffForHumans()}}</small>
                             </p>
@@ -35,7 +34,7 @@
                 <footer class="container">{{ $posts->links() }}</footer>
             @else
                 @component('components.empty-records')
-                    Объявлений пока что нет...
+                    Объявлений нет...
                 @endcomponent
             @endif
         </div>

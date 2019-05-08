@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\RequestLinkFromUser;
 use App\Post;
-use App\Category;
+use App\CategoryPost;
 use App\Reply;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,9 +27,34 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('relevance', true)->paginate(25);
+        $routeName = \Request::route()->getName();
+        switch ($routeName) {
+            case 'post.buy':
+                $posts = Post::where('relevance', true)->where('category_id', 1)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+            case 'post.sell':
+                $posts = Post::where('relevance', true)->where('category_id', 2)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+            case 'post.help':
+                $posts = Post::where('relevance', true)->where('category_id', 3)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+            case 'post.pets':
+                $posts = Post::where('relevance', true)->where('category_id', 4)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+            case 'post.service':
+                $posts = Post::where('relevance', true)->where('category_id', 5)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+            case 'post.loss':
+                $posts = Post::where('relevance', true)->where('category_id', 6)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
+        }
 
-        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -39,7 +64,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = CategoryPost::all();
 
         return view('posts.create', compact('categories'));
     }
@@ -56,10 +81,10 @@ class PostController extends Controller
         $attributes = $this->validatePost();
         $attributes['owner_id'] = auth()->id();
         $attributes['images'] = $images;
-        $post->create($attributes);
+        $createdPost = $post->create($attributes);
         flash('Объявление создано');
 
-        return redirect('/posts');
+        return redirect(route('post.show', $createdPost));
     }
 
     /**
@@ -85,11 +110,11 @@ class PostController extends Controller
      * @param  Post  $post
      * @return Response
      */
-    public function edit(Post $post, Category $category)
+    public function edit(Post $post, CategoryPost $category)
     {
         $this->authorize('update', $post);
 
-        $categories = Category::all();
+        $categories = CategoryPost::all();
 
         return view('posts.edit', [
             'post' => $post,
@@ -135,7 +160,7 @@ class PostController extends Controller
         $post->delete();
         flash('Объявление удалено');
 
-        return redirect(route('post.all'));
+        return redirect(route('my.posts'));
     }
 
     protected function imageUpload(Request $request)
