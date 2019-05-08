@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bulma-badge@3.0.0/dist/css/bulma-badge.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.5/bulma-tooltip/dist/css/bulma-tooltip.min.css">
 
 </head>
 <body class="has-navbar-fixed-top">
