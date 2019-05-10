@@ -53,6 +53,8 @@ class PostController extends Controller
                 $posts = Post::where('relevance', true)->where('category_id', 6)->paginate(25);
                 return view('posts.index', compact('posts'));
                 break;
+            default:
+                return redirect(route('home'));
         }
 
     }
@@ -116,10 +118,7 @@ class PostController extends Controller
 
         $categories = CategoryPost::all();
 
-        return view('posts.edit', [
-            'post' => $post,
-            'categories' => $categories
-        ]);
+        return view('posts.edit', compact(['post', 'categories']));
     }
 
     /**

@@ -2,10 +2,6 @@
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('main');
-
 Route::get('/how-much', function () {
     return view('how_much');
 })->name('how_much');
@@ -19,6 +15,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/admin/mail', 'AdminController@feedbackSubmit')->name('admin.feedback.submit');
 });
 
+Route::get('/', 'WelcomeController@index')->name('main');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@store')->name('home.store');
 Route::get('/home/posts', 'HomeController@myPosts')->name('my.posts');

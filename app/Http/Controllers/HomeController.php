@@ -53,7 +53,6 @@ class HomeController extends Controller
     public function updateRelevancePost(Post $post, Request $request)
     {
         $post->update([
-            'updated_at' => time(),
             'relevance' => $request->has('relevance'),
         ]);
         return back();
@@ -62,7 +61,6 @@ class HomeController extends Controller
     public function updateRelevanceTrip(Trip $trip, Request $request)
     {
         $trip->update([
-            'updated_at' => time(),
             'relevance' => $request->has('relevance'),
         ]);
         return back();
@@ -71,7 +69,6 @@ class HomeController extends Controller
     public function updateRelevanceDelivery(Trip $trip, Request $request)
     {
         $trip->update([
-            'updated_at' => time(),
             'relevance' => $request->has('relevance'),
         ]);
         return back();
@@ -80,7 +77,6 @@ class HomeController extends Controller
     public function updateRelevanceEntry(Entry $entry, Request $request)
     {
         $entry->update([
-            'updated_at' => time(),
             'relevance' => $request->has('relevance'),
         ]);
         return back();
