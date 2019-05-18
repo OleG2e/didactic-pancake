@@ -18,9 +18,6 @@ class TripUserController extends Controller
 
     public function addUser(Trip $trip)
     {
-        if (!$this->availability($trip)) {
-            return back()->with(flash('Мест нет'));
-        }
         $user = auth()->user();
         $user->trips()->attach($trip);
         $trip->decrement('passengers_count');
@@ -46,10 +43,5 @@ class TripUserController extends Controller
         flash('Вы отказались от поездки');
 
         return back();
-    }
-
-    private function availability(Trip $trip)
-    {
-        return ($trip->passengers_count - $trip->users()->count()) >= 0 ? true : false;
     }
 }

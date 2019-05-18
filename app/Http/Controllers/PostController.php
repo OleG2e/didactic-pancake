@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\RequestLinkFromUser;
 use App\Post;
-use App\CategoryPost;
+use App\Category;
 use App\Reply;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,6 +20,11 @@ class PostController extends Controller
         $this->middleware(['auth', 'verified'])->except(['index', 'show']);
     }
 
+    protected function sql($id)
+    {
+        return Post::where('relevance', true)->where('category_id', $id)->paginate(25);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,27 +35,45 @@ class PostController extends Controller
         $routeName = \Request::route()->getName();
         switch ($routeName) {
             case 'post.buy':
-                $posts = Post::where('relevance', true)->where('category_id', 1)->paginate(25);
+                $posts = $this->sql(4);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
             case 'post.sell':
-                $posts = Post::where('relevance', true)->where('category_id', 2)->paginate(25);
+                $posts = $this->sql(5);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
             case 'post.help':
-                $posts = Post::where('relevance', true)->where('category_id', 3)->paginate(25);
+                $posts = $this->sql(6);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
-            case 'post.pets':
-                $posts = Post::where('relevance', true)->where('category_id', 4)->paginate(25);
+            case 'post.pet':
+                $posts = $this->sql(7);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
             case 'post.service':
-                $posts = Post::where('relevance', true)->where('category_id', 5)->paginate(25);
+                $posts = $this->sql(8);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
             case 'post.loss':
-                $posts = Post::where('relevance', true)->where('category_id', 6)->paginate(25);
+                $posts = $this->sql(9);
+                if (\request()->wantsJson()) {
+                    return $posts;
+                }
                 return view('posts.index', compact('posts'));
                 break;
             default:
@@ -66,7 +89,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = CategoryPost::all();
+        $categories = Category::where('id', '>', 3)->get();
 
         return view('posts.create', compact('categories'));
     }
@@ -100,10 +123,10 @@ class PostController extends Controller
         if (isset($post->images)) {
             $imagesAll = json_decode($post->images);
 
-            return view('posts.show', compact(['reply', 'post', 'imagesAll']));
+            return view('posts.show', compact(['post', 'imagesAll']));
         }
 
-        return view('posts.show', compact(['reply', 'post']));
+        return view('posts.show', compact(['post']));
     }
 
     /**
@@ -111,12 +134,13 @@ class PostController extends Controller
      *
      * @param  Post  $post
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Post $post, CategoryPost $category)
+    public function edit(Post $post)
     {
         $this->authorize('update', $post);
 
-        $categories = CategoryPost::all();
+        $categories = Category::where('id', '>', 3)->get();
 
         return view('posts.edit', compact(['post', 'categories']));
     }
@@ -127,6 +151,7 @@ class PostController extends Controller
      * @param  Request  $request
      * @param  Post  $post
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Post $post)
     {
@@ -137,8 +162,7 @@ class PostController extends Controller
         $attributes['images'] = $images;
         $post->update($attributes);
         flash('Объявление изменено');
-
-        return redirect(route('post.show', $post));
+        return redirect(route('post.show', $post->id));
     }
 
     /**
@@ -185,7 +209,7 @@ class PostController extends Controller
     protected function validatePost()
     {
         return request()->validate([
-            'category_id' => 'required|integer',
+            'category_id' => 'required|integer|exists:categories,id',
             'title' => 'required',
             'description' => 'required',
         ]);

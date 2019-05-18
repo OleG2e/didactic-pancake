@@ -66,6 +66,7 @@
                                 <small> {{$trip->created_at}}</small>
                             </p>
                             <div class="content">
+                                <div class="more">{{$trip->description}}</div>
                                 <a href="{{route('delivery.show', $trip)}}">
                                     Обсудить
                                 </a>

@@ -12,10 +12,6 @@ class Reply extends Model
     ];
     protected $with = ['owner', 'post', 'category'];
 
-    protected $dispatchesEvents = [
-        'created' => ReplyCreated::class,
-    ];
-
     public function owner()
     {
         return $this->belongsTo(User::class)->withDefault();
@@ -23,7 +19,12 @@ class Reply extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class)->withDefault();
+        return $this->belongsTo(Post::class);
+    }
+
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
     }
 
     public function category()

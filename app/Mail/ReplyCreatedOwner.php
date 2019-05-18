@@ -19,7 +19,7 @@ class ReplyCreatedOwner extends Mailable
      *
      * @param $reply
      */
-    public function __construct(Reply $reply)
+    public function __construct($reply)
     {
         $this->reply = $reply;
     }
@@ -31,7 +31,7 @@ class ReplyCreatedOwner extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        return $this->from(config('mail.from.address'))
             ->markdown('emails.reply-created');
     }
 }

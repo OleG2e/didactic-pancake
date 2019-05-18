@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\RequestLinkFromUser;
-use App\Post;
 use App\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -61,15 +60,17 @@ class ReplyController extends Controller
     public function update(Request $request, Reply $reply)
     {
         $this->authorize('update', $reply);
+        $reply->update($request->validate(['description' => 'required|string']));
 
-        $reply->update(['description' => $request->validate(['description' => 'required|string'])]);
-        switch ($reply->category_id) {
-            case 1:
-                return redirect(route('post.show', $reply->post));
+        switch ($reply->category->slug) {
+            case 'trip':
+                return redirect(route('trip.show', $reply->post_id));
                 break;
-            case 2:
-                return redirect(route('trip.show', $reply->post));
+            case 'delivery':
+                return redirect(route('delivery.show', $reply->post_id));
                 break;
+            default:
+                return redirect(route('post.show', $reply->post_id));
         }
     }
 
@@ -85,14 +86,24 @@ class ReplyController extends Controller
         $this->authorize('delete', $reply);
 
         $reply->delete();
-        flash('Ответ удален');
+        flash('Ответ удалён');
 
         return back();
     }
 
     public function linkRequest(Reply $reply)
     {
-        $route = route('post.show', ['posts' => $reply->post->id]);
+        switch ($reply->category->id) {
+            case 2:
+                $route = route('trip.show', ['posts' => $reply->post_id]);
+                break;
+            case 3:
+                $route = route('delivery.show', ['posts' => $reply->post_id]);
+                break;
+            default:
+                $route = route('post.show', ['posts' => $reply->post_id]);
+        }
+
         Mail::to($reply->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$reply->owner->name}");
         return back();
