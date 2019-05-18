@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +13,9 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => \Hash::make('1234'),
-        'remember_token' => Str::random(10),
-        'link' => 'UserLink',
-        'law' => true,
+        'title' => $faker->word,
+        'slug' => $faker->word,
     ];
 });

@@ -67,6 +67,7 @@
                             <h6 class="subtitle is-6">Дата:
                                 <br>{{$trip->created_at}}</h6>
                             <div class="content">
+                                <div class="more">{{$trip->description}}</div>
                                 <a href="{{route('trip.show', $trip)}}">
                                     Обсудить
                                 </a>

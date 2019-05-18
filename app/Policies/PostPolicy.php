@@ -19,7 +19,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $post->owner_id === $user->id;
+        return $post->owner_id == $user->id;
     }
 
     /**
@@ -31,7 +31,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $post->owner_id === $user->id;
+        return $post->owner_id == $user->id;
     }
 
     /**
@@ -43,7 +43,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post)
     {
-        return $post->owner_id === $user->id;
+        return $post->owner_id == $user->id;
     }
 
     /**
@@ -55,6 +55,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post)
     {
-        return $post->owner_id === $user->id;
+        return $post->owner_id == $user->id;
     }
 }

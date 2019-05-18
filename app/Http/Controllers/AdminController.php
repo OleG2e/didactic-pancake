@@ -24,6 +24,6 @@ class AdminController extends Controller
         $email = (string) $request['email'];
         Mail::to($email)->send(new FeedbackToUser($message));
         flash('Твоё сообщение было отправлено юзеру');
-        return back();
+        return redirect(route('home'));
     }
 }

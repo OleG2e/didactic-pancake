@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Entry;
 use App\Mail\FeedbackFromUser;
 use App\Post;
 use App\Trip;
@@ -74,14 +73,6 @@ class HomeController extends Controller
         return back();
     }
 
-    public function updateRelevanceEntry(Entry $entry, Request $request)
-    {
-        $entry->update([
-            'relevance' => $request->has('relevance'),
-        ]);
-        return back();
-    }
-
     /**
      * Update the avatar for the user.
      *
@@ -91,7 +82,7 @@ class HomeController extends Controller
     public function updateAvatar(Request $request)
     {
         $path = $request->file('avatar')->storeAs('avatars/'.auth()->id(), 'avatar.jpg', 'public');
-        Image::make(url($path))->resize(512, 512)->save('storage/'.$path);
+        Image::make(url($path))->fit(512)->save('storage/'.$path);
         return back();
     }
 
@@ -107,12 +98,6 @@ class HomeController extends Controller
     {
         $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', 3)->latest()->get();
         return view('home.my_deliveries', compact('myDeliveries'));
-    }
-
-    public function myEntries(Entry $entry)
-    {
-        $myEntries = Entry::where('owner_id', auth()->id())->latest()->get();
-        return view('home.my_entries', compact('myEntries'));
     }
 
     public function feedbackForm()

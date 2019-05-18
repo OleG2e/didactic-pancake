@@ -19,7 +19,7 @@ class ReplyPolicy
      */
     public function update(User $user, Reply $reply)
     {
-        return $reply->owner_id === $user->id;
+        return $reply->owner_id == $user->id;
     }
 
     /**
@@ -31,7 +31,7 @@ class ReplyPolicy
      */
     public function delete(User $user, Reply $reply)
     {
-        return $reply->owner_id === $user->id;
+        return $reply->owner_id == $user->id;
     }
 
     /**
@@ -43,7 +43,7 @@ class ReplyPolicy
      */
     public function restore(User $user, Reply $reply)
     {
-        return $reply->owner_id === $user->id;
+        return $reply->owner_id == $user->id;
     }
 
     /**
@@ -55,6 +55,6 @@ class ReplyPolicy
      */
     public function forceDelete(User $user, Reply $reply)
     {
-        return $reply->owner_id === $user->id;
+        return $reply->owner_id == $user->id;
     }
 }

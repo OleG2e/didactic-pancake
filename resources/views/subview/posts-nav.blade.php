@@ -6,8 +6,8 @@
                 <span>Помощь</span>
             </a>
         </li>
-        <li class="{{(Request::route()->getName() == 'post.pets') ? 'is-active' : ''}}">
-            <a href="{{route('post.pets')}}">
+        <li class="{{(Request::route()->getName() == 'post.pet') ? 'is-active' : ''}}">
+            <a href="{{route('post.pet')}}">
                                 <span class="icon is-small">
                                     <i class="fa fa-paw"
                                        aria-hidden="true"></i>

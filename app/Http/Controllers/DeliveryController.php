@@ -51,13 +51,11 @@ class DeliveryController extends Controller
      */
     public function store(Trip $trip)
     {
-        $attributes = $this->validateTrip();
-        $attributes['date_time'] = $attributes['date'];
+        $attributes = $this->validateDelivery();
         $attributes['category_id'] = 3;
         $attributes['passengers_count'] = 0;
         $attributes['price'] = 0;
-        unset($attributes['date']);
-        $attributes['date_time'] = new DateTime($attributes['date_time']);
+        $attributes['date_time'] = new DateTime($attributes['date']);
         $attributes['owner_id'] = auth()->id();
         $trip->create($attributes);
         flash('Передачка создана');
@@ -105,7 +103,7 @@ class DeliveryController extends Controller
     {
         $this->authorize('update', $trip);
 
-        $attributes = $this->validateTrip();
+        $attributes = $this->validateDelivery();
         $attributes['date_time'] = $attributes['date'];
         unset($attributes['date']);
         $attributes['date_time'] = new DateTime($attributes['date_time']);
@@ -134,13 +132,13 @@ class DeliveryController extends Controller
         return redirect(route('delivery.all'));
     }
 
-    protected function validateTrip()
+    protected function validateDelivery()
     {
         return request()->validate([
             'startpoint_id' => 'required|integer',
             'endpoint_id' => 'required|integer',
             'date' => 'required',
-            'description' => 'string|nullable',
+            'description' => 'required|string',
         ]);
     }
 

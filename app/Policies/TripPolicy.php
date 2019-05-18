@@ -19,7 +19,7 @@ class TripPolicy
      */
     public function update(User $user, Trip $trip)
     {
-        return $trip->owner_id === $user->id;
+        return $trip->owner_id == $user->id;
     }
 
     /**
@@ -31,7 +31,7 @@ class TripPolicy
      */
     public function delete(User $user, Trip $trip)
     {
-        return $trip->owner_id === $user->id;
+        return $trip->owner_id == $user->id;
     }
 
     /**
@@ -43,7 +43,7 @@ class TripPolicy
      */
     public function restore(User $user, Trip $trip)
     {
-        return $trip->owner_id === $user->id;
+        return $trip->owner_id == $user->id;
     }
 
     /**
@@ -55,6 +55,6 @@ class TripPolicy
      */
     public function forceDelete(User $user, Trip $trip)
     {
-        return $trip->owner_id === $user->id;
+        return $trip->owner_id == $user->id;
     }
 }

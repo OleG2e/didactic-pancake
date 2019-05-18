@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </form>
-            <form method="post" action="{{route('image.upload')}}" enctype="multipart/form-data"
+            <form method="post" action="{{route('home.image.upload')}}" enctype="multipart/form-data"
                   style="margin-left: 20px">
                 @csrf
                 <div class="field">

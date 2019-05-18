@@ -39,10 +39,9 @@ class TripController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
         $towns = Town::all();
 
-        return view('trips.create', compact(['towns', 'categories']));
+        return view('trips.create', compact(['towns']));
     }
 
     /**
@@ -55,10 +54,7 @@ class TripController extends Controller
     public function store(Trip $trip)
     {
         $attributes = $this->validateTrip();
-        $attributes['date_time'] = $attributes['date'].' '.$attributes['time'];
-        unset($attributes['date']);
-        unset($attributes['time']);
-        $attributes['date_time'] = new DateTime($attributes['date_time']);
+        $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $attributes['owner_id'] = auth()->id();
         $attributes['category_id'] = 2;
         $createdTrip = $trip->create($attributes);
@@ -91,11 +87,10 @@ class TripController extends Controller
     {
         $this->authorize('update', $trip);
 
-        $categories = Category::all();
         $towns = Town::all();
         $dateTime = new DateTime($trip->date_time);
 
-        return view('trips.edit', compact(['trip', 'categories', 'towns', 'dateTime']));
+        return view('trips.edit', compact(['trip', 'towns', 'dateTime']));
     }
 
     /**
@@ -111,10 +106,7 @@ class TripController extends Controller
         $this->authorize('update', $trip);
 
         $attributes = $this->validateTrip();
-        $attributes['date_time'] = $attributes['date'].' '.$attributes['time'];
-        unset($attributes['date']);
-        unset($attributes['time']);
-        $attributes['date_time'] = new DateTime($attributes['date_time']);
+        $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $trip->update($attributes);
         flash('Поездка изменена');
 
@@ -140,15 +132,6 @@ class TripController extends Controller
         flash('Поездка удалена');
 
         return redirect(route('trip.all'));
-    }
-
-    public function linkRequest(Trip $post)
-    {
-        $route = route('delivery.show', ['trip' => $post->id]);
-        Mail::to($post->owner->email)->send(new RequestLinkFromUser($route));
-        flash("Запрос отправлен {$post->owner->name}");
-
-        return back();
     }
 
     protected function validateTrip()
