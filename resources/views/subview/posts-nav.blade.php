@@ -1,4 +1,4 @@
-<div class="tabs is-centered is-toggle is-toggle-rounded">
+<div class="tabs is-centered is-toggle is-toggle-rounded is-hidden-touch">
     <ul>
         <li class="{{(Request::route()->getName() == 'post.help') ? 'is-active' : ''}}">
             <a href="{{route('post.help')}}">

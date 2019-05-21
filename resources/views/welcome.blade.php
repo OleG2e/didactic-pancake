@@ -13,7 +13,7 @@
         </div>
     </section>
     <div class="container box has-text-centered">
-        <h1 class="title is-center">Последние 10 объявлений:</h1>
+        <h4 class="title is-4 is-center">Последние 10 объявлений:</h4>
         <div class="columns">
             @foreach($allPosts as $postsCategory)
                 @if($postsCategory->isNotEmpty())

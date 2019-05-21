@@ -17,13 +17,13 @@
                 @endauth
             </div>
         </nav>
-        <div class="title">Актуальные передачки:</div>
+        <h4 class="title is-size-4">Актуальные передачки:</h4>
         <div class="columns is-multiline">
             @if (count($deliveries))
                 @foreach($deliveries as $trip)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
+                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
                             <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
                                 <small> {{$trip->updated_at->diffForHumans()}}</small>
                             </p>

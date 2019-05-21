@@ -8,7 +8,7 @@
                     {{ session('message') }}
                 @endcomponent
             @endif
-            <h4 class="title is-4">Расписание движения автобусов Сыктывкар - Микунь</h4>
+            <h4 class="title is-size-4">Расписание движения автобусов Сыктывкар - Микунь</h4>
             <table class="table is-bordered">
                 <thead>
                 <tr>
@@ -122,7 +122,7 @@
                 </tr>
                 </tbody>
             </table>
-            <h4 class="title is-4">Расписание движения автобусов по Усть-Вымскому р-ну с 1 мая по 30 сентября 2019
+            <h4 class="title is-size-4">Расписание движения автобусов по Усть-Вымскому р-ну с 1 мая по 30 сентября 2019
                 года</h4>
             <table class="table is-bordered">
                 <thead>

@@ -43,44 +43,94 @@
         <div class="navbar-menu" id="navbar-menu-id">
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Категории
-                    </a>
-                    <div class="navbar-dropdown is-right is-boxed">
-                        <a class="navbar-item" href="{{ route('post.help') }}">
-                            <div>
-                  <span class="icon is-small">
-                    <i class="fa fa-table"></i>
-                  </span>
-                                Объявления
+                    <ul class="menu-list">
+                        <li>
+                            <a class="navbar-link">
+                                Категории
+                            </a>
+                            <div class="navbar-dropdown is-right is-boxed">
+                                    <div class="navbar-item">
+                                      <span class="icon is-small">
+                                        <i class="fa fa-table"></i>
+                                      </span>
+                                        Объявления
+                                    </div>
+                                <ul>
+                                    <li>
+                                        <a href="{{route('post.help')}}">
+                                            <span class="icon is-small"><i class="fa fa-hand-holding-heart"
+                                                                           aria-hidden="true"></i></span>
+                                            <span>Помощь</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('post.pet')}}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-paw"
+                                       aria-hidden="true"></i>
+                                </span>
+                                            <span>Животные</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('post.loss')}}">
+                                            <span class="icon is-small"><i class="fa fa-key"
+                                                                           aria-hidden="true"></i></span>
+                                            <span>Потери</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('post.buy')}}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-money-bill" aria-hidden="true"></i>
+                                </span>
+                                            <span>Куплю</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('post.sell')}}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-money-bill-wave"
+                                       aria-hidden="true"></i>
+                                </span>
+                                            <span>Продам</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('post.service')}}">
+                                            <span class="icon is-small"><i class="fa fa-concierge-bell"
+                                                                           aria-hidden="true"></i></span>
+                                            <span>Услуги</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <a class="navbar-item" href="{{route('trip.all')}}">
+                                    <div>
+                                      <span class="icon is-small">
+                                        <i class="fa fa-car"></i>
+                                      </span>
+                                        Поездки
+                                    </div>
+                                </a>
+                                <a class="navbar-item" href="{{ route('delivery.all') }}">
+                                    <div>
+                                      <span class="icon is-small">
+                                        <i class="fa fa-cube"></i>
+                                      </span>
+                                        Передачки
+                                    </div>
+                                </a>
+                                <a class="navbar-item" href="{{ route('bus.schedule') }}">
+                                    <div>
+                                      <span class="icon is-small">
+                                        <i class="fa fa-bus"></i>
+                                      </span>
+                                        Расписание
+                                    </div>
+                                </a>
                             </div>
-
-                        </a>
-                        <a class="navbar-item" href="{{route('trip.all')}}">
-                            <div>
-                  <span class="icon is-small">
-                    <i class="fa fa-car"></i>
-                  </span>
-                                Поездки
-                            </div>
-                        </a>
-                        <a class="navbar-item" href="{{ route('delivery.all') }}">
-                            <div>
-                  <span class="icon is-small">
-                    <i class="fa fa-cube"></i>
-                  </span>
-                                Передачки
-                            </div>
-                        </a>
-                        <a class="navbar-item" href="{{ route('bus.schedule') }}">
-                            <div>
-                  <span class="icon is-small">
-                    <i class="fa fa-bus"></i>
-                  </span>
-                                Расписание
-                            </div>
-                        </a>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="navbar-end">
@@ -92,33 +142,67 @@
                             {{ Auth::user()->name }}
                         </div>
                         <div class="navbar-dropdown is-right is-boxed">
-                            <a class="navbar-item" href="{{ route('home') }}">
-                                <div>
+                            @php
+                                $user = auth()->user();
+                            $myTrips = $user->trips()->count();
+                            $myPosts = $user->posts()->count();
+                            $myDeliveries = $user->deliveries()->count();
+                            @endphp
+                            <ul class="menu-list">
+                                <li>
+                                    <a class="navbar-item" href="{{ route('home') }}">
+                                        <div>
+                                            <span class="icon is-small">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                            Мой кабинет
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="navbar-item" href="{{route('my.trips')}}">
+                                            <span class="has-badge-inline" data-badge="{{$myTrips}}">
+                                               Мои поездки
+                                            </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="navbar-item" href="{{route('my.posts')}}">
+                                            <span class="has-badge-inline"
+                                                  data-badge="{{$myPosts}}">
+                                                Мои объявления
+                                            </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="navbar-item" href="{{route('my.deliveries')}}">
+                                            <span class="has-badge-inline" data-badge="{{$myDeliveries}}">
+                                                Мои передачки
+                                            </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <a class="navbar-item" href="{{ route('feedback.form') }}">
+                                        <div>
                                     <span class="icon is-small">
-                    <i class="fa fa-user"></i>
-                  </span>
-                                    Мой кабинет
-                                </div>
-                            </a>
-                            <a class="navbar-item" href="{{ route('feedback.form') }}">
-                                <div>
-                                    <span class="icon is-small">
-                    <i class="fa fa-envelope"></i>
-                  </span>
-                                    Написать админу
-                                </div>
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                                <div>
-                                    <span class="icon is-small">
-                    <i class="fa fa-sign-out-alt"></i>
-                  </span>
-                                    Выйти
-                                </div>
-                            </a>
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                            Написать админу
+                                        </div>
+                                    </a>
+                                    <hr class="navbar-divider">
+                                    <a class="navbar-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        <div>
+                                        <span class="icon is-small">
+                                            <i class="fa fa-sign-out-alt"></i>
+                                        </span>
+                                            Выйти
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
             </div>

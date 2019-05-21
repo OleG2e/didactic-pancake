@@ -6,7 +6,7 @@
                 <input type="hidden" name="post_id" value="{{$post->id}}">
                 <input type="hidden" name="category_id" value="{{$post->category_id}}">
                 <article class="media">
-                    <figure class="media-left">
+                    <figure class="media-left is-hidden-touch">
                         <p class="image is-64x64">
                             <img class="is-rounded"
                                  src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
@@ -15,7 +15,7 @@
                     <div class="media-content">
                         <div class="field">
                             <p class="control">
-                                        <textarea class="textarea" name="description" cols="6" rows="3"
+                                        <textarea class="textarea" name="description"
                                                   placeholder="Комментарий..."></textarea>
                             </p>
                         </div>

@@ -3,7 +3,7 @@
     @component('components.hero')
         {{ Breadcrumbs::render('post.edit', $post) }}
         <div class="box">
-            <div class="title">Редактирование объявления {{$post->title}}</div>
+            <h4 class="title is-size-4">Редактирование объявления {{$post->title}}</h4>
             <form method="post" action="{{route('post.update', $post)}}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
@@ -25,8 +25,11 @@
                         <label class="label">Заголовок:</label>
                         <input class="input is-rounded" type="text" placeholder="{{$post->title}}" name="title"
                                value="{{$post->title}}"
-                               required>{{old('title')}}
+                               required>
                     </div>
+                    @if ($errors->has('title'))
+                        <p class="help is-danger">{{ $errors->first('title') }}</p>
+                    @endif
                 </div>
                 <div class="field">
                     <label class="label">Текст:</label>
@@ -34,6 +37,9 @@
                         <textarea class="textarea" placeholder="{{$post->description}}"
                                   name="description">{{$post->description}}</textarea>
                     </div>
+                    @if ($errors->has('description'))
+                        <p class="help is-danger">{{ $errors->first('description') }}</p>
+                    @endif
                 </div>
                 <div class="field">
                     <label class="label">Фотографии</label>
@@ -43,15 +49,14 @@
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
-                        <button type="submit" class="button is-link" onclick="$(this).addClass('is-loading');">Сохранить
-                            изменения
+                        <button type="submit" class="button is-link" onclick="$(this).addClass('is-loading');">
+                            Сохранить
                         </button>
                     </div>
                     <div class="control">
                         <a class="button is-text" href="{{route('post.show', $post)}}">Отмена</a>
                     </div>
                 </div>
-                @include('layouts.errors')
             </form>
         </div>
     @endcomponent

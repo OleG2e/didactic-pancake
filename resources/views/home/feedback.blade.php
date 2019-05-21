@@ -3,9 +3,9 @@
     @component('components.hero')
         {{ Breadcrumbs::render('feedback.form') }}
         @if (session('message'))
-            <div class="notification is-success">
+            @component('components.flash_message', ['type'=>'is-success'])
                 {{session('message')}}
-            </div>
+            @endcomponent
         @endif
         <form method="post" action="{{route('feedback.submit')}}">
             @csrf

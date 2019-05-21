@@ -19,17 +19,13 @@
                         @php
                             $dateTime = new DateTime($trip->date_time);
                         @endphp
-                        <p style="word-wrap: break-word;">
-                            <strong>{{$trip->owner->name}}</strong>
-                            <small>{{$trip->updated_at->diffForHumans()}}</small>
-                            @isset($trip->description)<br> Описание: {{$trip->description}}@endisset
-                            <br><span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
-                            <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
-                            @if($trip->passengers_count)<br>Осталось
-                            мест: {{$trip->passengers_count}}@endif
-                            @if($trip->load)<br>Есть место для груза@endif
-                            <br> Стоимость: {{$trip->price}}
-                        </p>
+                        <strong>{{$trip->owner->name}}</strong>
+                        <small>{{$trip->updated_at->diffForHumans()}}</small>
+                        @isset($trip->description)<br>Описание: {{$trip->description}}@endisset
+                        <br><span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
+                        <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
+                        @if($trip->passengers_count)<br>Осталось мест: {{$trip->passengers_count}}@endif
+                        <br> Стоимость: {{$trip->price}}
                         @auth
                             @if (count($trip->users)==false and $trip->owner->id !== auth()->id())
                                 <form method="post" action="{{route('add.user', $trip)}}">
@@ -68,23 +64,17 @@
                         @endauth
                     </div>
                     @can('update', $trip)
-                        <nav class="level is-mobile">
-                            <div class="level-left">
-                                <div class="buttons are-small">
-                                    <a class="button" href="{{route('trip.edit',$trip)}}">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                    </a>
-                                    <a class="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-trip-form').submit();">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-trash"></i>
-                                    </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </nav>
+                        <a class="button is-small" href="{{route('trip.edit',$trip)}}">
+                            <span class="icon is-small">
+                                <i class="fa fa-edit"></i>
+                            </span>
+                        </a>
+                        <a class="button is-small" onclick="event.preventDefault();
+                              document.getElementById('delete-trip-form').submit();">
+                            <span class="icon is-small">
+                                <i class="fa fa-trash"></i>
+                            </span>
+                        </a>
                     @endcan
                     @include('subview.reply', ['post' => $trip])
                 </div>

@@ -9,9 +9,9 @@
                     </div>
                     <div class="message-body">
                         @if (session('resent'))
-                            <div class="alert alert-success" role="alert">
+                            @component('components.flash_message', ['type'=>'is-success'])
                                 {{ __('Новая ссылка для активации аккаунта была отправлена') }}
-                            </div>
+                            @endcomponent
                         @endif
                         {{ __('Перед продолжением, пожалуйста, проверьте свою почту. Для входа в личный кабинет вам нужно перейти по ссылке из письма.') }}
                         {{ __('Если вы не получили письмо, то') }} <a

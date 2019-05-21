@@ -2,7 +2,7 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('delivery.edit', $trip) }}
-        <div class="title">Редактирование передачки</div>
+        <h4 class="title is-size-4">Редактирование передачки</h4>
         <form method="post" action="{{route('delivery.update', $trip)}}">
             @method('patch')
             @csrf
@@ -56,6 +56,9 @@
                                 <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
+                        @if ($errors->has('date'))
+                            <p class="help is-danger">{{ $errors->first('date') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -65,6 +68,9 @@
                     <textarea class="textarea" name="description"
                               placeholder="{{$trip->description}}">{{$trip->description}}</textarea>
                 </p>
+                @if ($errors->has('description'))
+                    <p class="help is-danger">{{ $errors->first('description') }}</p>
+                @endif
             </div>
             <div class="field is-grouped">
                 <div class="control">
@@ -74,7 +80,6 @@
                     <a class="button is-text" href="{{route('delivery.show', $trip)}}">Отмена</a>
                 </div>
             </div>
-            @include('layouts.errors')
         </form>
     @endcomponent
 @endsection

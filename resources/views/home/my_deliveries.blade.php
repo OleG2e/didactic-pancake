@@ -10,7 +10,7 @@
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title">Мои передачки:</p>
+                    <h4 class="title is-size-4">Мои передачки:</h4>
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
@@ -61,7 +61,7 @@
                                     </footer>
                                 </div>
                             </div>
-                            <p class="title">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
+                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
                             <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
                                 <small> {{$trip->created_at}}</small>
                             </p>

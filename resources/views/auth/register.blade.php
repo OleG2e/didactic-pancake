@@ -39,8 +39,8 @@
                                 <label class="label">Данные для связи</label>
                                 <div class="control has-icons-left has-icons-right">
                                     <input class="input" type="text"
-                                           placeholder="Vk,Telegram,Viber..." name="link"
-                                           required>{{ old('link') }}
+                                           placeholder="Vk,Telegram,Viber..." name="link" value="{{ old('link') }}"
+                                           required>
                                     <span class="icon is-small is-left">
                                     <i class="fas fa-id-card"></i>
                                 </span>
@@ -93,27 +93,6 @@
                                     Зарегистрироваться
                                 </button>
                             </div>
-                            {{--                            <div class="field">--}}
-                            {{--                                <a class="button is-success modal-button" data-target="modal-bis">--}}
-                            {{--                                    Зарегистрироваться--}}
-                            {{--                                </a>--}}
-                            {{--                            </div>--}}
-                            {{--                            <div class="modal" id="modal-bis">--}}
-                            {{--                                <div class="modal-background"></div>--}}
-                            {{--                                <div class="modal-card">--}}
-                            {{--                                    <header class="modal-card-head">--}}
-                            {{--                                        <p class="modal-card-title">Прочти соглашение</p>--}}
-                            {{--                                        <a class="delete" aria-label="close"></a>--}}
-                            {{--                                    </header>--}}
-                            {{--                                    <section class="modal-card-body">--}}
-                            {{--                                        Федеральный закон--}}
-                            {{--                                    </section>--}}
-                            {{--                                    <footer class="modal-card-foot">--}}
-                            {{--                                        <button class="button is-success" type="submit">Прочитал</button>--}}
-                            {{--                                        <a class="button is-info">Не буду читать!</a>--}}
-                            {{--                                    </footer>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
                         </form>
                     </div>
                 </div>

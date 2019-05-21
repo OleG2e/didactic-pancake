@@ -10,7 +10,7 @@
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title">Мои объявления:</p>
+                    <h4 class="title is-size-4">Мои объявления:</h4>
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
@@ -25,7 +25,7 @@
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <h4 class="title is-4">{{$post->category->title}}</h4>
+                                        <h4 class="title is-size-4">{{$post->category->title}}</h4>
                                     </div>
                                 </div>
                                 <div class="level-right">

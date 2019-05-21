@@ -2,7 +2,7 @@
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.create') }}
-        <div class="title">Создать поездку</div>
+        <h4 class="title is-size-4">Создать поездку</h4>
         <form method="post" action="{{route('trip.all')}}">
             @csrf
             <div class="field is-horizontal">
@@ -85,6 +85,9 @@
                             </span>
                         </p>
                     </div>
+                    @if ($errors->has('date'))
+                        <p class="help is-danger">{{ $errors->first('date') }}</p>
+                    @endif
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
                             <input class="input" type="time" id="timepicker" name="time" placeholder="Время" required>
@@ -93,6 +96,9 @@
                             </span>
                         </p>
                     </div>
+                    @if ($errors->has('time'))
+                        <p class="help is-danger">{{ $errors->first('time') }}</p>
+                    @endif
                 </div>
             </div>
             <div class="field">
@@ -101,10 +107,12 @@
                     <textarea class="textarea" name="description" placeholder="Комментарий к поездке"></textarea>
                 </p>
             </div>
+            @if ($errors->has('description'))
+                <p class="help is-danger">{{ $errors->first('description') }}</p>
+            @endif
             <div class="control">
                 <button class="button is-primary is-rounded" type="submit">Создать поездку</button>
             </div>
-            @include('layouts.errors')
         </form>
     @endcomponent
 @endsection

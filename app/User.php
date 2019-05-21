@@ -39,6 +39,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Trip::class);
     }
 
+    public function deliveries()
+    {
+        return $this->hasMany(Trip::class, 'owner_id')->where('category_id', 3)->get();
+    }
+
     public function avatar()
     {
         $path = 'storage/avatars/'.$this->id.'/avatar.jpg';

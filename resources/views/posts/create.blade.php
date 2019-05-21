@@ -3,7 +3,7 @@
     @component('components.hero')
         {{ Breadcrumbs::render('post.create') }}
         <div class="box">
-            <div class="title">Создать объявление</div>
+            <h4 class="title is-size-4">Создать объявление</h4>
             <form method="post" action="{{route('post.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="field">
@@ -25,8 +25,11 @@
                     <div class="control">
                         <label class="label">Заголовок:</label>
                         <input class="input is-rounded" type="text" placeholder="Заголовок" name="title"
-                               required>{{old('title')}}
+                               value="{{ old('title') }}" required>
                     </div>
+                    @if ($errors->has('title'))
+                        <p class="help is-danger">{{ $errors->first('title') }}</p>
+                    @endif
                 </div>
                 <div class="field">
                     <label class="label">Текст:</label>
@@ -34,12 +37,18 @@
                                 <textarea class="textarea" placeholder="Текст" name="description"
                                           required>{{old('description')}}</textarea>
                     </div>
+                    @if ($errors->has('description'))
+                        <p class="help is-danger">{{ $errors->first('description') }}</p>
+                    @endif
                 </div>
                 <div class="field">
                     <label class="label">Фотографии</label>
                     <div class="control">
                         <input type="file" name="image[]" accept="image/*" multiple>
                     </div>
+                    @if ($errors->has('image'))
+                        <p class="help is-danger">{{ $errors->first('image') }}</p>
+                    @endif
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
@@ -51,7 +60,6 @@
                         <a class="button is-text" href="{{back()->getTargetUrl()}}">Отмена</a>
                     </div>
                 </div>
-                @include('layouts.errors')
             </form>
         </div>
     @endcomponent

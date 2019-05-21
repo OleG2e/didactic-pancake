@@ -25,7 +25,7 @@
                                 <label class="label">Пароль</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="password" placeholder="********" name="password"
-                                           required>
+                                           value="{{ old('password') }}" required>
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-lock"></i>
                                     </span>

@@ -10,7 +10,7 @@
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title">Мои поездки:</p>
+                    <h4 class="title is-size-4">Мои поездки:</h4>
                 </div>
             </div>
             <div class="level-item" style="padding-bottom: 10px">
@@ -25,7 +25,7 @@
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <h4 class="title is-4">{{$trip->category->title}}</h4>
+                                        <h4 class="title is-size-4">{{$trip->category->title}}</h4>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -63,8 +63,8 @@
                                     </div>
                                 </div>
                             @endcan
-                            <h4 class="title is-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
-                            <h6 class="subtitle is-6">Дата:
+                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
+                            <h6 class="subtitle is-size-6">Дата:
                                 <br>{{$trip->created_at}}</h6>
                             <div class="content">
                                 <div class="more">{{$trip->description}}</div>
