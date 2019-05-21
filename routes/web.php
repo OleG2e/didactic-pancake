@@ -2,10 +2,6 @@
 
 Auth::routes(['verify' => true]);
 
-Route::get('/how-much', function () {
-    return view('how_much');
-})->name('how_much');
-
 Route::get('/bus-schedule', function () {
     return view('entries.bus-schedule');
 })->name('bus.schedule');
