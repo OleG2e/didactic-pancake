@@ -23,7 +23,6 @@
                         <a class="button is-text" href="{{back()->getTargetUrl()}}">Отмена</a>
                     </div>
                 </div>
-                @include('layouts.errors')
             </form>
         </div>
     @endcomponent

@@ -137,7 +137,7 @@ class DeliveryController extends Controller
         return request()->validate([
             'startpoint_id' => 'required|integer',
             'endpoint_id' => 'required|integer',
-            'date' => 'required',
+            'date' => 'required|date',
             'description' => 'required|string',
         ]);
     }

@@ -140,9 +140,9 @@ class TripController extends Controller
             'startpoint_id' => 'required|integer',
             'endpoint_id' => 'required|integer',
             'passengers_count' => 'nullable|integer',
-            'price' => 'required|string',
-            'date' => 'required',
-            'time' => 'required',
+            'price' => 'required|string|alpha_dash',
+            'date' => 'required|date',
+            'time' => 'required|string',
             'description' => 'string|nullable',
         ]);
     }

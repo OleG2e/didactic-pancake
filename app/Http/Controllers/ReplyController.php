@@ -26,7 +26,7 @@ class ReplyController extends Controller
         $attributes = request()->validate([
             'post_id' => 'required|numeric',
             'category_id' => 'required|numeric',
-            'description' => 'required|string',
+            'description' => 'required|string|max:1024',
         ]);
         $attributes['owner_id'] = auth()->id();
         $reply->create($attributes);
