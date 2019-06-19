@@ -43,24 +43,32 @@
         <div class="navbar-menu" id="navbar-menu-id">
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
+                    <div class="navbar-link">
+                        Категории
+                    </div>
+                    @php
+                        if (Auth::guest()) {
+                            extract(\App\AppTemplate::countAds());
+                        } else {
+                            extract(\App\AppTemplate::countMyAds());
+                            extract(\App\AppTemplate::countAds());
+                        }
+                    @endphp
                     <ul class="menu-list">
                         <li>
-                            <a class="navbar-link">
-                                Категории
-                            </a>
                             <div class="navbar-dropdown is-right is-boxed">
-                                    <div class="navbar-item">
+                                <div class="navbar-item">
                                       <span class="icon is-small">
                                         <i class="fa fa-table"></i>
                                       </span>
-                                        Объявления
-                                    </div>
+                                    <span>Объявления</span>
+                                </div>
                                 <ul>
                                     <li>
                                         <a href="{{route('post.help')}}">
                                             <span class="icon is-small"><i class="fa fa-hand-holding-heart"
                                                                            aria-hidden="true"></i></span>
-                                            <span>Помощь</span>
+                                            <span class="has-badge-inline" data-badge="{{$helps}}">Помощь</span>
                                         </a>
                                     </li>
                                     <li>
@@ -69,14 +77,14 @@
                                     <i class="fa fa-paw"
                                        aria-hidden="true"></i>
                                 </span>
-                                            <span>Животные</span>
+                                            <span class="has-badge-inline" data-badge="{{$pets}}">Животные</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('post.loss')}}">
                                             <span class="icon is-small"><i class="fa fa-key"
                                                                            aria-hidden="true"></i></span>
-                                            <span>Потери</span>
+                                            <span class="has-badge-inline" data-badge="{{$losses}}">Потери</span>
                                         </a>
                                     </li>
                                     <li>
@@ -84,7 +92,7 @@
                                 <span class="icon is-small">
                                     <i class="fa fa-money-bill" aria-hidden="true"></i>
                                 </span>
-                                            <span>Куплю</span>
+                                            <span class="has-badge-inline" data-badge="{{$buys}}">Куплю</span>
                                         </a>
                                     </li>
                                     <li>
@@ -93,14 +101,14 @@
                                     <i class="fa fa-money-bill-wave"
                                        aria-hidden="true"></i>
                                 </span>
-                                            <span>Продам</span>
+                                            <span class="has-badge-inline" data-badge="{{$sells}}">Продам</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('post.service')}}">
                                             <span class="icon is-small"><i class="fa fa-concierge-bell"
                                                                            aria-hidden="true"></i></span>
-                                            <span>Услуги</span>
+                                            <span class="has-badge-inline" data-badge="{{$services}}">Услуги</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -109,7 +117,7 @@
                                       <span class="icon is-small">
                                         <i class="fa fa-car"></i>
                                       </span>
-                                        Поездки
+                                        <span class="has-badge-inline" data-badge="{{$trips}}">Поездки</span>
                                     </div>
                                 </a>
                                 <a class="navbar-item" href="{{ route('delivery.all') }}">
@@ -117,7 +125,7 @@
                                       <span class="icon is-small">
                                         <i class="fa fa-cube"></i>
                                       </span>
-                                        Передачки
+                                        <span class="has-badge-inline" data-badge="{{$deliveries}}">Передачки</span>
                                     </div>
                                 </a>
                                 <a class="navbar-item" href="{{ route('bus.schedule') }}">
@@ -125,7 +133,7 @@
                                       <span class="icon is-small">
                                         <i class="fa fa-bus"></i>
                                       </span>
-                                        Расписание
+                                        <span>Расписание</span>
                                     </div>
                                 </a>
                             </div>
@@ -142,12 +150,6 @@
                             {{ Auth::user()->name }}
                         </div>
                         <div class="navbar-dropdown is-right is-boxed">
-                            @php
-                                $user = auth()->user();
-                            $myTrips = $user->trips()->count();
-                            $myPosts = $user->posts()->count();
-                            $myDeliveries = $user->deliveries()->count();
-                            @endphp
                             <ul class="menu-list">
                                 <li>
                                     <a class="navbar-item" href="{{ route('home') }}">
@@ -214,9 +216,9 @@
         @csrf
     </form>
     @yield('content')
-    <div id="button-up">
-        Наверх
-    </div>
+    {{--    <div id="button-up">--}}
+    {{--        Наверх--}}
+    {{--    </div>--}}
 </div>
 </body>
 </html>

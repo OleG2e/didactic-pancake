@@ -1,8 +1,5 @@
 @php
-    $user = auth()->user();
-$myTrips = $user->trips()->count();
-$myPosts = $user->posts()->count();
-$myDeliveries = $user->deliveries()->count();
+    extract(\App\AppTemplate::countMyAds());
 @endphp
 <div class="tabs is-centered is-toggle is-toggle-rounded is-hidden-touch">
     <ul>
