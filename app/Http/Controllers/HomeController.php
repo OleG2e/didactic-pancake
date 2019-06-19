@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('home.main', compact('user'));
+        return view('home.profile', compact('user'));
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class HomeController extends Controller
     {
         $myPosts = Post::where('owner_id', auth()->id())->latest()->get();
 
-        return view('home.my_posts', compact('myPosts'));
+        return view('home.posts', compact('myPosts'));
     }
 
     public function updateRelevancePost(Post $post, Request $request)
@@ -91,13 +91,13 @@ class HomeController extends Controller
         $user = auth()->user();
         $myTrips = $user->trips;
 
-        return view('home.my_trips', compact('myTrips'));
+        return view('home.trips', compact('myTrips'));
     }
 
     public function myDeliveries()
     {
         $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', 3)->latest()->get();
-        return view('home.my_deliveries', compact('myDeliveries'));
+        return view('home.deliveries', compact('myDeliveries'));
     }
 
     public function feedbackForm()
