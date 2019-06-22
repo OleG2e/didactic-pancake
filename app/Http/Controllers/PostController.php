@@ -210,7 +210,7 @@ class PostController extends Controller
     {
         return request()->validate([
             'category_id' => 'required|integer|exists:categories,id',
-            'title' => 'required|string|alpha_dash|max:20',
+            'title' => 'required|string|max:20',
             'description' => 'required|string|max:1024',
         ]);
     }

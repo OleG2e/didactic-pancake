@@ -1,12 +1,14 @@
 @extends('layouts.app')
+@section('title', 'Мои объявления')
+@section('og:title', 'Мои объявления')
 @section('content')
     @component('components.hero')
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
-        @include('subview.home-nav')
+        @include('components.home-nav')
         <nav class="level">
             <div class="level-item level-left">
                 <div class="control">

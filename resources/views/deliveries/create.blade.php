@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Создать передачку')
+@section('og:title', 'Создать передачку')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('delivery.create') }}

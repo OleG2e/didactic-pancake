@@ -1,12 +1,14 @@
 @extends('layouts.app')
+@section('title', 'Объявления')
+@section('og:title', 'Объявления')
 @section('content')
     @component('components.hero')
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
-        @include('subview.posts-nav')
+        @include('components.posts-nav')
         @auth
             <nav class="level">
                 <div class="level-item level-left">

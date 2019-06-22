@@ -1,9 +1,14 @@
 @extends('layouts.app')
+@section('title', 'Детали поездки')
+@php
+    $dateTime = new DateTime($trip->date_time);
+@endphp
+@section('og:title', "{$dateTime->format('d.m.Y H:i')} {$trip->startpoint->title} - {$trip->endpoint->title}")
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.show', $trip) }}
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
@@ -16,9 +21,6 @@
                 </figure>
                 <div class="media-content">
                     <div class="content">
-                        @php
-                            $dateTime = new DateTime($trip->date_time);
-                        @endphp
                         <strong>{{$trip->owner->name}}</strong>
                         <small>{{$trip->updated_at->diffForHumans()}}</small>
                         @isset($trip->description)<br>Описание: {{$trip->description}}@endisset
@@ -76,10 +78,10 @@
                             </span>
                         </a>
                     @endcan
-                    @include('subview.reply', ['post' => $trip])
+                    @include('components.reply', ['post' => $trip])
                 </div>
             </article>
-            @include('subview.reply-form', ['post' => $trip])
+            @include('components.reply-form', ['post' => $trip])
             <br>
             <a class="button is-info is-hovered" href="{{route('trip.all')}}">Назад</a>
         </div>

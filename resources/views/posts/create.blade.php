@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Создать объявление')
+@section('og:title', 'Создать объявление')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.create') }}

@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Микуньский информационный сайт')
+@section('og:title', 'Микуньский информационный сайт')
 @section('content')
     <section class="hero is-success is-fullheight">
         <div class="hero-body">

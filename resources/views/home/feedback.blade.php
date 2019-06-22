@@ -1,9 +1,11 @@
 @extends('layouts.app')
+@section('title', 'Письмо админу')
+@section('og:title', 'Письмо админу')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('feedback.form') }}
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{session('message')}}
             @endcomponent
         @endif

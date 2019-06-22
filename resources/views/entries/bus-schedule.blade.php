@@ -1,10 +1,11 @@
 @extends('layouts.app')
+@section('title', 'Автобусное расписание')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('bus.schedule') }}
         <div class="box">
             @if (session('message'))
-                @component('components.flash_message', ['type'=>'is-success'])
+                @component('components.flash-message', ['type'=>'is-success'])
                     {{ session('message') }}
                 @endcomponent
             @endif

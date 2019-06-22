@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Регистрация')
+@section('og:title', 'Регистрация')
 @section('content')
     <section class="hero is-primary is-bold is-fullheight-with-navbar">
         <div class="hero-body">

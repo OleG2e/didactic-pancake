@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Создать поездку')
+@section('og:title', 'Создать поездку')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.create') }}

@@ -1,13 +1,15 @@
 @extends('layouts.app')
+@section('title', 'Мой профиль')
+@section('og:title', 'Мой профиль')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('home') }}
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
-        @include('subview.home-nav')
+        @include('components.home-nav')
         <article class="media">
             <figure class="media-left">
                 <p class="image is-128x128">

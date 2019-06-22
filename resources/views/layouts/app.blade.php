@@ -7,7 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Laravel')</title>
+    <title>@yield('title', config('app.name'))</title>
+
+    <meta property="og:title" content="@yield('og:title', config('app.name'))"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="@yield('og:url', url()->current())"/>
+    <meta property="og:image" content="@yield('og:image', 'images/label.jpg')"/>
 
     <!-- Scripts -->
     <script defer src="{{ asset('js/app.js') }}"></script>
@@ -44,7 +49,7 @@
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
                     <div class="navbar-link">
-                        Категории
+                        <span>Категории</span>
                     </div>
                     @php
                         if (Auth::guest()) {
@@ -157,7 +162,7 @@
                                             <span class="icon is-small">
                                                 <i class="fa fa-user"></i>
                                             </span>
-                                            Мой кабинет
+                                            <span>Мой кабинет</span>
                                         </div>
                                     </a>
                                     <ul>
@@ -189,7 +194,7 @@
                                     <span class="icon is-small">
                                         <i class="fa fa-envelope"></i>
                                     </span>
-                                            Написать админу
+                                            <span>Написать админу</span>
                                         </div>
                                     </a>
                                     <hr class="navbar-divider">
@@ -200,7 +205,7 @@
                                         <span class="icon is-small">
                                             <i class="fa fa-sign-out-alt"></i>
                                         </span>
-                                            Выйти
+                                            <span>Выйти</span>
                                         </div>
                                     </a>
                                 </li>

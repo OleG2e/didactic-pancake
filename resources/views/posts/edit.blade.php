@@ -1,9 +1,11 @@
 @extends('layouts.app')
+@section('title', 'Редактировать объявление')
+@section('og:title', 'Редактировать объявление')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.edit', $post) }}
         <div class="box">
-            <h4 class="title is-size-4">Редактирование объявления {{$post->title}}</h4>
+            <h4 class="title is-size-4">Редактировать объявление {{$post->title}}</h4>
             <form method="post" action="{{route('post.update', $post)}}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf

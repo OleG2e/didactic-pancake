@@ -1,9 +1,11 @@
 @extends('layouts.app')
+@section('title', 'Детали передачки')
+@section('og:title', 'Передачка')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('delivery.show', $trip) }}
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
@@ -55,10 +57,10 @@
                             </div>
                         </nav>
                     @endcan
-                    @include('subview.reply', ['post'=> $trip])
+                    @include('components.reply', ['post'=> $trip])
                 </div>
             </article>
-            @include('subview.reply-form', ['post' => $trip])
+            @include('components.reply-form', ['post' => $trip])
             <br>
             <a class="button is-info is-hovered" href="{{route('delivery.all')}}">Назад</a>
         </div>

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'AdminFeedback')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('admin.feedback.form') }}

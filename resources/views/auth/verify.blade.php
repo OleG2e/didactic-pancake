@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', 'Сброс пароля')
+@section('og:title', 'Сброс пароля')
 @section('content')
     <section class="hero is-primary is-bold is-fullheight-with-navbar">
         <div class="hero-body">
@@ -9,7 +11,7 @@
                     </div>
                     <div class="message-body">
                         @if (session('resent'))
-                            @component('components.flash_message', ['type'=>'is-success'])
+                            @component('components.flash-message', ['type'=>'is-success'])
                                 {{ __('Новая ссылка для активации аккаунта была отправлена') }}
                             @endcomponent
                         @endif

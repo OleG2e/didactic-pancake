@@ -46,7 +46,7 @@ class ReplyController extends Controller
     {
         $this->authorize('update', $reply);
 
-        return view('subview.reply-edit-form', compact('reply'));
+        return view('components.reply-edit-form', compact('reply'));
     }
 
     /**

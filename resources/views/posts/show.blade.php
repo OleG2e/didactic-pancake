@@ -1,9 +1,14 @@
 @extends('layouts.app')
+@section('title', 'Детали объявления')
+@section('og:title', $post->title)
+@if (!empty($imagesAll))
+    @section('og:image', asset($imagesAll->preview[0]))
+@endif
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('post.show', $post) }}
         @if (session('message'))
-            @component('components.flash_message', ['type'=>'is-success'])
+            @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
             @endcomponent
         @endif
@@ -58,11 +63,11 @@
                             </figure>
                         @endfor
                     @endif
-                    @include('subview.reply', $post)
+                    @include('components.reply', $post)
                 </div>
             </article>
             <section class="section">
-                @include('subview.reply-form', $post)
+                @include('components.reply-form', $post)
             </section>
             <div class="container">{{ $post->replies()->links() }}</div>
             <br>

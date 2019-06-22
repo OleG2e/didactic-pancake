@@ -1,8 +1,10 @@
 @extends('layouts.app')
+@section('title', 'Редактировать поездку')
+@section('og:title', 'Редактировать поездку')
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.edit', $trip) }}
-        <h4 class="title is-size-4">Редактирование поездки {{$trip->title}}</h4>
+        <h4 class="title is-size-4">Редактировать поездку {{$trip->title}}</h4>
         <form method="post" action="{{route('trip.update', $trip)}}">
             @method('patch')
             @csrf
