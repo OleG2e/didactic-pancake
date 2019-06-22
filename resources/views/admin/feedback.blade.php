@@ -18,12 +18,18 @@
                         <i class="fas fa-envelope"></i>
                     </span>
                 </div>
+                @if ($errors->has('email'))
+                    <p class="help is-danger">{{ $errors->first('email') }}</p>
+                @endif
             </div>
             <div class="field">
                 <label class="label">Сообщение</label>
                 <div class="control">
                     <textarea class="textarea" placeholder="Текст" name="message"></textarea>
                 </div>
+                @if ($errors->has('message'))
+                    <p class="help is-danger">{{ $errors->first('message') }}</p>
+                @endif
             </div>
             <button class="button is-success" type="submit">Отправить</button>
         </form>

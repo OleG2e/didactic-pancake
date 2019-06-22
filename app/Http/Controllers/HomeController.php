@@ -107,7 +107,10 @@ class HomeController extends Controller
 
     public function feedbackSubmit(Request $request)
     {
-        $message = (string) $request['message'];
+        if ($request->has('image')) {
+            $image = $request->file('image')->storeAs('reports/'.auth()->id(), 'image.jpg', 'public');
+        }
+        $message = ['message' => (string) $request['message'], 'image' => ($image ?? null)];
         Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));
         flash('Твоё сообщение было отправлено админу');
 
