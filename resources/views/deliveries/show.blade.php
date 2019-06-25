@@ -21,22 +21,28 @@
                         @php
                             $dateTime = new DateTime($trip->date_time);
                         @endphp
-                        <p style="word-wrap: break-word;">
+                        <div style="white-space:pre-line">
                             <strong>{{$trip->owner->name}}</strong>
                             <small>{{$trip->updated_at->diffForHumans()}}</small>
+                            <br><span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
+                            @isset($trip->description)<br><span>Описание: {{$trip->description}}</span>@endisset
+                            <br><span>Дата: {{$dateTime->format('d.m.Y')}}</span>
                             @auth
-                                <a title="Связаться" class="button is-small"
-                                   href="{{route('delivery.link.request', $trip)}}">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-link"></i>
-                                    </span>
-                                </a>
+                                <form method="post" action="{{route('delivery.link.request', $trip)}}">
+                                    @csrf
+                                    <div class="field">
+                                        <div class="control">
+                                            <button type="submit" title="Связаться" class="button is-small">
+                                            <span class="icon is-small">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                                <span>Связаться</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             @endauth
-                            <br>
-                            <span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
-                            @isset($trip->description)<br> Описание: {{$trip->description}}@endisset
-                            <br>Дата: {{$dateTime->format('d.m.Y')}}
-                        </p>
+                        </div>
                     </div>
                     @can('update', $trip)
                         <nav class="level is-mobile">

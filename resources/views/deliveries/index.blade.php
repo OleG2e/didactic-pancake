@@ -33,7 +33,7 @@
                                 $dateTime = new DateTime($trip->date_time);
                             @endphp
                             <span> Дата: {{$dateTime->format('d.m.Y')}}</span>
-                            <br>Описание: {{$trip->description}}
+                            <br><span>Описание: {{$trip->description}}</span>
                             <br><a href="{{route('delivery.show', $trip)}}">
                                 Посмотреть
                             </a>

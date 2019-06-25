@@ -31,7 +31,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param Exception $exception
+     * @param  Exception  $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -42,12 +42,17 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param Request $request
-     * @param Exception $exception
+     * @param  Request  $request
+     * @param  Exception  $exception
      * @return Response
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            if ($exception->getStatusCode() === 405){
+                return response()->redirectTo('/');
+            }
+        }
         return parent::render($request, $exception);
     }
 }

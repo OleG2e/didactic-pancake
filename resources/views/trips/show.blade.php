@@ -23,11 +23,11 @@
                     <div class="content">
                         <strong>{{$trip->owner->name}}</strong>
                         <small>{{$trip->updated_at->diffForHumans()}}</small>
-                        @isset($trip->description)<br>Описание: {{$trip->description}}@endisset
+                        @isset($trip->description)<br><span>Описание: {{$trip->description}}</span>@endisset
                         <br><span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
-                        <br>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
-                        @if($trip->passengers_count)<br>Осталось мест: {{$trip->passengers_count}}@endif
-                        <br> Стоимость: {{$trip->price}}
+                        <br><span>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}</span>
+                        @if($trip->passengers_count)<br><span>Осталось мест: {{$trip->passengers_count}}</span>@endif
+                        <br><span>Стоимость: {{$trip->price}}</span>
                         @auth
                             @if (count($trip->users)==false and $trip->owner->id !== auth()->id())
                                 <form method="post" action="{{route('add.user', $trip)}}">
@@ -82,8 +82,7 @@
                 </div>
             </article>
             @include('components.reply-form', ['post' => $trip])
-            <br>
-            <a class="button is-info is-hovered" href="{{route('trip.all')}}">Назад</a>
+            <br><a class="button is-info is-hovered" href="{{route('trip.all')}}">Назад</a>
         </div>
     @endcomponent
     <form id="delete-trip-form" method="post" action="{{route('trip.destroy',$trip)}}">

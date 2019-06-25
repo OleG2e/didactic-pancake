@@ -38,6 +38,11 @@ class TripUserController extends Controller
         $user = auth()->user();
         $user->trips()->detach($trip);
         $trip->increment('passengers_count');
+        if ($trip->relevance == false) {
+            $trip->relevance = true;
+        }
+        $trip->save();
+
         event(new TripSubPassengerOwner($trip, $user));
         event(new TripSubPassengerCompanion($trip, $user));
         flash('Вы отказались от поездки');

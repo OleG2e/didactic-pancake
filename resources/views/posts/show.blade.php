@@ -21,40 +21,41 @@
                 </figure>
                 <div class="media-content">
                     <div class="content">
-                        <p style="word-wrap: break-word;">
+                        <div style="white-space:pre-line">
                             <strong>{{$post->owner->name}}</strong>
                             <small>{{$post->updated_at->diffForHumans()}}</small>
+                            <br><span>{{$post->description}}</span>
                             @auth
-                                <a title="Связаться" class="button is-small"
-                                   href="{{route('post.link.request', $post)}}">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-link"></i>
-                                    </span>
-                                </a>
-                            @endauth
-                            <br>
-                            {{$post->description}}
-                        </p>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <div class="buttons are-small">
-                                @can('update', $post)
-                                    <a title="Редактировать" class="button" href="{{route('post.edit', $post)}}">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-edit"></i>
-                                    </span>
-                                    </a>
-                                    <a title="Удалить" class="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-post-form').submit();">
+                                <form method="post" action="{{route('post.link.request', $post)}}">
+                                    @csrf
+                                    <div class="field">
+                                        <div class="control">
+                                            <button type="submit" title="Связаться" class="button is-small">
                                             <span class="icon is-small">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-link"></i>
                                             </span>
-                                    </a>
-                                @endcan
-                            </div>
+                                                <span>Связаться</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endauth
                         </div>
-                    </nav>
+                    </div>
+                    @can('update', $post)
+                        <a title="Редактировать" class="button is-small"
+                           href="{{route('post.edit', $post)}}">
+                            <span class="icon is-small">
+                                <i class="fa fa-edit"></i>
+                            </span>
+                        </a>
+                        <a title="Удалить" class="button is-small" onclick="event.preventDefault();
+                           document.getElementById('delete-post-form').submit();">
+                            <span class="icon is-small">
+                                <i class="fa fa-trash"></i>
+                            </span>
+                        </a>
+                    @endcan
                     @if (!empty($imagesAll))
                         @for ($i = 0; $i < count($imagesAll->full); $i++)
                             <figure class="image is-128x128" style="display: inline-block">
@@ -70,8 +71,7 @@
                 @include('components.reply-form', $post)
             </section>
             <div class="container">{{ $post->replies()->links() }}</div>
-            <br>
-            <a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
+            <br><a class="button is-info is-hovered" href="{{back()->getTargetUrl()}}">Назад</a>
         </div>
     @endcomponent
     <form id="delete-post-form" method="post" action="{{route('post.destroy', $post)}}">

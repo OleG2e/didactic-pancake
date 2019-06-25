@@ -13,7 +13,7 @@
                     <div class="control">
                         <div class="select is-rounded">
                             <select name="category_id" id="category_id" required>
-                                <option value="">Выберете одну...</option>
+                                <option value="" disabled>Выберете одну...</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                         {{ $category->title }}
