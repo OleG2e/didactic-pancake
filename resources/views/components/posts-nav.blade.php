@@ -1,5 +1,11 @@
 <div class="tabs is-centered is-toggle is-toggle-rounded is-hidden-touch">
     <ul>
+        <li class="{{(Request::route()->getName() == 'post.all') ? 'is-active' : ''}}">
+            <a href="{{route('post.all')}}">
+                <span class="icon is-small"><i class="fa fa-table" aria-hidden="true"></i></span>
+                <span>Все</span>
+            </a>
+        </li>
         <li class="{{(Request::route()->getName() == 'post.help') ? 'is-active' : ''}}">
             <a href="{{route('post.help')}}">
                 <span class="icon is-small"><i class="fa fa-hand-holding-heart" aria-hidden="true"></i></span>

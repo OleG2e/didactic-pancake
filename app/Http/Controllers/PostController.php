@@ -34,6 +34,10 @@ class PostController extends Controller
     {
         $routeName = \Request::route()->getName();
         switch ($routeName) {
+            case 'post.all':
+                $posts = Post::where('relevance', true)->paginate(25);
+                return view('posts.index', compact('posts'));
+                break;
             case 'post.buy':
                 $posts = $this->sql(4);
                 if (\request()->wantsJson()) {

@@ -20,6 +20,7 @@ class AppTemplate extends Model
     {
         $trips = Trip::where('category_id', 2)->whereRelevance(true)->count();
         $deliveries = Trip::where('category_id', 3)->whereRelevance(true)->count();
+        $all = Post::whereRelevance(true)->count();
         $buys = Post::where('category_id', 4)->whereRelevance(true)->count();
         $sells = Post::where('category_id', 5)->whereRelevance(true)->count();
         $helps = Post::where('category_id', 6)->whereRelevance(true)->count();
@@ -28,6 +29,7 @@ class AppTemplate extends Model
         $losses = Post::where('category_id', 9)->whereRelevance(true)->count();
 
         return compact([
+            'all',
             'trips',
             'deliveries',
             'buys',

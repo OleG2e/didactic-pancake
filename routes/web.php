@@ -26,6 +26,7 @@ Route::post('/home/image/upload', 'HomeController@updateAvatar')->name('home.ima
 
 Route::post('/posts', 'PostController@store')->name('post.store');
 Route::get('/posts/create', 'PostController@create')->name('post.create');
+Route::get('/posts', 'PostController@index')->name('post.all');
 Route::get('/posts/buy', 'PostController@index')->name('post.buy');
 Route::get('/posts/sell', 'PostController@index')->name('post.sell');
 Route::get('/posts/help', 'PostController@index')->name('post.help');

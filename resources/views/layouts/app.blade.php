@@ -63,10 +63,10 @@
                         <li>
                             <div class="navbar-dropdown is-right is-boxed">
                                 <div class="navbar-item">
-                                      <span class="icon is-small">
-                                        <i class="fa fa-table"></i>
-                                      </span>
-                                    <span>Объявления</span>
+                                    <a href="{{route('post.all')}}">
+                                        <span class="icon is-small"><i class="fa fa-table" aria-hidden="true"></i></span>
+                                        <span class="has-badge-inline" data-badge="{{$all}}">Объявления</span>
+                                    </a>
                                 </div>
                                 <ul>
                                     <li>
