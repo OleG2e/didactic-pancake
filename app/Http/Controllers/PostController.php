@@ -197,8 +197,8 @@ class PostController extends Controller
                 $pathImagesFull = $image[$i]->store($path, 'public');
                 $pathImagesPreview = $image[$i]->store('preview/'.$path, 'public');
                 Image::make($image[$i]->getRealPath())->fit(256)->save(public_path('storage/'.$pathImagesPreview), 70);
-                $pathAllFiles['full'][] = $pathImagesFull;
-                $pathAllFiles['preview'][] = $pathImagesPreview;
+                $pathAllFiles['full'][] = $pathImagesFull;//in production use 'public/'.$pathImagesFull
+                $pathAllFiles['preview'][] = $pathImagesPreview;//in production use 'public/'.$pathImagesPreview
                 $i--;
             }
         }
