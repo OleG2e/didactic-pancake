@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Notifications\CustomResetPasswordNotification;
+use App\Notifications\CustomVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,9 +47,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function avatar()
     {
-        $path = 'storage/avatars/'.$this->id.'/avatar.jpg';
+        $path = 'storage/avatars/'.$this->id.'/avatar.jpg';//in production use 'public/avatars/'.$this->id.'/avatar.jpg'
 
-        return asset(file_exists($path) ? $path : 'avatars/user-circle-solid.svg');
+        return asset(file_exists($path) ? $path : 'storage/avatars/user-circle-solid.svg');
     }
 
     public function roles()
@@ -66,5 +67,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomResetPasswordNotification($token));
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new CustomVerifyEmail());
     }
 }

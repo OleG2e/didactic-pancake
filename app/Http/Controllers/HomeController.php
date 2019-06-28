@@ -82,7 +82,7 @@ class HomeController extends Controller
     public function updateAvatar(Request $request)
     {
         $path = $request->file('avatar')->storeAs('avatars/'.auth()->id(), 'avatar.jpg', 'public');
-        Image::make(url($path))->fit(512)->save('storage/'.$path);
+        Image::make($request->file('avatar'))->fit(512)->save('storage/'.$path);// in production use save('public/'.$path)
         return back();
     }
 
@@ -108,7 +108,7 @@ class HomeController extends Controller
     public function feedbackSubmit(Request $request)
     {
         if ($request->has('image')) {
-            $image = $request->file('image')->storeAs('reports/'.auth()->id(), 'image.jpg', 'public');
+            $image = $request->file('image')->storeAs('reports/'.auth()->id(), time().'.jpg', 'public');
         }
         $message = ['message' => (string) $request['message'], 'image' => ($image ?? null)];
         Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));

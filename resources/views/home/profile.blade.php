@@ -21,10 +21,8 @@
                     <p>
                         <strong>{{$user->name}}</strong>
                         <small>{{$user->email}}</small>
-                        <br>
                         @isset($user->link)
-                            <br>
-                            <span>Данные для связи: <br> {{$user->link}}</span>
+                            <br><span>Данные для связи:<br>{{$user->link}}</span>
                         @endisset
                     </p>
                 </div>

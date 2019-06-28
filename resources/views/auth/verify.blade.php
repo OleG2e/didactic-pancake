@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Сброс пароля')
-@section('og:title', 'Сброс пароля')
+@section('title', 'Подтверждение почты')
+@section('og:title', 'Подтверждение почты')
 @section('content')
     <section class="hero is-primary is-bold is-fullheight-with-navbar">
         <div class="hero-body">
