@@ -41,21 +41,21 @@
                                 </form>
                             @endauth
                         </div>
-                    </div>
-                    @can('update', $post)
-                        <a title="Редактировать" class="button is-small"
-                           href="{{route('post.edit', $post)}}">
+                        @can('update', $post)
+                            <a title="Редактировать" class="button is-small"
+                               href="{{route('post.edit', $post)}}">
                             <span class="icon is-small">
                                 <i class="fa fa-edit"></i>
                             </span>
-                        </a>
-                        <a title="Удалить" class="button is-small" onclick="event.preventDefault();
+                            </a>
+                            <a title="Удалить" class="button is-small" onclick="event.preventDefault();
                            document.getElementById('delete-post-form').submit();">
                             <span class="icon is-small">
                                 <i class="fa fa-trash"></i>
                             </span>
-                        </a>
-                    @endcan
+                            </a>
+                        @endcan
+                    </div>
                     @if (!empty($imagesAll))
                         @for ($i = 0; $i < count($imagesAll->full); $i++)
                             <figure class="image is-128x128" style="display: inline-block">

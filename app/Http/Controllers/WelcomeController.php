@@ -10,11 +10,13 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $categoryPosts = Category::all();
-        $allPosts = [];
+        $countCategoryPosts = Category::all()->count();
+        $allPosts = collect();
 
-        for ($i = 1; $i <= count($categoryPosts); $i++) {
-            $allPosts[] = Post::where('relevance', true)->where('category_id', $i)->latest()->get();
+        for ($i = 1; $i <= $countCategoryPosts; $i++) {
+            if (Post::where('relevance', true)->where('category_id', $i)->count() > 0) {
+                $allPosts->push(Post::where('relevance', true)->where('category_id', $i)->latest()->get());
+            }
         }
 
         return view('welcome', compact('allPosts'));
