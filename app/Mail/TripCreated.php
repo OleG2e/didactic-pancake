@@ -15,6 +15,7 @@ class TripCreated extends Mailable
 
 
     public $trip;
+    public $date;
 
     /**
      * Create a new message instance.
@@ -24,6 +25,7 @@ class TripCreated extends Mailable
     public function __construct($trip)
     {
         $this->trip = $trip;
+        $this->date = clone $this->trip->date_time;
     }
 
     private function attachCalendar()
@@ -45,7 +47,6 @@ class TripCreated extends Mailable
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
             ->markdown('emails.trip-created')
-            ->attachData($this->attachCalendar(), 'event.ics')
-            ->with(['date' => $this->trip->date_time]);
+            ->attachData($this->attachCalendar(), 'event.ics');
     }
 }

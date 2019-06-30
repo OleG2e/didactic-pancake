@@ -5,7 +5,7 @@
         @slot('header')
             Поездка опубликована
         @endslot
-        Ваша поездка в {{$trip->endpoint->title}} в {{$date->format('H:i m.d.Y')}} опубликована
+        Ваша поездка в {{$trip->endpoint->title}} в {{$date->format('H:i d.m.Y')}} опубликована
     @endcomponent
     @component('components.button', ['url' => route('trip.show', ['trips' => $trip->id]), 'type' => 'is-success'])
         Перейти к объявлению

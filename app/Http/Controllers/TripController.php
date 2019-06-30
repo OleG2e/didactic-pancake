@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Events\TripCreated;
 use App\Mail\RequestLinkFromUser;
 use App\Town;
 use App\Trip;
@@ -60,6 +61,7 @@ class TripController extends Controller
         $createdTrip = $trip->create($attributes);
         $user = auth()->user();
         $user->trips()->attach($createdTrip);
+        event(new TripCreated($createdTrip));
         flash('Поездка создана');
 
         return redirect('/trips');

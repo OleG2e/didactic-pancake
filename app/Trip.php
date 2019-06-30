@@ -14,10 +14,6 @@ class Trip extends Model
 
     protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];
 
-    protected $dispatchesEvents = [
-        'created' => TripCreated::class,
-    ];
-
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id')->withDefault();

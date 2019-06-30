@@ -1,7 +1,29 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns#">
 <head>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () {
+                (m[i].a = m[i].a || []).push(arguments)
+            };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(54254332, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/54254332" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
     <meta charset="utf-8">
+    <meta name="yandex-verification" content="ae868d3a9193d7b4"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -64,7 +86,8 @@
                             <div class="navbar-dropdown is-right is-boxed">
                                 <div class="navbar-item">
                                     <a href="{{route('post.all')}}">
-                                        <span class="icon is-small"><i class="fa fa-table" aria-hidden="true"></i></span>
+                                        <span class="icon is-small"><i class="fa fa-table"
+                                                                       aria-hidden="true"></i></span>
                                         <span class="has-badge-inline" data-badge="{{$all}}">Объявления</span>
                                     </a>
                                 </div>

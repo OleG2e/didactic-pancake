@@ -22,9 +22,12 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                     <div class="dropdown-content">
-                        <div class="dropdown-item">
-                            <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a>
-                        </div>
+                        @auth
+                            <div class="dropdown-item">
+                                <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать
+                                    поездку</a>
+                            </div>
+                        @endauth
                         <div class="dropdown-item">
                             <a class="button is-info is-rounded"
                                href="https://pass.rzd.ru/tickets/public/ru?layer_name=e3-route&st0=Микунь&code0=2010210&st1=Сыктывкар&code1=2010280&dt0={{date('d.m.Y',time() + 86400)}}&tfl=3&md=0&checkSeats=0"
