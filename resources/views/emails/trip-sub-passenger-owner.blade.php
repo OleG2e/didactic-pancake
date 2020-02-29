@@ -8,7 +8,7 @@
         <strong>{{$user->name}}</strong> передумал ехать...
         <br>Связаться с ним и переубедить: {{$user->link}}
     @endcomponent
-    @component('components.button', ['url' => route('trip.show', ['trips' => $trip->id]), 'type' => 'is-warning'])
+    @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-warning'])
         Перейти к объявлению
     @endcomponent
 @endsection

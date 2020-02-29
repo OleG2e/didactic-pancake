@@ -7,7 +7,7 @@
         @endslot
         Чтобы посмотреть детали нажми на кнопку ниже
     @endcomponent
-    @component('components.button', ['url' => route('post.show', ['posts' => $reply->post->id]), 'type' => 'is-info'])
+    @component('components.button', ['url' => route('post.show', $reply->post->id), 'type' => 'is-info'])
         Перейти к объявлению
     @endcomponent
 @endsection

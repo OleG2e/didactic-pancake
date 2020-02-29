@@ -8,7 +8,7 @@
         Вы присоединились к поездке
         <br>Связаться с хозяином объявления: {{$trip->owner->link}}
     @endcomponent
-    @component('components.button', ['url' => route('trip.show', ['trips' => $trip->id]), 'type' => 'is-success'])
+    @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-success'])
         Перейти к объявлению
     @endcomponent
 @endsection

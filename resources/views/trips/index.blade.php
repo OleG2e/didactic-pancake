@@ -13,7 +13,7 @@
         <div class="content">
             <div class="dropdown is-hoverable">
                 <div class="dropdown-trigger">
-                    <button class="button is-rounded is-primary" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <button class="button is-rounded @auth is-primary @else is-info @endauth" aria-haspopup="true" aria-controls="dropdown-menu">
                         <span>Новая поездка</span>
                         <span class="icon is-small">
                         <i class="fas fa-angle-down" aria-hidden="true"></i>

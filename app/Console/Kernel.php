@@ -7,6 +7,7 @@ use App\Trip;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Spatie\Sitemap\SitemapGenerator;
 
 class Kernel extends ConsoleKernel
 {
@@ -43,6 +44,11 @@ class Kernel extends ConsoleKernel
         })->hourly();
 
         $schedule->command('backup:run')->daily();
+
+        $schedule->call(function () {
+            SitemapGenerator::create(config('app.url'))
+                ->writeToFile(public_path('sitemap.xml'));
+        })->hourly();
     }
 
     /**

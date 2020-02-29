@@ -8,7 +8,7 @@
         У вас появился новый пассажир <strong>{{$user->name}}</strong>.
         <br>Связаться с ним: {{$user->link}}
     @endcomponent
-    @component('components.button', ['url' => route('trip.show', ['trips' => $trip->id]), 'type' => 'is-success'])
+    @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-success'])
         Перейти к объявлению
     @endcomponent
 @endsection

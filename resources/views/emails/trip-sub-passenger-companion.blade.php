@@ -7,7 +7,7 @@
         @endslot
         Если передумаете, то перейдите по ссылке ниже
     @endcomponent
-    @component('components.button', ['url' => route('trip.show', ['trips' => $trip->id]), 'type' => 'is-warning'])
+    @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-warning'])
         Перейти к объявлению
     @endcomponent
 @endsection

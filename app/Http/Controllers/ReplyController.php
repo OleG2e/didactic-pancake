@@ -95,13 +95,13 @@ class ReplyController extends Controller
     {
         switch ($reply->category->id) {
             case 2:
-                $route = route('trip.show', ['posts' => $reply->post_id]);
+                $route = route('trip.show', $reply->post_id);
                 break;
             case 3:
-                $route = route('delivery.show', ['posts' => $reply->post_id]);
+                $route = route('delivery.show', $reply->post_id);
                 break;
             default:
-                $route = route('post.show', ['posts' => $reply->post_id]);
+                $route = route('post.show', $reply->post_id);
         }
 
         Mail::to($reply->owner->email)->send(new RequestLinkFromUser($route));

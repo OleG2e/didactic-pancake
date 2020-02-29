@@ -81,11 +81,10 @@
                             <div class="field">
                                 <input id="switch" type="checkbox" name="law" class="switch" value="1"
                                        checked="checked">
-                                <label for="switch">Я прочитал <a
-                                            href="https://journal.tinkoff.ru/news/uvozhay-bl/"
-                                            style="text-decoration: underline;" target="_blank">разбор закона
-                                        об оскорблении власти</a>
-                                </label>
+                                <label for="switch"></label>
+                                    Я прочитал <a href="https://journal.tinkoff.ru/news/uvozhay-bl/"
+                                    style="text-decoration: underline;" target="_blank">разбор закона 
+                                    об оскорблении власти</a>
                             </div>
                             @if ($errors->has('law'))
                                 <p class="help is-danger">{{ $errors->first('law') }}</p>

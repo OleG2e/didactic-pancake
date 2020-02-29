@@ -221,7 +221,7 @@ class PostController extends Controller
 
     public function linkRequest(Post $post)
     {
-        $route = route('post.show', ['posts' => $post->id]);
+        $route = route('post.show', $post->id);
         Mail::to($post->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$post->owner->name}");
 

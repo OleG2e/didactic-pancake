@@ -144,7 +144,7 @@ class DeliveryController extends Controller
 
     public function linkRequest(Trip $trip)
     {
-        $route = route('delivery.show', ['posts' => $trip->id]);
+        $route = route('delivery.show', $trip->id);
         Mail::to($trip->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$trip->owner->name}");
 
