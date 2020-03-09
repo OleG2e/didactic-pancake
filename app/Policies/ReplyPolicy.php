@@ -17,7 +17,7 @@ class ReplyPolicy
      * @param  \App\Reply  $reply
      * @return mixed
      */
-    public function update(User $user, Reply $reply)
+    public function update(User $user, Reply $reply): bool
     {
         return $reply->owner_id == $user->id;
     }
@@ -29,7 +29,7 @@ class ReplyPolicy
      * @param  \App\Reply  $reply
      * @return mixed
      */
-    public function delete(User $user, Reply $reply)
+    public function delete(User $user, Reply $reply): bool
     {
         return $reply->owner_id == $user->id;
     }
@@ -41,7 +41,7 @@ class ReplyPolicy
      * @param  \App\Reply  $reply
      * @return mixed
      */
-    public function restore(User $user, Reply $reply)
+    public function restore(User $user, Reply $reply): bool
     {
         return $reply->owner_id == $user->id;
     }
@@ -53,7 +53,7 @@ class ReplyPolicy
      * @param  \App\Reply  $reply
      * @return mixed
      */
-    public function forceDelete(User $user, Reply $reply)
+    public function forceDelete(User $user, Reply $reply): bool
     {
         return $reply->owner_id == $user->id;
     }

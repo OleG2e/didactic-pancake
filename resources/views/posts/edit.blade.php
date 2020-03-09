@@ -3,10 +3,10 @@
 @section('og:title', 'Редактировать объявление')
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.edit', $post) }}
+        {{ Breadcrumbs::render('post.edit', $post->category->slug, $post) }}
         <div class="box">
             <h4 class="title is-size-4">Редактировать объявление {{$post->title}}</h4>
-            <form method="post" action="{{route('post.update', $post)}}" enctype="multipart/form-data">
+            <form method="post" action="{{route('post.update', [$post->category->slug, $post])}}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
                 <div class="field">
@@ -56,7 +56,7 @@
                         </button>
                     </div>
                     <div class="control">
-                        <a class="button is-text" href="{{route('post.show', $post)}}">Отмена</a>
+                        <a class="button is-text" href="{{route('post.show', [$post->category->slug, $post])}}">Отмена</a>
                     </div>
                 </div>
             </form>

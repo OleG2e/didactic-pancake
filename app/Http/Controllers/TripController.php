@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Events\TripCreated;
-use App\Mail\RequestLinkFromUser;
+use App\Http\Requests\TripRequest;
 use App\Town;
 use App\Trip;
 use App\Reply;
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Auth\Access\AuthorizationException;
 use DateTime;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class TripController extends Controller
 {
@@ -24,9 +22,9 @@ class TripController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $trips = Trip::whereRelevance(true)->where('passengers_count', '>', 0)->oldest('date_time')->get();
 
@@ -36,9 +34,9 @@ class TripController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $towns = Town::all();
 
@@ -49,12 +47,13 @@ class TripController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Trip  $trip
-     * @return Response
+     * @param  TripRequest  $request
+     * @return RedirectResponse
      * @throws \Exception
      */
-    public function store(Trip $trip)
+    public function store(Trip $trip, TripRequest $request): RedirectResponse
     {
-        $attributes = $this->validateTrip();
+        $attributes = $request->validated();
         $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $attributes['owner_id'] = auth()->id();
         $attributes['category_id'] = 2;
@@ -71,9 +70,10 @@ class TripController extends Controller
      * Display the specified resource.
      *
      * @param  Trip  $trip
-     * @return Response
+     * @param  Reply  $reply
+     * @return View
      */
-    public function show(Trip $trip, Reply $reply)
+    public function show(Trip $trip, Reply $reply): View
     {
         return view('trips.show', compact(['trip', 'reply']));
     }
@@ -82,10 +82,10 @@ class TripController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  Trip  $trip
-     * @return Response
-     * @throws \Exception
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Trip $trip)
+    public function edit(Trip $trip): View
     {
         $this->authorize('update', $trip);
 
@@ -98,16 +98,16 @@ class TripController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  TripRequest  $request
      * @param  Trip  $trip
-     * @return Response
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Trip $trip)
+    public function update(TripRequest $request, Trip $trip): RedirectResponse
     {
         $this->authorize('update', $trip);
 
-        $attributes = $this->validateTrip();
+        $attributes = $request->validated();
         $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $trip->update($attributes);
         flash('Поездка изменена');
@@ -119,13 +119,14 @@ class TripController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Trip  $trip
-     * @return Response
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Trip $trip)
+    public function destroy(Trip $trip): RedirectResponse
     {
         $this->authorize('delete', $trip);
 
-        $replies = Reply::where('post_id', $trip->id)->get();
+        $replies = Reply::where('model_id', $trip->id)->get();
         $trip->users()->detach();
         foreach ($replies as $reply) {
             $reply->delete();
@@ -134,18 +135,5 @@ class TripController extends Controller
         flash('Поездка удалена');
 
         return redirect(route('trip.all'));
-    }
-
-    protected function validateTrip()
-    {
-        return request()->validate([
-            'startpoint_id' => 'required|integer',
-            'endpoint_id' => 'required|integer',
-            'passengers_count' => 'nullable|integer',
-            'price' => 'required|string|alpha_dash',
-            'date' => 'required|date',
-            'time' => 'required|string',
-            'description' => 'string|nullable',
-        ]);
     }
 }

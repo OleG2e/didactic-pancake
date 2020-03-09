@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $user->link = (string) $request['link'];
+        $user->link = (string)$request['link'];
         $user->save();
         return back();
     }
@@ -51,25 +51,31 @@ class HomeController extends Controller
 
     public function updateRelevancePost(Post $post, Request $request)
     {
-        $post->update([
-            'relevance' => $request->has('relevance'),
-        ]);
+        $post->update(
+            [
+                'relevance' => $request->has('relevance'),
+            ]
+        );
         return back();
     }
 
     public function updateRelevanceTrip(Trip $trip, Request $request)
     {
-        $trip->update([
-            'relevance' => $request->has('relevance'),
-        ]);
+        $trip->update(
+            [
+                'relevance' => $request->has('relevance'),
+            ]
+        );
         return back();
     }
 
     public function updateRelevanceDelivery(Trip $trip, Request $request)
     {
-        $trip->update([
-            'relevance' => $request->has('relevance'),
-        ]);
+        $trip->update(
+            [
+                'relevance' => $request->has('relevance'),
+            ]
+        );
         return back();
     }
 
@@ -82,7 +88,9 @@ class HomeController extends Controller
     public function updateAvatar(Request $request)
     {
         $path = $request->file('avatar')->storeAs('avatars/'.auth()->id(), 'avatar.jpg', 'public');
-        Image::make($request->file('avatar'))->fit(512)->save('storage/'.$path);// in production use save('public/'.$path)
+        Image::make($request->file('avatar'))->fit(512)->save(
+            'storage/'.$path
+        );// in production use save('public/'.$path)
         return back();
     }
 
@@ -110,7 +118,7 @@ class HomeController extends Controller
         if ($request->has('image')) {
             $image = $request->file('image')->storeAs('reports/'.auth()->id(), time().'.jpg', 'public');
         }
-        $message = ['message' => (string) $request['message'], 'image' => ($image ?? null)];
+        $message = ['message' => (string)$request['message'], 'image' => ($image ?? null)];
         Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));
         flash('Твоё сообщение было отправлено админу');
 

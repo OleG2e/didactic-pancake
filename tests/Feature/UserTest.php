@@ -14,19 +14,26 @@ class UserTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $user;
-    protected $trip;
-    protected $post;
-    protected $category;
+    private object $user;
+    private object $trip;
+    private object $post;
+    private object $category;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->category = collect();
+        $slugs = collect(['ad', 'trip', 'delivery', 'buy', 'sell', 'help', 'pet', 'service', 'loss']);
+        $slugs->each(
+            function ($slug) {
+                return $this->category->push(factory(Category::class)->create(['slug' => $slug]));
+            }
+        );
+
         $this->user = factory(User::class)->create();
         $this->trip = factory(Trip::class)->create();
         $this->post = factory(Post::class)->create();
-        $this->category = factory(Category::class)->create();
     }
 
     /**

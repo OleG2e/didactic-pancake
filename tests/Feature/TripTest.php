@@ -8,26 +8,36 @@ use App\Town;
 use App\Trip;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class TripTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $user;
-    protected $category;
-    protected $post;
-    protected $town;
-    protected $trip;
+    private object $user;
+    private object $category;
+    private object $post;
+    private object $town;
+    private object $trip;
+    private object $reply;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->category = collect();
+        $slugs = collect(['ad', 'trip', 'delivery', 'buy', 'sell', 'help', 'pet', 'service', 'loss']);
+        $slugs->each(
+            function ($slug) {
+                return $this->category->push(factory(Category::class)->create(['slug' => $slug]));
+            }
+        );
+
         $this->user = factory(User::class)->create();
-        $this->category = factory(Category::class)->create();
         $this->town = factory(Town::class)->create();
         $this->trip = factory(Trip::class)->create();
+        $this->reply = factory(Reply::class)->create();
     }
 
     public function testGuestCanSeeTrips()
@@ -73,17 +83,9 @@ class TripTest extends TestCase
 
     public function testUserCanCreateTrip()
     {
-        $trip = [
-            "startpoint_id" => 1,
-            "endpoint_id" => 1,
-            "passengers_count" => 4,
-            "price" => "По-братски",
-            "date" => "2019-05-28",
-            "time" => "18:30:00",
-            "description" => "Trip description"
-        ];
+        $trip = factory(Trip::class)->make(['date' => '2020/03/13', 'time' => '16:30',]);
         $this->actingAs($this->user)
-            ->post(route('trip.store'), $trip)
+            ->post(route('trip.store'), $trip->toArray())
             ->assertStatus(302)
             ->assertSessionHas(['message' => 'Поездка создана']);
         $this->assertDatabaseHas('trips', ['id' => 1]);
@@ -126,15 +128,13 @@ class TripTest extends TestCase
 
     public function testUserCanDeleteOwnTrip()
     {
-        $trip = factory(Trip::class)->create(['owner_id' => $this->user->id]);
-        $replies = factory(Reply::class, 5)->create(['post_id' => $trip->id]);
         $this->actingAs($this->user)
-            ->delete(route('trip.destroy', $trip))
+            ->delete(route('trip.destroy', $this->trip))
             ->assertStatus(302)
             ->assertSessionHas(['message' => 'Поездка удалена']);
 
-        $this->assertDatabaseMissing('trips', ['id' => $trip->id]);
-        $this->assertDatabaseMissing('replies', ['post_id' => $trip->id]);
+        $this->assertDatabaseMissing('trips', ['id' => $this->trip]);
+        $this->assertDatabaseMissing('replies', ['trip', $this->trip, $this->reply]);
     }
 
     public function testUserCanNotDeleteNotOwnTrip()
@@ -147,82 +147,11 @@ class TripTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function testUserCanCreateReply()
-    {
-        $reply = factory(Reply::class)->make(['post_id' => $this->trip->id]);
-
-        $this->actingAs($this->user)
-            ->post(route('reply.store'), $reply->toArray())
-            ->assertStatus(302)
-            ->assertSessionHas(['message' => 'Ответ создан']);
-        $this->assertDatabaseHas('replies', ['id' => 1]);
-    }
-
-    public function testUserCanDeleteOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id]);
-
-        $this->actingAs($this->user)
-            ->delete(route('reply.destroy', $reply))
-            ->assertStatus(302)
-            ->assertSessionHas(['message' => 'Ответ удалён']);
-        $this->assertDatabaseMissing('replies', ['post_id' => $this->trip->id]);
-    }
-
-    public function testUserCanSeeUpdateReplyForm()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id]);
-
-        $this->actingAs($this->user)
-            ->get(route('reply.edit', $reply))
-            ->assertOk()
-            ->assertSee($reply->description);
-    }
-
-    public function testUserCanUpdateOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id]);
-        $replyUpdated = factory(Reply::class)->make(['description' => 'New Title'])->toArray();
-
-        $this->actingAs($this->user)
-            ->patch(route('reply.update', $reply), $replyUpdated)
-            ->assertStatus(302);
-    }
-
-    public function testUserCanNotDeleteNotOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id, 'owner_id' => 256]);
-
-        $this->actingAs($this->user)
-            ->delete(route('reply.destroy', $reply))
-            ->assertStatus(403);
-    }
-
-    public function testUserCanNotUpdateNotOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id, 'owner_id' => 256]);
-
-        $this->actingAs($this->user)
-            ->patch(route('reply.update', $reply))
-            ->assertStatus(403);
-    }
-
-    public function testUserCanRequestLinkToOwnerReply()
-    {
-        $user = factory(User::class, 2)->create();
-        $category = factory(Category::class, 2)->create();
-        $reply = factory(Reply::class)->create(['post_id' => $this->trip->id, 'owner_id' => 2, 'category_id' => 2]);
-
-        $this->actingAs($user[0])
-            ->post(route('reply.link.request', $reply))
-            ->assertSessionHas(['message' => "Запрос отправлен {$reply->owner->name}"]);
-    }
-
     public function testGuestCanNotParticipateInTrip()
     {
         $this->assertGuest();
 
-        $this->patch(route('add.user', $this->trip), $this->trip->toArray())
+        $this->patch(route('trip.add.user', $this->trip), $this->trip->toArray())
             ->assertRedirect(route('login'));
     }
 
@@ -232,7 +161,7 @@ class TripTest extends TestCase
 
         $this->actingAs($this->user)
             ->from(route('trip.show', $trip))
-            ->patch(route('add.user', $trip), $trip->toArray())
+            ->patch(route('trip.add.user', $trip), $trip->toArray())
             ->assertSessionHas(['message' => 'Вы присоединились к поездке'])
             ->assertRedirect(route('trip.show', $trip));
         $this->assertDatabaseHas('trip_user', ['trip_id' => $trip->id]);
@@ -241,19 +170,17 @@ class TripTest extends TestCase
 
     public function testUserCanDeclineFromTrip()
     {
-        $user = factory(User::class)->create();
-
-        $user->trips()->attach($this->trip);
+        $this->user->trips()->attach($this->trip);
         $this->assertDatabaseHas('trip_user', ['trip_id' => $this->trip->id]);
-        $this->assertDatabaseHas('trip_user', ['user_id' => $user->id]);
+        $this->assertDatabaseHas('trip_user', ['user_id' => $this->user->id]);
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->from(route('trip.show', $this->trip))
-            ->delete(route('remove.user', $this->trip), $this->trip->toArray())
+            ->delete(route('trip.remove.user', $this->trip), $this->trip->toArray())
             ->assertSessionHas(['message' => 'Вы отказались от поездки'])
             ->assertRedirect(route('trip.show', $this->trip));
 
         $this->assertDatabaseMissing('trip_user', ['trip_id' => $this->trip->id]);
-        $this->assertDatabaseMissing('trip_user', ['user_id' => $user->id]);
+        $this->assertDatabaseMissing('trip_user', ['user_id' => $this->user->id]);
     }
 }

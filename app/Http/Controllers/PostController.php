@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Mail\RequestLinkFromUser;
 use App\Post;
 use App\Category;
 use App\Reply;
-use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
@@ -20,80 +21,31 @@ class PostController extends Controller
         $this->middleware(['auth', 'verified'])->except(['index', 'show']);
     }
 
-    protected function sql($id)
-    {
-        return Post::where('relevance', true)->where('category_id', $id)->paginate(25);
-    }
-
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @param  string  $category
+     * @return View
      */
-    public function index()
+    public function index(string $category): View
     {
-        $routeName = \Request::route()->getName();
-        switch ($routeName) {
-            case 'post.all':
-                $posts = Post::where('relevance', true)->paginate(25);
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.buy':
-                $posts = $this->sql(4);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.sell':
-                $posts = $this->sql(5);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.help':
-                $posts = $this->sql(6);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.pet':
-                $posts = $this->sql(7);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.service':
-                $posts = $this->sql(8);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            case 'post.loss':
-                $posts = $this->sql(9);
-                if (\request()->wantsJson()) {
-                    return $posts;
-                }
-                return view('posts.index', compact('posts'));
-                break;
-            default:
-                return redirect(route('home'));
+        if ($category === 'all') {
+            $posts = Post::whereRelevance(true)->paginate(25);
+        } else {
+            $posts = Category::where('slug', $category)->firstOrFail()->posts()->whereRelevance(true)->paginate(25);
         }
 
+        return view('posts.index', compact(['posts', 'category']));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        $categories = Category::where('id', '>', 3)->get();
+        $categories = Category::whereSection(Post::MODEL_NAME)->get();
 
         return view('posts.create', compact('categories'));
     }
@@ -101,28 +53,30 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  Post  $post
+     * @param  PostRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Post $post, Request $request)
+    public function store(Post $post, PostRequest $request): RedirectResponse
     {
         $images = $this->imageUpload($request);
-        $attributes = $this->validatePost();
+        $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
         $attributes['images'] = $images;
         $createdPost = $post->create($attributes);
         flash('Объявление создано');
 
-        return redirect(route('post.show', $createdPost));
+        return redirect(route('post.show', [$createdPost->category->slug, $createdPost]));
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  string  $category
      * @param  Post  $post
-     * @return Response
+     * @return View
      */
-    public function show(Post $post)
+    public function show(string $category, Post $post): View
     {
         if (isset($post->images)) {
             $imagesAll = json_decode($post->images);
@@ -136,15 +90,16 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  string  $category
      * @param  Post  $post
-     * @return Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Post $post)
+    public function edit(string $category, Post $post): View
     {
         $this->authorize('update', $post);
 
-        $categories = Category::where('id', '>', 3)->get();
+        $categories = Category::whereSection(Post::MODEL_NAME)->get();
 
         return view('posts.edit', compact(['post', 'categories']));
     }
@@ -152,35 +107,37 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  string  $category
      * @param  Post  $post
-     * @return Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param  PostRequest  $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Post $post)
+    public function update(string $category, Post $post, PostRequest $request): RedirectResponse
     {
         $this->authorize('update', $post);
 
         $images = $this->imageUpload($request);
-        $attributes = $this->validatePost();
+        $attributes = $request->validated();
         $attributes['images'] = $images;
         $post->update($attributes);
         flash('Объявление изменено');
-        return redirect(route('post.show', $post->id));
+        return redirect(route('post.show', [$category, $post->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  string  $category
      * @param  Post  $post
-     * @return Response
-     * @throws Exception
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Post $post)
+    public function destroy(string $category, Post $post): RedirectResponse
     {
         $this->authorize('delete', $post);
 
-        $replies = Reply::where('post_id', $post->id)->get();
+        $replies = Reply::where('model_id', $post->id)->where('model_name', Post::MODEL_NAME)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }
@@ -210,18 +167,9 @@ class PostController extends Controller
         return json_encode($pathAllFiles);
     }
 
-    protected function validatePost()
+    public function linkRequest(string $category, Post $post): RedirectResponse
     {
-        return request()->validate([
-            'category_id' => 'required|integer|exists:categories,id',
-            'title' => 'required|string|max:20',
-            'description' => 'required|string|max:1024',
-        ]);
-    }
-
-    public function linkRequest(Post $post)
-    {
-        $route = route('post.show', $post->id);
+        $route = route('post.show', [$category, $post->id]);
         Mail::to($post->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$post->owner->name}");
 

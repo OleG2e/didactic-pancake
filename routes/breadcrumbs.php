@@ -70,15 +70,15 @@ Breadcrumbs::for('post.create', function ($trail) {
 });
 
 // Home > Post > Edit
-Breadcrumbs::for('post.edit', function ($trail, $post) {
+Breadcrumbs::for('post.edit', function ($trail, $category, $post) {
     $trail->parent('main');
-    $trail->push('Редактировать объявление', route('post.edit', $post));
+    $trail->push('Редактировать объявление', route('post.edit', [$category, $post]));
 });
 
 // Home > Post > Show
-Breadcrumbs::for('post.show', function ($trail, $post) {
+Breadcrumbs::for('post.show', function ($trail, $category, $post) {
     $trail->parent('main');
-    $trail->push('Детали объявления', route('post.show', $post));
+    $trail->push('Детали объявления', route('post.show', [$category, $post]));
 });
 
 // Home > Trip

@@ -86,7 +86,7 @@
                         <li>
                             <div class="navbar-dropdown is-right is-boxed">
                                 <div class="navbar-item">
-                                    <a href="{{route('post.all')}}">
+                                    <a href="{{route('post.all', 'all')}}">
                                         <span class="icon is-small"><i class="fa fa-table"
                                                                        aria-hidden="true"></i></span>
                                         <span class="has-badge-inline" data-badge="{{$all}}">Объявления</span>
@@ -94,14 +94,14 @@
                                 </div>
                                 <ul>
                                     <li>
-                                        <a href="{{route('post.help')}}">
+                                        <a href="{{route('post.all', 'help')}}">
                                             <span class="icon is-small"><i class="fa fa-hand-holding-heart"
                                                                            aria-hidden="true"></i></span>
                                             <span class="has-badge-inline" data-badge="{{$helps}}">Помощь</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.pet')}}">
+                                        <a href="{{route('post.all', 'pet')}}">
                                 <span class="icon is-small">
                                     <i class="fa fa-paw"
                                        aria-hidden="true"></i>
@@ -110,14 +110,14 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.loss')}}">
+                                        <a href="{{route('post.all', 'loss')}}">
                                             <span class="icon is-small"><i class="fa fa-key"
                                                                            aria-hidden="true"></i></span>
                                             <span class="has-badge-inline" data-badge="{{$losses}}">Потери</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.buy')}}">
+                                        <a href="{{route('post.all', 'buy')}}">
                                 <span class="icon is-small">
                                     <i class="fa fa-money-bill" aria-hidden="true"></i>
                                 </span>
@@ -125,7 +125,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.sell')}}">
+                                        <a href="{{route('post.all', 'sell')}}">
                                 <span class="icon is-small">
                                     <i class="fa fa-money-bill-wave"
                                        aria-hidden="true"></i>
@@ -134,7 +134,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('post.service')}}">
+                                        <a href="{{route('post.all', 'service')}}">
                                             <span class="icon is-small"><i class="fa fa-concierge-bell"
                                                                            aria-hidden="true"></i></span>
                                             <span class="has-badge-inline" data-badge="{{$services}}">Услуги</span>

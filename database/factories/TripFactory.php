@@ -9,7 +9,7 @@ $factory->define(App\Trip::class, function (Faker $faker) {
         'startpoint_id' => 1,
         'endpoint_id' => 1,
         'passengers_count' => 4,
-        'date_time' => now(),
+        'date_time' => $faker->date(),
         'description' => $faker->text,
         'price' => $faker->word,
     ];

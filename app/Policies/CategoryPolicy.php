@@ -10,7 +10,7 @@ class CategoryPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user)
+    public function view(User $user): bool
     {
         return $user->id === 1; // admin id
     }
@@ -21,7 +21,7 @@ class CategoryPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->id === 1; // admin id
     }
@@ -33,7 +33,7 @@ class CategoryPolicy
      * @param  \App\Category  $category
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return $user->id === 1;
     }
@@ -45,7 +45,7 @@ class CategoryPolicy
      * @param  \App\Category  $category
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return $user->id === 1;
     }
@@ -57,7 +57,7 @@ class CategoryPolicy
      * @param  \App\Category  $category
      * @return mixed
      */
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return $user->id === 1;
     }
@@ -69,7 +69,7 @@ class CategoryPolicy
      * @param  \App\Category  $category
      * @return mixed
      */
-    public function forceDelete(User $user)
+    public function forceDelete(User $user): bool
     {
         return $user->id === 1;
     }

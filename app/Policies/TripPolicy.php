@@ -17,7 +17,7 @@ class TripPolicy
      * @param  \App\Trip  $trip
      * @return mixed
      */
-    public function update(User $user, Trip $trip)
+    public function update(User $user, Trip $trip): bool
     {
         return $trip->owner_id == $user->id;
     }
@@ -29,7 +29,7 @@ class TripPolicy
      * @param  \App\Trip  $trip
      * @return mixed
      */
-    public function delete(User $user, Trip $trip)
+    public function delete(User $user, Trip $trip): bool
     {
         return $trip->owner_id == $user->id;
     }
@@ -41,7 +41,7 @@ class TripPolicy
      * @param  \App\Trip  $trip
      * @return mixed
      */
-    public function restore(User $user, Trip $trip)
+    public function restore(User $user, Trip $trip): bool
     {
         return $trip->owner_id == $user->id;
     }
@@ -53,7 +53,7 @@ class TripPolicy
      * @param  \App\Trip  $trip
      * @return mixed
      */
-    public function forceDelete(User $user, Trip $trip)
+    public function forceDelete(User $user, Trip $trip): bool
     {
         return $trip->owner_id == $user->id;
     }

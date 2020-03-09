@@ -4,6 +4,10 @@ namespace App;
 
 use App\Notifications\CustomResetPasswordNotification;
 use App\Notifications\CustomVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +22,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'link', 'law',
+        'name',
+        'email',
+        'password',
+        'link',
+        'law',
     ];
 
     /**
@@ -27,32 +35,42 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-    public function posts()
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'owner_id');
     }
 
-    public function trips()
+    public function trips(): BelongsToMany
     {
         return $this->belongsToMany(Trip::class);
     }
 
-    public function deliveries()
+    public function deliveries(): HasMany
     {
-        return $this->hasMany(Trip::class, 'owner_id')->where('category_id', 3)->get();
+        return $this->hasMany(Delivery::class, 'owner_id');
     }
 
-    public function avatar()
+    public function avatar(): string
     {
         $path = 'storage/avatars/'.$this->id.'/avatar.jpg';//in production use 'public/avatars/'.$this->id.'/avatar.jpg'
 
         return asset(file_exists($path) ? $path : 'storage/avatars/user-circle-solid.svg');
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->as('role');
@@ -64,12 +82,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string  $token
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
 
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new CustomVerifyEmail());
     }

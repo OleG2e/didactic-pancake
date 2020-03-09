@@ -2,33 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Delivery;
+use App\Http\Requests\ReplyRequest;
 use App\Mail\RequestLinkFromUser;
 use App\Reply;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Trip;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class ReplyController extends Controller
 {
-    public function __construct()
+    private function routeSwitcher(string $model_name, Reply $reply): string
     {
-        $this->middleware(['auth', 'verified']);
+        switch ($model_name) {
+            case Trip::MODEL_NAME:
+                return route('trip.show', $reply->model_id);
+                break;
+            case Delivery::MODEL_NAME:
+                return route('delivery.show', $reply->model_id);
+                break;
+            default:
+                return route('post.show', [$reply->parent($model_name)->category->slug, $reply->model_id]);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param  string  $model_name
+     * @param  int  $model_id
      * @param  Reply  $reply
-     * @return Response
+     * @param  ReplyRequest  $request
+     * @return RedirectResponse
      */
-    public function store(Reply $reply)
+    public function store(string $model_name, int $model_id, Reply $reply, ReplyRequest $request): RedirectResponse
     {
-        $attributes = request()->validate([
-            'post_id' => 'required|numeric',
-            'category_id' => 'required|numeric',
-            'description' => 'required|string|max:1024',
-        ]);
+        $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
+        $attributes['model_id'] = $model_id;
+        $attributes['model_name'] = $model_name;
         $reply->create($attributes);
         flash('Ответ создан');
 
@@ -38,50 +52,48 @@ class ReplyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  string  $model_name
+     * @param  int  $model_id
      * @param  Reply  $reply
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Reply $reply)
+    public function edit(string $model_name, int $model_id, Reply $reply): View
     {
         $this->authorize('update', $reply);
 
-        return view('components.reply-edit-form', compact('reply'));
+        return view('components.reply-edit-form', compact(['model_name', 'model_id', 'reply']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  string  $model_name
+     * @param  int  $model_id
      * @param  Reply  $reply
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param  ReplyRequest  $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Reply $reply)
+    public function update(string $model_name, int $model_id, Reply $reply, ReplyRequest $request): RedirectResponse
     {
         $this->authorize('update', $reply);
-        $reply->update($request->validate(['description' => 'required|string']));
 
-        switch ($reply->category->slug) {
-            case 'trip':
-                return redirect(route('trip.show', $reply->post_id));
-                break;
-            case 'delivery':
-                return redirect(route('delivery.show', $reply->post_id));
-                break;
-            default:
-                return redirect(route('post.show', $reply->post_id));
-        }
+        $reply->update($request->validated());
+
+        return redirect($this->routeSwitcher($model_name, $reply));
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  string  $model_name
+     * @param  int  $model_id
      * @param  Reply  $reply
-     * @return Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Reply $reply)
+    public function destroy(string $model_name, int $model_id, Reply $reply): RedirectResponse
     {
         $this->authorize('delete', $reply);
 
@@ -91,18 +103,9 @@ class ReplyController extends Controller
         return back();
     }
 
-    public function linkRequest(Reply $reply)
+    public function linkRequest(string $model_name, int $model_id, Reply $reply): RedirectResponse
     {
-        switch ($reply->category->id) {
-            case 2:
-                $route = route('trip.show', $reply->post_id);
-                break;
-            case 3:
-                $route = route('delivery.show', $reply->post_id);
-                break;
-            default:
-                $route = route('post.show', $reply->post_id);
-        }
+        $route = $this->routeSwitcher($model_name, $reply);
 
         Mail::to($reply->owner->email)->send(new RequestLinkFromUser($route));
         flash("Запрос отправлен {$reply->owner->name}");

@@ -20,6 +20,10 @@
             </div>
         </nav>
         <div class="columns is-multiline">
+            @php
+                //$category = \App\AppTemplate::currentCategory();
+                //$route = route('post.all', $category);
+            @endphp
             @if(count($myPosts))
                 @foreach($myPosts as $post)
                     <div class="column is-narrow">
@@ -47,7 +51,7 @@
                                         Удалить пост от {{$post->created_at}}?
                                     </section>
                                     <footer class="modal-card-foot">
-                                        <form method="post" action="{{route('post.destroy', $post)}}">
+                                        <form method="post" action="{{route('post.destroy', [$post->category, $post])}}">
                                             @method('delete')
                                             @csrf
                                             <button class="button is-danger" type="submit">
@@ -65,7 +69,7 @@
                                 <br>{{$post->created_at}}</h6>
                             <div class="content">
                                 <div class="more">{{$post->description}}</div>
-                                <a href="{{route('post.show', $post)}}">
+                                <a href="{{route('post.show', [$post->category, $post])}}">
                                     Обсудить
                                 </a>
                                 <form method="post" action="{{route('update.relevance.post', $post)}}">

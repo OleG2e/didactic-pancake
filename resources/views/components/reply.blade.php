@@ -1,4 +1,6 @@
-@foreach($post->replies() as $reply)
+@php($model = \App\Reply::getCurrentParentModel($model_name, $model_id))
+@foreach($model->replies() as $reply)
+    @php($routeParameters = [$model_name, $reply->parent($model_name)->id, $reply])
     <article class="media">
         <figure class="media-left">
             <p class="image is-48x48">
@@ -12,7 +14,8 @@
                     <small>{{$reply->updated_at}}</small>
                     <br><span>{{$reply->description}}</span>
                     @auth
-                        <form method="post" action="{{route('reply.link.request', $reply)}}">
+                        <form method="post"
+                              action="{{route('reply.link.request', $routeParameters)}}">
                             @csrf
                             <div class="field">
                                 <div class="control">
@@ -30,12 +33,12 @@
             </div>
             @can('update', $reply)
                 <div class="field is-grouped">
-                    <a class="button is-small" href="{{route('reply.edit',$reply)}}">
+                    <a class="button is-small" href="{{route('reply.edit', $routeParameters)}}">
                         <span class="icon is-small">
                             <i class="fa fa-edit"></i>
                         </span>
                     </a>
-                    <form method="post" action="{{route('reply.destroy',$reply)}}">
+                    <form method="post" action="{{route('reply.destroy', $routeParameters)}}">
                         @method('delete')
                         @csrf
                         <button class="button is-small" type="submit">

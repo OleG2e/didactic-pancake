@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppTemplate extends Model
 {
-    public static function countMyAds()
+    public static function countMyAds(): array
     {
         $user = auth()->user();
         $myTrips = $user->trips()->count();
@@ -16,28 +16,35 @@ class AppTemplate extends Model
         return compact(['myTrips', 'myPosts', 'myDeliveries']);
     }
 
-    public static function countAds()
+    public static function currentCategory(): string
     {
-        $trips = Trip::where('category_id', 2)->whereRelevance(true)->count();
-        $deliveries = Trip::where('category_id', 3)->whereRelevance(true)->count();
-        $all = Post::whereRelevance(true)->count();
-        $buys = Post::where('category_id', 4)->whereRelevance(true)->count();
-        $sells = Post::where('category_id', 5)->whereRelevance(true)->count();
-        $helps = Post::where('category_id', 6)->whereRelevance(true)->count();
-        $pets = Post::where('category_id', 7)->whereRelevance(true)->count();
-        $services = Post::where('category_id', 8)->whereRelevance(true)->count();
-        $losses = Post::where('category_id', 9)->whereRelevance(true)->count();
+        return \Request::route()->parameter('category');
+    }
 
-        return compact([
-            'all',
-            'trips',
-            'deliveries',
-            'buys',
-            'sells',
-            'helps',
-            'pets',
-            'services',
-            'losses'
-        ]);
+    public static function countAds(): array
+    {
+        $trips = Category::where('slug', 'trip')->firstOrFail()->trips()->whereRelevance(true)->count();
+        $deliveries = Category::where('slug', 'delivery')->firstOrFail()->trips()->whereRelevance(true)->count();
+        $all = Post::whereRelevance(true)->count();
+        $buys = Category::where('slug', 'buy')->firstOrFail()->posts()->whereRelevance(true)->count();
+        $sells = Category::where('slug', 'sell')->firstOrFail()->posts()->whereRelevance(true)->count();
+        $helps = Category::where('slug', 'help')->firstOrFail()->posts()->whereRelevance(true)->count();
+        $pets = Category::where('slug', 'pet')->firstOrFail()->posts()->whereRelevance(true)->count();
+        $services = Category::where('slug', 'service')->firstOrFail()->posts()->whereRelevance(true)->count();
+        $losses = Category::where('slug', 'loss')->firstOrFail()->posts()->whereRelevance(true)->count();
+
+        return compact(
+            [
+                'all',
+                'trips',
+                'deliveries',
+                'buys',
+                'sells',
+                'helps',
+                'pets',
+                'services',
+                'losses'
+            ]
+        );
     }
 }

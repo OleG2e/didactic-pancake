@@ -1,10 +1,8 @@
 @auth
     <article class="media">
         <div class="media-content">
-            <form action="{{route('reply.store')}}" method="post">
+            <form action="{{route('reply.store', [$model_name,$model_id])}}" method="post">
                 @csrf
-                <input type="hidden" name="post_id" value="{{$post->id}}">
-                <input type="hidden" name="category_id" value="{{$post->category_id}}">
                 <article class="media">
                     <figure class="media-left is-hidden-touch">
                         <p class="image is-64x64">

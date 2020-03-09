@@ -17,7 +17,7 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(User $user, Post $post)
+    public function update(User $user, Post $post): bool
     {
         return $post->owner_id == $user->id;
     }
@@ -29,7 +29,7 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Post $post)
+    public function delete(User $user, Post $post): bool
     {
         return $post->owner_id == $user->id;
     }
@@ -41,7 +41,7 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function restore(User $user, Post $post)
+    public function restore(User $user, Post $post): bool
     {
         return $post->owner_id == $user->id;
     }
@@ -53,7 +53,7 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function forceDelete(User $user, Post $post)
+    public function forceDelete(User $user, Post $post): bool
     {
         return $post->owner_id == $user->id;
     }

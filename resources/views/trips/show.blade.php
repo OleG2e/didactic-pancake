@@ -78,10 +78,10 @@
                             </span>
                         </a>
                     @endcan
-                    @include('components.reply', ['post' => $trip])
+                    @include('components.reply', ['model_name' => \App\Trip::MODEL_NAME, 'model_id' => $trip->id])
                 </div>
             </article>
-            @include('components.reply-form', ['post' => $trip])
+            @include('components.reply-form', ['model_name' => \App\Trip::MODEL_NAME, 'model_id' => $trip->id])
             <br><a class="button is-info is-hovered" href="{{route('trip.all')}}">Назад</a>
         </div>
     @endcomponent

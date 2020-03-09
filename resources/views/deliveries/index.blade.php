@@ -22,19 +22,19 @@
         <h4 class="title is-size-4">Актуальные передачки:</h4>
         <div class="columns is-multiline">
             @if (count($deliveries))
-                @foreach($deliveries as $trip)
+                @foreach($deliveries as $delivery)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
-                            <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
-                                <small> {{$trip->updated_at->diffForHumans()}}</small>
+                            <h4 class="title is-size-4">{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</h4>
+                            <p class="subtitle"><strong>{{$delivery->owner->name}}</strong>
+                                <small> {{$delivery->updated_at->diffForHumans()}}</small>
                             </p>
                             @php
-                                $dateTime = new DateTime($trip->date_time);
+                                $timestamp = new DateTime($delivery->timestamp);
                             @endphp
-                            <span> Дата: {{$dateTime->format('d.m.Y')}}</span>
-                            <br><span>Описание: {{$trip->description}}</span>
-                            <br><a href="{{route('delivery.show', $trip)}}">
+                            <span> Дата: {{$timestamp->format('d.m.Y')}}</span>
+                            <br><span>Описание: {{$delivery->description}}</span>
+                            <br><a href="{{route('delivery.show', $delivery)}}">
                                 Посмотреть
                             </a>
                         </div>

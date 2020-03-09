@@ -3,7 +3,8 @@
     @component('components.hero')
         <div class="box">
             <div class="title">Редактирование ответа {{$reply->title}}</div>
-            <form method="post" action="{{route('reply.update', $reply)}}">
+            <form method="post"
+                  action="{{route('reply.update', [$model_name, $reply->parent($model_name)->id, $reply])}}">
                 @method('patch')
                 @csrf
                 <div class="field">
@@ -15,9 +16,7 @@
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
-                        <button type="submit" class="button is-link">Сохранить
-                            изменения
-                        </button>
+                        <button type="submit" class="button is-link">Сохранить изменения</button>
                     </div>
                     <div class="control">
                         <a class="button is-text" href="{{back()->getTargetUrl()}}">Отмена</a>

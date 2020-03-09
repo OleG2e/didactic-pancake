@@ -21,7 +21,7 @@
                 @foreach($posts as $post)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            @if (\Request::route()->getName() === 'post.all')
+                            @if (\App\AppTemplate::currentCategory() === 'all')
                                 <p class="title is-size-4">{{$post->category->title}}</p>
                             @endif
                             <p class="subtitle"><strong>{{$post->owner->name}}</strong>
@@ -29,7 +29,7 @@
                             </p>
                             <div class="content">
                                 <div class="more">{{$post->description}}</div>
-                                <a href="{{route('post.show', $post)}}">
+                                <a href="{{route('post.show', [$post->category->slug, $post])}}">
                                     Обсудить
                                 </a>
                             </div>

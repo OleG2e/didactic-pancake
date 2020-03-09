@@ -2,30 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Http\Requests\DeliveryRequest;
 use App\Mail\RequestLinkFromUser;
 use App\Reply;
 use App\Town;
-use App\Trip;
-use Illuminate\Http\Request;
+use App\Delivery;
 use DateTime;
-use Illuminate\Http\Response;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class DeliveryController extends Controller
 {
+    private object $categories;
+    private object $towns;
+
     public function __construct()
     {
         $this->middleware(['auth', 'verified'])->except(['index', 'show']);
+        $this->categories = Category::whereSection(Delivery::MODEL_NAME)->get();
+        $this->towns = Town::all();
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $deliveries = Trip::whereRelevance(true)->where('category_id', 3)->oldest('date_time')->get();
+        $deliveries = Delivery::whereRelevance(true)->oldest()->get();
 
         return view('deliveries.index', compact('deliveries'));
     }
@@ -33,120 +41,115 @@ class DeliveryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        $towns = Town::all();
-
-        return view('deliveries.create', compact(['towns']));
+        return view('deliveries.create', ['towns' => $this->towns, 'categories' => $this->categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Trip  $trip
-     * @return Response
+     * @param  Delivery  $delivery
+     * @param  DeliveryRequest  $request
+     * @return RedirectResponse
      * @throws \Exception
      */
-    public function store(Trip $trip)
+    public function store(Delivery $delivery, DeliveryRequest $request): RedirectResponse
     {
-        $attributes = $this->validateDelivery();
-        $attributes['category_id'] = 3;
-        $attributes['passengers_count'] = 0;
-        $attributes['price'] = 0;
-        $attributes['date_time'] = new DateTime($attributes['date']);
+        $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
-        $trip->create($attributes);
+        $delivery->create($attributes);
+
         flash('Передачка создана');
 
-        return redirect('/deliveries');
+        return redirect(route('delivery.all'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Trip  $trip
-     * @return Response
+     * @param  Delivery  $delivery
+     * @return View
+     * @throws \Exception
      */
-    public function show(Trip $trip)
+    public function show(Delivery $delivery): View
     {
-        return view('deliveries.show', compact(['trip']));
+        $dateTime = new DateTime($delivery->timestamp);
+
+        return view('deliveries.show', compact(['delivery', 'dateTime']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Trip  $trip
-     * @return Response
-     * @throws \Exception
+     * @param  Delivery  $delivery
+     * @return View
+     * @throws AuthorizationException
      */
-    public function edit(Trip $trip)
+    public function edit(Delivery $delivery): View
     {
-        $this->authorize('update', $trip);
+        $this->authorize('update', $delivery);
 
-        $towns = Town::all();
-        $dateTime = new DateTime($trip->date_time);
+        $timestamp = new DateTime($delivery->timestamp);
 
-        return view('deliveries.edit', compact(['trip', 'towns', 'dateTime']));
+        return view(
+            'deliveries.edit',
+            [
+                'categories' => $this->categories,
+                'delivery' => $delivery,
+                'timestamp' => $timestamp,
+                'towns' => $this->towns,
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  Trip  $trip
-     * @return Response
-     * @throws \Exception
+     * @param  Delivery  $delivery
+     * @param  DeliveryRequest  $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Trip $trip)
+    public function update(Delivery $delivery, DeliveryRequest $request): RedirectResponse
     {
-        $this->authorize('update', $trip);
+        $this->authorize('update', $delivery);
 
-        $attributes = $this->validateDelivery();
-        $attributes['date_time'] = $attributes['date'];
-        unset($attributes['date']);
-        $attributes['date_time'] = new DateTime($attributes['date_time']);
-        $trip->update($attributes);
+        $attributes = $request->validated();
+        $delivery->update($attributes);
         flash('Передачка изменена');
 
-        return redirect(route('delivery.show', $trip));
+        return redirect(route('delivery.show', $delivery));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Trip  $trip
-     * @return Response
+     * @param  Delivery  $delivery
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Trip $trip)
+    public function destroy(Delivery $delivery): RedirectResponse
     {
-        $this->authorize('delete', $trip);
-        $replies = Reply::where('post_id', $trip->id)->where('category_id', 3)->get();
+        $this->authorize('delete', $delivery);
+
+        $replies = Reply::where('model_id', $delivery->id)->where('model_name', Delivery::MODEL_NAME)->get();
         foreach ($replies as $reply) {
             $reply->delete();
         }
-        $trip->delete();
+        $delivery->delete();
         flash('Передачка удалена');
 
         return redirect(route('delivery.all'));
     }
 
-    protected function validateDelivery()
+    public function linkRequest(Delivery $delivery)
     {
-        return request()->validate([
-            'startpoint_id' => 'required|integer',
-            'endpoint_id' => 'required|integer',
-            'date' => 'required|date',
-            'description' => 'required|string',
-        ]);
-    }
-
-    public function linkRequest(Trip $trip)
-    {
-        $route = route('delivery.show', $trip->id);
-        Mail::to($trip->owner->email)->send(new RequestLinkFromUser($route));
-        flash("Запрос отправлен {$trip->owner->name}");
+        $route = route('delivery.show', $delivery->id);
+        Mail::to($delivery->owner->email)->send(new RequestLinkFromUser($route));
+        flash("Запрос отправлен {$delivery->owner->name}");
 
         return back();
     }

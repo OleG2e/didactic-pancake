@@ -13,14 +13,18 @@ class CreateRepliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('owner_id');
-            $table->unsignedInteger('post_id');
-            $table->unsignedInteger('category_id');
-            $table->text('description');
-            $table->timestamps();
-        });
+        Schema::create(
+            'replies',
+            function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->unsignedInteger('owner_id');
+                $table->unsignedInteger('model_id');
+                $table->char('model_name', 16);
+                $table->json('attachment')->nullable();
+                $table->text('description');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

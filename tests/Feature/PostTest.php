@@ -13,51 +13,41 @@ class PostTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $user;
-    protected $category;
-    protected $post;
+    private object $user;
+    private object $category;
+    private object $post;
+    private object $reply;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->category = collect();
+        $slugs = collect(['ad', 'trip', 'delivery', 'buy', 'sell', 'help', 'pet', 'service', 'loss']);
+        $slugs->each(
+            function ($slug) {
+                return $this->category->push(factory(Category::class)->create(['slug' => $slug]));
+            }
+        );
+
         $this->user = factory(User::class)->create();
         $this->category = factory(Category::class)->create();
         $this->post = factory(Post::class)->create();
+        $this->reply = factory(Reply::class)->create();
     }
 
-    public function testGuestCanSeePostsInCategories()
+    public function testGuestCanSeePostsInAllCategories()
     {
-        for ($i = 1; $i < 10; $i++) {
-            $post = factory(Post::class)->create(['category_id' => $i]);
-        }
-
         $this->assertGuest();
-        $this->getJson(route('post.buy'))
-            ->assertJsonFragment(['category_id' => '4'])
-            ->assertJsonMissing(['category_id' => '6']);
-        $this->getJson(route('post.sell'))
-            ->assertJsonFragment(['category_id' => '5'])
-            ->assertJsonMissing(['category_id' => '6']);
-        $this->getJson(route('post.help'))
-            ->assertJsonFragment(['category_id' => '6'])
-            ->assertJsonMissing(['category_id' => '4']);
-        $this->getJson(route('post.pet'))
-            ->assertJsonFragment(['category_id' => '7'])
-            ->assertJsonMissing(['category_id' => '6']);
-        $this->getJson(route('post.service'))
-            ->assertJsonFragment(['category_id' => '8'])
-            ->assertJsonMissing(['category_id' => '6']);
-        $this->getJson(route('post.loss'))
-            ->assertJsonFragment(['category_id' => '9'])
-            ->assertJsonMissing(['category_id' => '6']);
+        $this->get(route('post.all', 'all'))
+            ->assertOk();
     }
 
     public function testGuestCanSeePostDetails()
     {
         $this->assertGuest();
 
-        $this->get(route('post.show', $this->post))
+        $this->get(route('post.show', ['ad', $this->post]))
             ->assertOk();
     }
 
@@ -101,7 +91,7 @@ class PostTest extends TestCase
     public function testUserCanSeeUpdatePostForm()
     {
         $this->actingAs($this->user)
-            ->get(route('post.edit', $this->post))
+            ->get(route('post.edit', ['ad', $this->post]))
             ->assertOk()
             ->assertSee($this->post->category->id)
             ->assertSee($this->post->title);
@@ -112,9 +102,9 @@ class PostTest extends TestCase
         $postUpdated = factory(Post::class)->make(['title' => 'New Title']);
 
         $this->actingAs($this->user)
-            ->patch(route('post.update', $this->post), $postUpdated->toArray())
+            ->patch(route('post.update', ['ad', $this->post]), $postUpdated->toArray())
             ->assertStatus(302)
-            ->assertRedirect(route('post.show', $this->post))
+            ->assertRedirect(route('post.show', ['ad', $this->post]))
             ->assertSessionHas(['message' => 'Объявление изменено']);
         $this->assertDatabaseHas('posts', ['title' => 'New Title']);
     }
@@ -151,21 +141,21 @@ class PostTest extends TestCase
     public function testGuestCanNotDeletePost()
     {
         $this->assertGuest();
-        $this->delete(route('post.destroy', $this->post))
+        $this->delete(route('post.destroy', ['ad', $this->post]))
             ->assertRedirect('/login');
     }
 
     public function testUserCanDeleteOwnPost()
     {
-        $post = factory(Post::class)->create(['owner_id' => $this->user->id]);
-        $replies = factory(Reply::class, 5)->create(['post_id' => $post->id]);
+//        $post = factory(Post::class)->create(['owner_id' => $this->user->id]);
+//        $replies = factory(Reply::class, 5)->create(['post_id' => $post->id]);
         $this->actingAs($this->user)
-            ->delete(route('post.destroy', $post))
+            ->delete(route('post.destroy', ['buy', $this->post]))
             ->assertStatus(302)
             ->assertSessionHas(['message' => 'Объявление удалено']);
 
-        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
-        $this->assertDatabaseMissing('replies', ['post_id' => $post->id]);
+        $this->assertDatabaseMissing('posts', ['id' => $this->post->id]);
+        $this->assertDatabaseMissing('replies', ['post', $this->post, $this->reply]);
     }
 
     public function testUserCanNotDeleteNotOwnPost()
@@ -173,69 +163,7 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create(['owner_id' => 256]);
 
         $this->actingAs($this->user)
-            ->delete(route('post.destroy', $post))
-            ->assertStatus(403);
-    }
-
-    public function testUserCanCreateReply()
-    {
-        $reply = factory(Reply::class)->make(['post_id' => $this->post->id]);
-
-        $this->actingAs($this->user)
-            ->post(route('reply.store'), $reply->toArray())
-            ->assertStatus(302)
-            ->assertSessionHas(['message' => 'Ответ создан']);
-        $this->assertDatabaseHas('replies', ['id' => 1]);
-    }
-
-    public function testUserCanDeleteOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->post->id]);
-
-        $this->actingAs($this->user)
-            ->delete(route('reply.destroy', $reply))
-            ->assertStatus(302)
-            ->assertSessionHas(['message' => 'Ответ удалён']);
-        $this->assertDatabaseMissing('replies', ['post_id' => $this->post->id]);
-    }
-
-    public function testUserCanSeeUpdateReplyForm()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->post->id]);
-
-        $this->actingAs($this->user)
-            ->get(route('reply.edit', $reply))
-            ->assertOk()
-            ->assertSee($reply->description);
-    }
-
-    public function testUserCanUpdateOwnReply()
-    {
-        $reply = factory(Reply::class)->create(['post_id' => $this->post->id]);
-        $replyUpdated = factory(Reply::class)->make(['description' => 'New Title'])->toArray();
-
-        $this->actingAs($this->user)
-            ->patch(route('reply.update', $reply), $replyUpdated)
-            ->assertStatus(302);
-    }
-
-    public function testUserCanNotDeleteNotOwnReply()
-    {
-        $post = factory(Post::class)->create(['owner_id' => 256]);
-        $reply = factory(Reply::class)->create(['post_id' => $post->id, 'owner_id' => 256]);
-
-        $this->actingAs($this->user)
-            ->delete(route('reply.destroy', $reply))
-            ->assertStatus(403);
-    }
-
-    public function testUserCanNotUpdateNotOwnReply()
-    {
-        $post = factory(Post::class)->create(['owner_id' => 256]);
-        $reply = factory(Reply::class)->create(['post_id' => $post->id, 'owner_id' => 256]);
-
-        $this->actingAs($this->user)
-            ->patch(route('reply.update', $reply))
+            ->delete(route('post.destroy', ['ad', $post]))
             ->assertStatus(403);
     }
 
@@ -244,17 +172,7 @@ class PostTest extends TestCase
         $user = factory(User::class, 2)->create();
 
         $this->actingAs($user[1])
-            ->post(route('post.link.request', $this->post))
+            ->post(route('post.link.request', ['ad', $this->post]))
             ->assertSessionHas(['message' => "Запрос отправлен {$this->post->owner->name}"]);
-    }
-
-    public function testUserCanRequestLinkToOwnerReply()
-    {
-        $user = factory(User::class, 2)->create();
-        $reply = factory(Reply::class)->create(['post_id' => $this->post->id, 'owner_id' => 2]);
-
-        $this->actingAs($user[0])
-            ->post(route('reply.link.request', $reply))
-            ->assertSessionHas(['message' => "Запрос отправлен {$reply->owner->name}"]);
     }
 }

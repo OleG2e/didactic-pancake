@@ -16,7 +16,7 @@ class TownPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->id == 1; // admin id
     }
@@ -28,7 +28,7 @@ class TownPolicy
      * @param  \App\Town  $town
      * @return mixed
      */
-    public function update(User $user, Town $town)
+    public function update(User $user, Town $town): bool
     {
         return $user->id == 1; // admin id
     }
@@ -40,7 +40,7 @@ class TownPolicy
      * @param  \App\Town  $town
      * @return mixed
      */
-    public function delete(User $user, Town $town)
+    public function delete(User $user, Town $town): bool
     {
         return $user->id == 1; // admin id
     }
@@ -52,7 +52,7 @@ class TownPolicy
      * @param  \App\Town  $town
      * @return mixed
      */
-    public function restore(User $user, Town $town)
+    public function restore(User $user, Town $town): bool
     {
         return $user->id == 1; // admin id
     }
@@ -64,7 +64,7 @@ class TownPolicy
      * @param  \App\Town  $town
      * @return mixed
      */
-    public function forceDelete(User $user, Town $town)
+    public function forceDelete(User $user, Town $town): bool
     {
         return $user->id == 1; // admin id
     }

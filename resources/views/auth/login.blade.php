@@ -19,9 +19,12 @@
                                         <i class="fa fa-envelope"></i>
                                     </span>
                                 </div>
-                                @if ($errors->has('name'))
-                                    <p class="help is-danger">{{ $errors->first('name') }}</p>
-                                @endif
+                                @error('name')
+                                <p class="help is-danger">{{$message}}</p>
+                                @enderror
+                                @error('email')
+                                <p class="help is-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="label">Пароль</label>
@@ -32,9 +35,9 @@
                                         <i class="fa fa-lock"></i>
                                     </span>
                                 </div>
-                                @if ($errors->has('password'))
-                                    <p class="help is-danger">{{ $errors->first('password') }}</p>
-                                @endif
+                                @error('password')
+                                <p class="help is-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="checkbox">

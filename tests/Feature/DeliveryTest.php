@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Category;
 use App\Reply;
 use App\Town;
-use App\Trip;
+use App\Delivery;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -16,18 +16,24 @@ class DeliveryTest extends TestCase
 
     protected $user;
     protected $category;
-    protected $post;
     protected $town;
-    protected $trip;
+    protected $delivery;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->category = collect();
+        $slugs = collect(['ad', 'trip', 'delivery', 'buy', 'sell', 'help', 'pet', 'service', 'loss']);
+        $slugs->each(
+            function ($slug) {
+                return $this->category->push(factory(Category::class)->create(['slug' => $slug]));
+            }
+        );
+
         $this->user = factory(User::class)->create();
-        $this->category = factory(Category::class)->create();
         $this->town = factory(Town::class)->create();
-        $this->trip = factory(Trip::class)->create();
+        $this->delivery = factory(Delivery::class)->create();
     }
 
     public function testGuestCanSeeDeliveries()
@@ -40,8 +46,7 @@ class DeliveryTest extends TestCase
     public function testGuestCanSeeDeliveryDetails()
     {
         $this->assertGuest();
-
-        $this->get(route('delivery.show', $this->trip))
+        $this->get(route('delivery.show', $this->delivery))
             ->assertOk();
     }
 
@@ -58,9 +63,9 @@ class DeliveryTest extends TestCase
     public function testUsersMustConfirmEmailBeforeCreateDelivery()
     {
         $user = factory(User::class)->create(['email_verified_at' => null]);
-        $trip = factory(Trip::class)->make(['owner_id' => $user->id]);
+        $delivery = factory(Delivery::class)->make(['owner_id' => $user->id]);
         $this->actingAs($user)
-            ->post(route('delivery.store'), $trip->toArray())
+            ->post(route('delivery.store'), $delivery->toArray())
             ->assertRedirect(route('verification.notice'));
     }
 
@@ -73,83 +78,56 @@ class DeliveryTest extends TestCase
 
     public function testUserCanCreateDelivery()
     {
-        $trip = [
-            "startpoint_id" => 1,
-            "endpoint_id" => 1,
-            "date" => "2019-05-28",
-            "description" => "Delivery description"
-        ];
         $this->actingAs($this->user)
-            ->post(route('delivery.store'), $trip)
+            ->post(route('delivery.store'), $this->delivery->toArray())
             ->assertStatus(302)
             ->assertSessionHas(['message' => 'Передачка создана']);
-        $this->assertDatabaseHas('trips', ['id' => 1]);
+        $this->assertDatabaseHas('deliveries', ['id' => 1]);
     }
 
     public function testUserCanSeeUpdateDeliveryForm()
     {
-        $trip = factory(Trip::class)->create([
-            'category_id' => 3,
-            'owner_id' => 1,
-            'startpoint_id' => 1,
-            'endpoint_id' => 1,
-            'passengers_count' => 0,
-            'date_time' => now(),
-            'description' => 'Delivery description',
-            'price' => 0,
-        ]);
-
         $this->actingAs($this->user)
-            ->get(route('delivery.edit', $trip))
+            ->get(route('delivery.edit', $this->delivery))
             ->assertOk()
-            ->assertSee('Delivery description');
+            ->assertSee($this->delivery->description);
     }
 
     public function testUserCanUpdateOwnDelivery()
     {
-        $tripUpdated = [
-            'category_id' => 3,
-            'owner_id' => 1,
-            'startpoint_id' => 1,
-            'endpoint_id' => 1,
-            'passengers_count' => 0,
-            'date' => '2019-05-28',
-            'time' => '18:30:00',
-            'description' => 'New Delivery description',
-            'price' => 0,
-        ];
+        $deliveryUpdated = factory(Delivery::class)->make(['description' => 'New description'])->toArray();
 
         $this->actingAs($this->user)
-            ->patch(route('delivery.update', $this->trip), $tripUpdated)
+            ->patch(route('delivery.update', $this->delivery), $deliveryUpdated)
             ->assertStatus(302)
-            ->assertRedirect(route('delivery.show', $this->trip))
+            ->assertRedirect(route('delivery.show', $this->delivery))
             ->assertSessionHas(['message' => 'Передачка изменена']);
-        $this->assertDatabaseHas('trips', ['description' => 'New Delivery description']);
+        $this->assertDatabaseHas('deliveries', ['description' => 'New description']);
     }
 
     public function testGuestCanNotDeleteDelivery()
     {
         $this->assertGuest();
-        $this->delete(route('delivery.destroy', $this->trip))
+        $this->delete(route('delivery.destroy', $this->delivery))
             ->assertRedirect('/login');
     }
 
     public function testUserCanDeleteOwnDelivery()
     {
-        $replies = factory(Reply::class, 5)->create(['post_id' => $this->trip->id, 'category_id' => 3]);
+        $replies = factory(Reply::class, 5)->create(['model_id' => $this->delivery->id]);
         $this->actingAs($this->user)
-            ->delete(route('delivery.destroy', $this->trip))
+            ->delete(route('delivery.destroy', $this->delivery))
             ->assertStatus(302)
             ->assertSessionHas(['message' => 'Передачка удалена']);
 
-        $this->assertDatabaseMissing('trips', ['id' => $this->trip->id]);
-        $this->assertDatabaseMissing('replies', ['post_id' => $this->trip->id]);
+        $this->assertDatabaseMissing('deliveries', ['id' => $this->delivery->id]);
+        $this->assertDatabaseMissing('replies', ['model_id' => $this->delivery->id, 'model_name' => 'trip']);
     }
 
     public function testUserCanNotDeleteNotOwnDelivery()
     {
         $user = factory(User::class)->create();
-        $trip = factory(Trip::class)->create(['owner_id' => 2]);
+        $trip = factory(Delivery::class)->create(['owner_id' => 2]);
 
         $this->actingAs($this->user)
             ->delete(route('delivery.destroy', $trip))
@@ -159,7 +137,7 @@ class DeliveryTest extends TestCase
     public function testUserCanRequestLinkToOwnerDelivery()
     {
         $this->actingAs($this->user)
-            ->post(route('delivery.link.request', $this->trip))
-            ->assertSessionHas(['message' => "Запрос отправлен {$this->trip->owner->name}"]);
+            ->post(route('delivery.link.request', $this->delivery))
+            ->assertSessionHas(['message' => "Запрос отправлен {$this->delivery->owner->name}"]);
     }
 }

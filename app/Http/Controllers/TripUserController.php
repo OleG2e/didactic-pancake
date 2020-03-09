@@ -7,7 +7,7 @@ use App\Events\TripAddPassengerOwner;
 use App\Events\TripSubPassengerOwner;
 use App\Events\TripSubPassengerCompanion;
 use App\Trip;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class TripUserController extends Controller
 {
@@ -16,7 +16,7 @@ class TripUserController extends Controller
         $this->middleware(['auth', 'verified', 'throttle:5,5']);
     }
 
-    public function addUser(Trip $trip)
+    public function addUser(Trip $trip): RedirectResponse
     {
         $user = auth()->user();
         $user->trips()->attach($trip);
@@ -33,7 +33,7 @@ class TripUserController extends Controller
         return back();
     }
 
-    public function removeUser(Trip $trip)
+    public function removeUser(Trip $trip): RedirectResponse
     {
         $user = auth()->user();
         $user->trips()->detach($trip);
