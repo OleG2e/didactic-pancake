@@ -138,6 +138,6 @@ class DeliveryTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('delivery.link.request', $this->delivery))
-            ->assertSessionHas(['message' => "Запрос отправлен {$this->delivery->owner->name}"]);
+            ->assertSessionHas(['message' => "Запрос отправлен {$this->delivery->owner->username}"]);
     }
 }

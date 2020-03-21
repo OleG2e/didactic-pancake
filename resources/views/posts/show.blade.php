@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Детали объявления')
 @section('og:title', $post->title)
-@if (!empty($imagesAll))
-    @section('og:image', asset($imagesAll->preview[0]))
+@if ($post->countImages())
+    @section('og:image', \App\Helpers::getImage($post, 'preview'))
 @endif
 @section('content')
     @component('components.hero')
@@ -16,17 +16,18 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="{{$post->owner->avatar()}}" alt="{{$post->owner->name}}">
+                        <img src="{{$post->owner->avatar()}}" alt="{{$post->owner->username}}">
                     </p>
                 </figure>
                 <div class="media-content">
                     <div class="content">
                         <div style="white-space:pre-line">
-                            <strong>{{$post->owner->name}}</strong>
+                            <strong>{{$post->owner->username}}</strong>
                             <small>{{$post->updated_at->diffForHumans()}}</small>
                             <br><span>{{$post->description}}</span>
                             @auth
-                                <form method="post" action="{{route('post.link.request', [$post->category->slug, $post])}}">
+                                <form method="post"
+                                      action="{{route('post.link.request', [$post->category->slug, $post])}}">
                                     @csrf
                                     <div class="field">
                                         <div class="control">
@@ -56,11 +57,12 @@
                             </a>
                         @endcan
                     </div>
-                    @if (!empty($imagesAll))
-                        @for ($i = 0; $i < count($imagesAll->full); $i++)
+                    @if ($post->countImages())
+                        @for ($i = 0; $i < $post->countImages(); $i++)
                             <figure class="image is-128x128" style="display: inline-block">
-                                <a href="{{asset($imagesAll->full[$i])}}">
-                                    <img src="{{asset($imagesAll->preview[$i])}}"></a>
+                                <a href="{{\App\Helpers::getImage($post, 'full', $i)}}" target="_blank">
+                                    <img src="{{\App\Helpers::getImage($post, 'preview', $i)}}">
+                                </a>
                             </figure>
                         @endfor
                     @endif

@@ -34,6 +34,11 @@ class Post extends Model implements iReply
 
     public function replies(): LengthAwarePaginator
     {
-        return $this->hasMany(Reply::class, 'model_id')->paginate(10);
+        return $this->hasMany(Reply::class, 'model_id')->where('model_name', self::MODEL_NAME)->paginate(10);
+    }
+
+    public function countImages(): int
+    {
+        return count(json_decode($this->images)->full);
     }
 }

@@ -26,7 +26,7 @@
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
                             <h4 class="title is-size-4">{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</h4>
-                            <p class="subtitle"><strong>{{$delivery->owner->name}}</strong>
+                            <p class="subtitle"><strong>{{$delivery->owner->username}}</strong>
                                 <small> {{$delivery->updated_at->diffForHumans()}}</small>
                             </p>
                             @php

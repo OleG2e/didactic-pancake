@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers;
 use Closure;
 
 class Admin
@@ -15,7 +16,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (isAdmin()) {
+        if (Helpers::isAdmin()) {
             return $next($request);
         }
 

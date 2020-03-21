@@ -14,12 +14,12 @@
                                 <div class="control has-icons-left">
                                     <input class="input" type="text"
                                            placeholder="Имя пользователя" name="login"
-                                           value="{{ old('name') ?: old('email') }}" required autofocus>
+                                           value="{{ old('login') ?: old('email') }}" required autofocus>
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>
                                     </span>
                                 </div>
-                                @error('name')
+                                @error('login')
                                 <p class="help is-danger">{{$message}}</p>
                                 @enderror
                                 @error('email')

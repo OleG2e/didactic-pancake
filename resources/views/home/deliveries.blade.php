@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                             <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
-                            <p class="subtitle"><strong>{{$trip->owner->name}}</strong>
+                            <p class="subtitle"><strong>{{$trip->owner->username}}</strong>
                                 <small> {{$trip->created_at}}</small>
                             </p>
                             <div class="content">

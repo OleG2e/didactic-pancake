@@ -20,7 +20,8 @@
     "laravel/ui": "^2.0",
     "rollbar/rollbar-laravel": "^6.0.0",
     "spatie/calendar-links": "^1.2",
-    "spatie/laravel-sitemap": "^5.6"
+    "spatie/laravel-sitemap": "^5.6",
+    "ext-json": "*"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.6",
@@ -48,9 +49,6 @@
     "classmap": [
       "database/seeds",
       "database/factories"
-    ],
-    "files": [
-      "app/helpers.php"
     ]
   },
   "autoload-dev": {

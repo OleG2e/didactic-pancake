@@ -10,30 +10,31 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.7.2",
+        "@fortawesome/fontawesome-free": "^5.12.1",
         "axios": "^0.19",
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.4.1",
+        "bulma": "^0.7.5",
         "cross-env": "^7.0",
-        "jquery": "^3.2",
+        "jquery": "^3.4.1",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
-        "popper.js": "^1.12",
+        "node-sass": "^4.13.1",
+        "popper.js": "^1.16.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
+        "vue": "^2.6.11",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "bulma": "^0.7.4",
-        "bulma-badge": "^3.0.0",
+        "bulma-badge": "^3.0.1",
         "bulma-extensions": "^4.1.1",
         "chat-engine": "^0.9.21",
         "chat-engine-typing-indicator": "0.0.9",
         "jquery-ui": "^1.12.1",
-        "pickadate": "^3.6.3",
+        "pickadate": "^3.6.4",
         "vue-chat-engine": "0.0.7",
-        "vuejs-datepicker": "^1.5.4",
-        "vuex": "^3.1.0"
+        "vuejs-datepicker": "^1.6.2",
+        "vuex": "^3.1.3"
     }
 }

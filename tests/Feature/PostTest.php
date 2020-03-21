@@ -173,6 +173,6 @@ class PostTest extends TestCase
 
         $this->actingAs($user[1])
             ->post(route('post.link.request', ['ad', $this->post]))
-            ->assertSessionHas(['message' => "Запрос отправлен {$this->post->owner->name}"]);
+            ->assertSessionHas(['message' => "Запрос отправлен {$this->post->owner->username}"]);
     }
 }

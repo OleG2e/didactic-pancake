@@ -21,10 +21,10 @@
                 @foreach($posts as $post)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            @if (\App\AppTemplate::currentCategory() === 'all')
+                            @if (\App\Helpers::currentCategory() === 'all')
                                 <p class="title is-size-4">{{$post->category->title}}</p>
                             @endif
-                            <p class="subtitle"><strong>{{$post->owner->name}}</strong>
+                            <p class="subtitle"><strong>{{$post->owner->username}}</strong>
                                 <small> {{$post->updated_at->diffForHumans()}}</small>
                             </p>
                             <div class="content">

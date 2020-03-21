@@ -1,5 +1,5 @@
 @php
-    extract(\App\AppTemplate::countMyAds());
+    extract(\App\Helpers::countMyAds());
 @endphp
 <div class="tabs is-centered is-toggle is-toggle-rounded is-hidden-touch">
     <ul>

@@ -220,6 +220,6 @@ class ReplyTest extends TestCase
     {
         $this->actingAs($this->user)
             ->post(route('reply.link.request', $this->routeParameters))
-            ->assertSessionHas(['message' => "Запрос отправлен {$this->reply->owner->name}"]);
+            ->assertSessionHas(['message' => "Запрос отправлен {$this->reply->owner->username}"]);
     }
 }

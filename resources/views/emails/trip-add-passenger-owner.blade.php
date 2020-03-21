@@ -5,7 +5,7 @@
         @slot('header')
             Новый пассажир к поездке в {{$trip->endpoint->title}} в {{$date->format('H:i m.d.Y')}}
         @endslot
-        У вас появился новый пассажир <strong>{{$user->name}}</strong>.
+        У вас появился новый пассажир <strong>{{$user->username}}</strong>.
         <br>Связаться с ним: {{$user->link}}
     @endcomponent
     @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-success'])

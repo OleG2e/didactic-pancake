@@ -29,9 +29,9 @@
                         <input class="input is-rounded" type="text" placeholder="Заголовок" name="title"
                                value="{{ old('title') }}" required>
                     </div>
-                    @if ($errors->has('title'))
-                        <p class="help is-danger">{{ $errors->first('title') }}</p>
-                    @endif
+                    @error('title')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="field">
                     <label class="label">Текст:</label>
@@ -39,18 +39,18 @@
                                 <textarea class="textarea" placeholder="Текст" name="description"
                                           required>{{old('description')}}</textarea>
                     </div>
-                    @if ($errors->has('description'))
-                        <p class="help is-danger">{{ $errors->first('description') }}</p>
-                    @endif
+                    @error('description')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="field">
                     <label class="label">Фотографии</label>
                     <div class="control">
                         <input type="file" name="image[]" accept="image/*" multiple>
                     </div>
-                    @if ($errors->has('image'))
-                        <p class="help is-danger">{{ $errors->first('image') }}</p>
-                    @endif
+                    @error('image')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="field is-grouped">
                     <div class="control">

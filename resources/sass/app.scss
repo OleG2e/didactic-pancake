@@ -1,8 +1,11 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bulma/bulma';
+@import "~bulma-badge/dist/css/bulma-badge";
+@import "~bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip";
+@import "~bulma-extensions/bulma-switch/dist/css/bulma-switch";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~pickadate/lib/compressed/themes/classic.css";
+@import "~pickadate/lib/compressed/themes/classic.date.css";
+@import "~pickadate/lib/compressed/themes/classic.time.css";

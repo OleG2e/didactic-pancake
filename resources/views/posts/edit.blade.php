@@ -6,7 +6,8 @@
         {{ Breadcrumbs::render('post.edit', $post->category->slug, $post) }}
         <div class="box">
             <h4 class="title is-size-4">Редактировать объявление {{$post->title}}</h4>
-            <form method="post" action="{{route('post.update', [$post->category->slug, $post])}}" enctype="multipart/form-data">
+            <form method="post" action="{{route('post.update', [$post->category->slug, $post])}}"
+                  enctype="multipart/form-data">
                 @method('patch')
                 @csrf
                 <div class="field">
@@ -29,9 +30,9 @@
                                value="{{$post->title}}"
                                required>
                     </div>
-                    @if ($errors->has('title'))
-                        <p class="help is-danger">{{ $errors->first('title') }}</p>
-                    @endif
+                    @error('title')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="field">
                     <label class="label">Текст:</label>
@@ -39,9 +40,9 @@
                         <textarea class="textarea" placeholder="{{$post->description}}"
                                   name="description">{{$post->description}}</textarea>
                     </div>
-                    @if ($errors->has('description'))
-                        <p class="help is-danger">{{ $errors->first('description') }}</p>
-                    @endif
+                    @error('description')
+                    <p class="help is-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="field">
                     <label class="label">Фотографии</label>
@@ -56,7 +57,8 @@
                         </button>
                     </div>
                     <div class="control">
-                        <a class="button is-text" href="{{route('post.show', [$post->category->slug, $post])}}">Отмена</a>
+                        <a class="button is-text"
+                           href="{{route('post.show', [$post->category->slug, $post])}}">Отмена</a>
                     </div>
                 </div>
             </form>

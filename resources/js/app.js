@@ -35,7 +35,12 @@ const app = new Vue({
     el: '#app',
     //components:{AvatarForm,SaveImage}
 });
-
+require('jquery');
+require('jquery-ui');
+require('pickadate/lib/compressed/picker');
+require('pickadate/lib/compressed/picker.date');
+require('pickadate/lib/compressed/picker.time');
+require('pickadate/lib/compressed/legacy');
 // import bulmaCalendar from '/Users/olegbiruk/Programming/forum/node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min';
 // // Initialize all input of date type.
 // const calendars = bulmaCalendar.attach('[type="date"]', options);
@@ -172,4 +177,27 @@ $('#navbar-burger-id').click(function () {
         $('#navbar-burger-id').addClass('is-active');
         $('#navbar-menu-id').addClass('is-active');
     }
+});
+
+// imgZoom
+$('img.js-image').css({cursor: 'zoom-in'}).addClass('img-enlargable').click(function(){
+    var src = $(this).attr('src');
+    var fullImg = $('<div>').css({
+        background: 'RGBA(0,0,0,.5) url('+src+') no-repeat center',
+        backgroundSize: 'contain',
+        width:'100%', height:'100%',
+        position:'fixed',
+        zIndex:'10000',
+        top:'0', left:'0',
+        cursor: 'zoom-out'
+    });
+    fullImg.click(function(){
+        $(this).remove();
+    }).appendTo('body');
+
+    $(document).on('keydown', function(event) {
+        if (event.key == "Escape") {
+            fullImg.remove();
+        }
+    }).appendTo('body');
 });

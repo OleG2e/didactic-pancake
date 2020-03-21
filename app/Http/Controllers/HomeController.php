@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
+use App\Helpers;
 
 class HomeController extends Controller
 {
@@ -120,7 +121,7 @@ class HomeController extends Controller
         }
         $message = ['message' => (string)$request['message'], 'image' => ($image ?? null)];
         Mail::to(env('ADMIN_MAIL'))->send(new FeedbackFromUser($message));
-        flash('Твоё сообщение было отправлено админу');
+        Helpers::flash('Твоё сообщение было отправлено админу');
 
         return back();
     }

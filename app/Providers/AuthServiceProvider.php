@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function () {
-            if (isAdmin()) {
+            if (Helpers::isAdmin()) {
                 return true;
             }
         });

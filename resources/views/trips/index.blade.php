@@ -13,7 +13,8 @@
         <div class="content">
             <div class="dropdown is-hoverable">
                 <div class="dropdown-trigger">
-                    <button class="button is-rounded @auth is-primary @else is-info @endauth" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <button class="button is-rounded @auth is-primary @else is-info @endauth" aria-haspopup="true"
+                            aria-controls="dropdown-menu">
                         <span>Новая поездка</span>
                         <span class="icon is-small">
                         <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -48,14 +49,11 @@
                     <div class="column is-narrow">
                         <div class="box">
                             <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
-                            <h5 class="subtitle"><strong>{{$trip->owner->name}}</strong>
+                            <h5 class="subtitle"><strong>{{$trip->owner->username}}</strong>
                                 <small> {{$trip->updated_at->diffForHumans()}}</small>
                             </h5>
                             <div class="content">
-                                @php
-                                    $dateTime = new DateTime($trip->date_time);
-                                @endphp
-                                Дата поездки: {{$dateTime->format('d.m.Y H:i')}}
+                                Дата поездки: {{\App\Helpers::dateFormat($trip->date_time)}}
                                 <br>Осталось мест:<strong> {{$trip->passengers_count}}</strong>
                                 <br><a href="{{route('trip.show', $trip)}}">Обсудить</a>
                             </div>

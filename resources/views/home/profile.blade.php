@@ -19,7 +19,7 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>{{$user->name}}</strong>
+                        <strong>{{$user->username}}</strong>
                         <small>{{$user->email}}</small>
                         @isset($user->link)
                             <br><span>Данные для связи:<br>{{$user->link}}</span>

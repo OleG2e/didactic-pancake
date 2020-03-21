@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use App\Helpers;
 
 class ReplyController extends Controller
 {
@@ -44,7 +45,7 @@ class ReplyController extends Controller
         $attributes['model_id'] = $model_id;
         $attributes['model_name'] = $model_name;
         $reply->create($attributes);
-        flash('Ответ создан');
+        Helpers::flash('Ответ создан');
 
         return back();
     }
@@ -98,7 +99,7 @@ class ReplyController extends Controller
         $this->authorize('delete', $reply);
 
         $reply->delete();
-        flash('Ответ удалён');
+        Helpers::flash('Ответ удалён');
 
         return back();
     }
@@ -108,7 +109,7 @@ class ReplyController extends Controller
         $route = $this->routeSwitcher($model_name, $reply);
 
         Mail::to($reply->owner->email)->send(new RequestLinkFromUser($route));
-        flash("Запрос отправлен {$reply->owner->name}");
+        Helpers::flash("Запрос отправлен {$reply->owner->username}");
         return back();
     }
 }

@@ -3,7 +3,7 @@
     @component('components.message')
         @slot('type', 'is-info')
         @slot('header')
-            {{Auth::user()->name}} решил написать
+            {{Auth::user()->username}} решил написать
         @endslot
         {{$message['message']}}
         @isset($message['image'])

@@ -7,7 +7,7 @@
                     <figure class="media-left is-hidden-touch">
                         <p class="image is-64x64">
                             <img class="is-rounded"
-                                 src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->name}}">
+                                 src="{{Auth::user()->avatar()}}" alt="{{Auth::user()->username}}">
                         </p>
                     </figure>
                     <div class="media-content">

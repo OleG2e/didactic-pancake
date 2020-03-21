@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Helpers;
 
 class TripController extends Controller
 {
@@ -61,7 +62,7 @@ class TripController extends Controller
         $user = auth()->user();
         $user->trips()->attach($createdTrip);
         event(new TripCreated($createdTrip));
-        flash('Поездка создана');
+        Helpers::flash('Поездка создана');
 
         return redirect('/trips');
     }
@@ -70,12 +71,11 @@ class TripController extends Controller
      * Display the specified resource.
      *
      * @param  Trip  $trip
-     * @param  Reply  $reply
      * @return View
      */
-    public function show(Trip $trip, Reply $reply): View
+    public function show(Trip $trip): View
     {
-        return view('trips.show', compact(['trip', 'reply']));
+        return view('trips.show', compact(['trip']));
     }
 
     /**
@@ -90,9 +90,8 @@ class TripController extends Controller
         $this->authorize('update', $trip);
 
         $towns = Town::all();
-        $dateTime = new DateTime($trip->date_time);
 
-        return view('trips.edit', compact(['trip', 'towns', 'dateTime']));
+        return view('trips.edit', compact(['trip', 'towns']));
     }
 
     /**
@@ -110,7 +109,7 @@ class TripController extends Controller
         $attributes = $request->validated();
         $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $trip->update($attributes);
-        flash('Поездка изменена');
+        Helpers::flash('Поездка изменена');
 
         return redirect(route('trip.show', $trip));
     }
@@ -126,13 +125,13 @@ class TripController extends Controller
     {
         $this->authorize('delete', $trip);
 
-        $replies = Reply::where('model_id', $trip->id)->get();
+        $replies = Reply::where('model_id', $trip->id)->where('model_name', Trip::MODEL_NAME)->get();
         $trip->users()->detach();
         foreach ($replies as $reply) {
             $reply->delete();
         }
         $trip->delete();
-        flash('Поездка удалена');
+        Helpers::flash('Поездка удалена');
 
         return redirect(route('trip.all'));
     }

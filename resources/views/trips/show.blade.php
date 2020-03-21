@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Детали поездки')
 @php
-    $dateTime = new DateTime($trip->date_time);
+    $dateTime = \App\Helpers::dateFormat($trip->date_time);
 @endphp
-@section('og:title', "{$dateTime->format('d.m.Y H:i')} {$trip->startpoint->title} - {$trip->endpoint->title}")
+@section('og:title', "{$dateTime} {$trip->startpoint->title} - {$trip->endpoint->title}")
 @section('content')
     @component('components.hero')
         {{ Breadcrumbs::render('trip.show', $trip) }}
@@ -16,16 +16,16 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="{{$trip->owner->avatar()}}" alt="{{$trip->owner->name}}">
+                        <img src="{{$trip->owner->avatar()}}" alt="{{$trip->owner->username}}">
                     </p>
                 </figure>
                 <div class="media-content">
                     <div class="content">
-                        <strong>{{$trip->owner->name}}</strong>
+                        <strong>{{$trip->owner->username}}</strong>
                         <small>{{$trip->updated_at->diffForHumans()}}</small>
                         @isset($trip->description)<br><span>Описание: {{$trip->description}}</span>@endisset
                         <br><span>{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</span>
-                        <br><span>Дата поездки: {{$dateTime->format('d.m.Y H:i')}}</span>
+                        <br><span>Дата поездки: {{$dateTime}}</span>
                         @if($trip->passengers_count)<br><span>Осталось мест: {{$trip->passengers_count}}</span>@endif
                         <br><span>Стоимость: {{$trip->price}}</span>
                         @auth

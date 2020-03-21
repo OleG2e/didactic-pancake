@@ -27,6 +27,9 @@
                                 <i class="fa fa-city"></i>
                             </div>
                         </div>
+                        @error('startpoint_id')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="field">
                         <label class="label">Куда:</label>
@@ -45,6 +48,9 @@
                                 <i class="fa fa-city"></i>
                             </div>
                         </div>
+                        @error('endpoint_id')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="field">
                         <label class="label">Количество пассажиров:</label>
@@ -63,6 +69,9 @@
                                 <i class="fa fa-users"></i>
                             </div>
                         </div>
+                        @error('passengers_count')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="field">
                         <label class="label">Стоимость:</label>
@@ -79,10 +88,13 @@
                                 <i class="fa fa-ruble-sign"></i>
                             </div>
                         </div>
+                        @error('price')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
-            <span>Текущая дата: {{$dateTime->format('d.m.Y H:i')}}</span>
+            <span>Текущая дата: {{\App\Helpers::dateFormat($trip->date_time)}}</span>
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
@@ -92,10 +104,10 @@
                                 <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
+                        @error('date')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
-                    @if ($errors->has('date'))
-                        <p class="help is-danger">{{ $errors->first('date') }}</p>
-                    @endif
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
                             <input class="input" type="time" id="timepicker" name="time" placeholder="Время" required>
@@ -103,10 +115,10 @@
                                 <i class="fa fa-clock"></i>
                             </span>
                         </p>
+                        @error('time')
+                        <p class="help is-danger">{{ $message }}</p>
+                        @enderror
                     </div>
-                    @if ($errors->has('time'))
-                        <p class="help is-danger">{{ $errors->first('time') }}</p>
-                    @endif
                 </div>
             </div>
             <div class="field">
@@ -115,10 +127,10 @@
                     <textarea class="textarea" name="description"
                               placeholder="{{$trip->description}}">{{$trip->description}}</textarea>
                 </p>
+                @error('description')
+                <p class="help is-danger">{{ $message }}</p>
+                @enderror
             </div>
-            @if ($errors->has('description'))
-                <p class="help is-danger">{{ $errors->first('description') }}</p>
-            @endif
             <div class="control">
                 <button class="button is-primary is-rounded" type="submit">Сохранить изменения</button>
             </div>

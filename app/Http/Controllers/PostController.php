@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers;
 use App\Http\Requests\PostRequest;
 use App\Mail\RequestLinkFromUser;
 use App\Post;
@@ -59,12 +60,12 @@ class PostController extends Controller
      */
     public function store(Post $post, PostRequest $request): RedirectResponse
     {
-        $images = $this->imageUpload($request);
+        $images = Helpers::imageUpload();
         $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
         $attributes['images'] = $images;
         $createdPost = $post->create($attributes);
-        flash('Объявление создано');
+        Helpers::flash('Объявление создано');
 
         return redirect(route('post.show', [$createdPost->category->slug, $createdPost]));
     }
@@ -78,12 +79,6 @@ class PostController extends Controller
      */
     public function show(string $category, Post $post): View
     {
-        if (isset($post->images)) {
-            $imagesAll = json_decode($post->images);
-
-            return view('posts.show', compact(['post', 'imagesAll']));
-        }
-
         return view('posts.show', compact(['post']));
     }
 
@@ -117,11 +112,11 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $images = $this->imageUpload($request);
+        $images = Helpers::imageUpload();
         $attributes = $request->validated();
         $attributes['images'] = $images;
         $post->update($attributes);
-        flash('Объявление изменено');
+        Helpers::flash('Объявление изменено');
         return redirect(route('post.show', [$category, $post->id]));
     }
 
@@ -142,36 +137,16 @@ class PostController extends Controller
             $reply->delete();
         }
         $post->delete();
-        flash('Объявление удалено');
+        Helpers::flash('Объявление удалено');
 
         return redirect(route('my.posts'));
-    }
-
-    protected function imageUpload(Request $request)
-    {
-        $path = 'posts/'.auth()->id();
-        $pathAllFiles = [];
-        $allImages = $request->allFiles();
-        foreach ($allImages as $image) {
-            $i = count($allImages['image']) - 1;
-            while (isset($image[$i])) {
-                $pathImagesFull = $image[$i]->store($path, 'public');
-                $pathImagesPreview = $image[$i]->store('preview/'.$path, 'public');
-                Image::make($image[$i]->getRealPath())->fit(256)->save(public_path('storage/'.$pathImagesPreview), 70);
-                $pathAllFiles['full'][] = $pathImagesFull;//in production use 'public/'.$pathImagesFull
-                $pathAllFiles['preview'][] = $pathImagesPreview;//in production use 'public/'.$pathImagesPreview
-                $i--;
-            }
-        }
-
-        return json_encode($pathAllFiles);
     }
 
     public function linkRequest(string $category, Post $post): RedirectResponse
     {
         $route = route('post.show', [$category, $post->id]);
         Mail::to($post->owner->email)->send(new RequestLinkFromUser($route));
-        flash("Запрос отправлен {$post->owner->name}");
+        Helpers::flash("Запрос отправлен {$post->owner->username}");
 
         return back();
     }

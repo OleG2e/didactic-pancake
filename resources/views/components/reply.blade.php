@@ -4,14 +4,14 @@
     <article class="media">
         <figure class="media-left">
             <p class="image is-48x48">
-                <img src="{{$reply->owner->avatar()}}" alt="{{$reply->owner->name}}">
+                <img src="{{$reply->owner->avatar()}}" alt="{{$reply->owner->username}}">
             </p>
         </figure>
         <div class="media-content">
             <div class="content">
                 <div style="white-space:pre-line">
-                    <strong>{{$reply->owner->name}}</strong>
-                    <small>{{$reply->updated_at}}</small>
+                    <strong>{{$reply->owner->username}}</strong>
+                    <small>{{\App\Helpers::dateFormat($reply->updated_at)}}</small>
                     <br><span>{{$reply->description}}</span>
                     @auth
                         <form method="post"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\FeedbackToUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Helpers;
 
 class AdminController extends Controller
 {
@@ -23,7 +24,7 @@ class AdminController extends Controller
         $message = (string) $request['message'];
         $email = (string) $request['email'];
         Mail::to($email)->send(new FeedbackToUser($message));
-        flash('Твоё сообщение было отправлено юзеру');
+        Helpers::flash('Твоё сообщение было отправлено юзеру');
         return redirect(route('home'));
     }
 }

@@ -13,13 +13,13 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="{{$delivery->owner->avatar()}}" alt="{{$delivery->owner->name}}">
+                        <img src="{{$delivery->owner->avatar()}}" alt="{{$delivery->owner->username}}">
                     </p>
                 </figure>
                 <div class="media-content">
                     <div class="content">
                         <div style="white-space:pre-line">
-                            <strong>{{$delivery->owner->name}}</strong>
+                            <strong>{{$delivery->owner->username}}</strong>
                             <small>{{$delivery->updated_at->diffForHumans()}}</small>
                             <br><span>{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</span>
                             @isset($delivery->description)<br><span>Описание: {{$delivery->description}}</span>@endisset

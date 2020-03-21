@@ -13,15 +13,16 @@
                                 <label class="label">Логин</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="text"
-                                           placeholder="Elon Musk" name="name" value="{{ old('name') }}" required
+                                           placeholder="Elon Musk" name="username" value="{{ old('username') }}"
+                                           required
                                            autofocus>
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-user"></i>
                                     </span>
                                 </div>
-                                @if ($errors->has('name'))
-                                    <p class="help is-danger">{{ $errors->first('name') }}</p>
-                                @endif
+                                @error('username')
+                                <p class="help is-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="label">Email</label>
@@ -33,9 +34,9 @@
                                     <i class="fas fa-envelope"></i>
                                 </span>
                                 </div>
-                                @if ($errors->has('email'))
-                                    <p class="help is-danger">{{ $errors->first('email') }}</p>
-                                @endif
+                                @error('email')
+                                <p class="help is-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="label">Данные для связи</label>
@@ -47,9 +48,9 @@
                                     <i class="fas fa-id-card"></i>
                                 </span>
                                 </div>
-                                @if ($errors->has('link'))
-                                    <p class="help is-danger">{{ $errors->first('link') }}</p>
-                                @endif
+                                @error('link')
+                                <p class="help is-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="label">Пароль</label>
@@ -60,9 +61,9 @@
                                         <i class="fa fa-lock"></i>
                                     </span>
                                 </div>
-                                @if ($errors->has('password'))
-                                    <p class="help is-danger">{{ $errors->first('password') }}</p>
-                                @endif
+                                @error('password')
+                                <p class="help is-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <label class="label">Подтверждение пароля</label>
@@ -74,21 +75,21 @@
                                         <i class="fa fa-lock"></i>
                                     </span>
                                 </div>
-                                @if ($errors->has('password_confirmation'))
-                                    <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
-                                @endif
+                                @error('password_confirmation')
+                                <p class="help is-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="field">
                                 <input id="switch" type="checkbox" name="law" class="switch" value="1"
                                        checked="checked">
                                 <label for="switch"></label>
-                                    Я прочитал <a href="https://journal.tinkoff.ru/news/uvozhay-bl/"
-                                    style="text-decoration: underline;" target="_blank">разбор закона 
+                                Я прочитал <a href="https://journal.tinkoff.ru/news/uvozhay-bl/"
+                                              style="text-decoration: underline;" target="_blank">разбор закона
                                     об оскорблении власти</a>
                             </div>
-                            @if ($errors->has('law'))
-                                <p class="help is-danger">{{ $errors->first('law') }}</p>
-                            @endif
+                            @error('law')
+                            <p class="help is-danger">{{ $message }}</p>
+                            @enderror
                             <div class="field">
                                 <button class="button is-success" type="submit">
                                     Зарегистрироваться

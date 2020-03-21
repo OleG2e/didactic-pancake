@@ -21,7 +21,7 @@
         </nav>
         <div class="columns is-multiline">
             @php
-                //$category = \App\AppTemplate::currentCategory();
+                //$category = \App\Helpers::currentCategory();
                 //$route = route('post.all', $category);
             @endphp
             @if(count($myPosts))

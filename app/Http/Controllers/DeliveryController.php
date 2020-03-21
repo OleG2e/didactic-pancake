@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use App\Helpers;
 
 class DeliveryController extends Controller
 {
@@ -62,7 +63,7 @@ class DeliveryController extends Controller
         $attributes['owner_id'] = auth()->id();
         $delivery->create($attributes);
 
-        flash('Передачка создана');
+        Helpers::flash('Передачка создана');
 
         return redirect(route('delivery.all'));
     }
@@ -119,7 +120,7 @@ class DeliveryController extends Controller
 
         $attributes = $request->validated();
         $delivery->update($attributes);
-        flash('Передачка изменена');
+        Helpers::flash('Передачка изменена');
 
         return redirect(route('delivery.show', $delivery));
     }
@@ -140,7 +141,7 @@ class DeliveryController extends Controller
             $reply->delete();
         }
         $delivery->delete();
-        flash('Передачка удалена');
+        Helpers::flash('Передачка удалена');
 
         return redirect(route('delivery.all'));
     }
@@ -149,7 +150,7 @@ class DeliveryController extends Controller
     {
         $route = route('delivery.show', $delivery->id);
         Mail::to($delivery->owner->email)->send(new RequestLinkFromUser($route));
-        flash("Запрос отправлен {$delivery->owner->name}");
+        Helpers::flash("Запрос отправлен {$delivery->owner->username}");
 
         return back();
     }

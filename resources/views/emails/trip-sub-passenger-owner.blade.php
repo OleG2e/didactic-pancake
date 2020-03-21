@@ -5,7 +5,7 @@
         @slot('header')
             От поездки в {{$trip->endpoint->title}} в {{$date->format('H:i m.d.Y')}} отказался пассажир
         @endslot
-        <strong>{{$user->name}}</strong> передумал ехать...
+        <strong>{{$user->username}}</strong> передумал ехать...
         <br>Связаться с ним и переубедить: {{$user->link}}
     @endcomponent
     @component('components.button', ['url' => route('trip.show', $trip->id), 'type' => 'is-warning'])

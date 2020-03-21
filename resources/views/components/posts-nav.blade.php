@@ -1,5 +1,5 @@
 @php
-    $category = \App\AppTemplate::currentCategory();
+    $category = \App\Helpers::currentCategory();
     $route = route('post.all', $category);
 @endphp
 <div class="tabs is-centered is-toggle is-toggle-rounded is-hidden-touch">

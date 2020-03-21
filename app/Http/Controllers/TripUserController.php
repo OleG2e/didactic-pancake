@@ -8,6 +8,7 @@ use App\Events\TripSubPassengerOwner;
 use App\Events\TripSubPassengerCompanion;
 use App\Trip;
 use Illuminate\Http\RedirectResponse;
+use App\Helpers;
 
 class TripUserController extends Controller
 {
@@ -28,7 +29,7 @@ class TripUserController extends Controller
 
         event(new TripAddPassengerOwner($trip, $user));
         event(new TripAddPassengerCompanion($trip, $user));
-        flash('Вы присоединились к поездке');
+        Helpers::flash('Вы присоединились к поездке');
 
         return back();
     }
@@ -45,7 +46,7 @@ class TripUserController extends Controller
 
         event(new TripSubPassengerOwner($trip, $user));
         event(new TripSubPassengerCompanion($trip, $user));
-        flash('Вы отказались от поездки');
+        Helpers::flash('Вы отказались от поездки');
 
         return back();
     }

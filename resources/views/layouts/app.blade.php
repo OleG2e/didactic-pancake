@@ -39,21 +39,9 @@
 
     <!-- Scripts -->
     <script defer src="{{ asset('js/app.js') }}"></script>
-    <script defer src="http://code.jquery.com/jquery-3.3.1.js"></script>
-    <script defer src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pickadate@3.6.0/lib/compressed/picker.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pickadate@3.6.0/lib/compressed/picker.date.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pickadate@3.6.0/lib/compressed/picker.time.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/pickadate@3.6.0/lib/compressed/legacy.min.js"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bulma-badge@3.0.0/dist/css/bulma-badge.min.css" rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.5/bulma-tooltip/dist/css/bulma-tooltip.min.css">
 
 </head>
 <body class="has-navbar-fixed-top">
@@ -76,10 +64,10 @@
                     </div>
                     @php
                         if (Auth::guest()) {
-                            extract(\App\AppTemplate::countAds());
+                            extract(\App\Helpers::countAds());
                         } else {
-                            extract(\App\AppTemplate::countMyAds());
-                            extract(\App\AppTemplate::countAds());
+                            extract(\App\Helpers::countMyAds());
+                            extract(\App\Helpers::countAds());
                         }
                     @endphp
                     <ul class="menu-list">
@@ -176,7 +164,7 @@
                 @else
                     <div class="navbar-item has-dropdown is-hoverable">
                         <div class="navbar-link">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->username }}
                         </div>
                         <div class="navbar-dropdown is-right is-boxed">
                             <ul class="menu-list">
