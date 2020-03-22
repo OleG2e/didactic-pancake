@@ -66,7 +66,7 @@ class Helpers extends Model
 
     public static function imageUpload(string $path = Post::MODEL_NAME): string
     {
-        $path = $path.'/'.auth()->user()->username.'/'.date('d-m-Y', time());
+        $path = '/uploads/images/'.$path.'/'.auth()->user()->username.'/'.date('d-m-Y', time());
         $pathAllFiles = [];
         $allImages = request()->allFiles();
 
