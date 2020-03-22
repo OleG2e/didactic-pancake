@@ -19,6 +19,7 @@ class Reply extends Model
         'owner_id',
     ];
     protected $with = ['owner'];
+    protected $touches = ['trip', 'post', 'delivery'];
 
     public function owner(): BelongsTo
     {
