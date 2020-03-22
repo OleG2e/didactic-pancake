@@ -181,7 +181,7 @@ $('#navbar-burger-id').click(function () {
 
 // imgZoom
 $('img.js-image').css({cursor: 'zoom-in'}).addClass('img-enlargable').click(function(){
-    var src = $(this).attr('src');
+    var src = $(this).attr('src').replace(/\/preview\//g, '/full/');
     var fullImg = $('<div>').css({
         background: 'RGBA(0,0,0,.5) url('+src+') no-repeat center',
         backgroundSize: 'contain',

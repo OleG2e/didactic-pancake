@@ -66,7 +66,8 @@ class Helpers extends Model
 
     public static function imageUpload(string $path = Post::MODEL_NAME): string
     {
-        $path = '/uploads/images/'.$path.'/'.auth()->user()->username.'/'.date('d-m-Y', time());
+        $pathFull = 'uploads/images/full/'.$path.'/'.auth()->user()->username.'/'.date('d-m-Y', time());
+        $pathPreview = 'uploads/images/preview/'.$path.'/'.auth()->user()->username.'/'.date('d-m-Y', time());
         $pathAllFiles = [];
         $allImages = request()->allFiles();
 
@@ -75,8 +76,8 @@ class Helpers extends Model
                 $i = count($allImages['image']) - 1;
                 while (isset($image[$i])) {
                     $filenameWithoutSpaces = self::spacesReplace($image[$i]->getClientOriginalName());
-                    $pathImagesFull = $image[$i]->storeAs($path, $filenameWithoutSpaces, 'public');
-                    $pathImagesPreview = $image[$i]->storeAs('preview/'.$path, $filenameWithoutSpaces, 'public');
+                    $pathImagesFull = $image[$i]->storeAs($pathFull, $filenameWithoutSpaces, 'public');
+                    $pathImagesPreview = $image[$i]->storeAs($pathPreview, $filenameWithoutSpaces, 'public');
                     Image::make($image[$i]->getRealPath())->widen(512)->save(
                         public_path('storage/'.$pathImagesPreview),
                         70

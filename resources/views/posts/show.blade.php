@@ -60,9 +60,7 @@
                     @if ($post->countImages())
                         @for ($i = 0; $i < $post->countImages(); $i++)
                             <figure class="image is-128x128" style="display: inline-block">
-                                <a href="{{\App\Helpers::getImage($post, 'full', $i)}}" target="_blank">
-                                    <img src="{{\App\Helpers::getImage($post, 'preview', $i)}}">
-                                </a>
+                                <img class="js-image" src="{{\App\Helpers::getImage($post, 'preview', $i)}}">
                             </figure>
                         @endfor
                     @endif
