@@ -19,7 +19,7 @@ class CreateDeliveriesTable extends Migration
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('startpoint_id');
             $table->unsignedInteger('endpoint_id');
-            $table->timestamp('timestamp');
+            $table->dateTime('date_time');
             $table->text('description')->nullable();
             $table->string('price')->nullable();
             $table->boolean('relevance')->default(true);

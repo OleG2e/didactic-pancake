@@ -77,9 +77,7 @@ class DeliveryController extends Controller
      */
     public function show(Delivery $delivery): View
     {
-        $dateTime = new DateTime($delivery->timestamp);
-
-        return view('deliveries.show', compact(['delivery', 'dateTime']));
+        return view('deliveries.show', compact(['delivery']));
     }
 
     /**
@@ -93,14 +91,11 @@ class DeliveryController extends Controller
     {
         $this->authorize('update', $delivery);
 
-        $timestamp = new DateTime($delivery->timestamp);
-
         return view(
             'deliveries.edit',
             [
                 'categories' => $this->categories,
                 'delivery' => $delivery,
-                'timestamp' => $timestamp,
                 'towns' => $this->towns,
             ]
         );

@@ -9,7 +9,7 @@ $factory->define(
             'attachment' => $faker->imageUrl(),
             'description' => $faker->text,
             'model_id' => 1,
-            'model_name' => $faker->word,
+            'model_name' => \App\Post::MODEL_NAME,
             'owner_id' => 1,
         ];
     }

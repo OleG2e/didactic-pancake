@@ -88,18 +88,18 @@
                     </div>
                 </div>
             </div>
-            <span>Текущая дата: {{$timestamp->format('d.m.Y')}}</span>
+            <span>Текущая дата: {{\App\Helpers::dateFormat($delivery->date_time,'d.m.Y')}}</span>
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input class="input" type="date" id="datepicker" name="timestamp" placeholder="Дата"
+                            <input class="input" type="date" id="datepicker" name="date_time" placeholder="Дата"
                                    required>
                             <span class="icon is-left">
                                 <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
-                        @error('timestamp')
+                        @error('date_time')
                         <p class="help is-danger">{{ $message }}</p>
                         @enderror
                     </div>

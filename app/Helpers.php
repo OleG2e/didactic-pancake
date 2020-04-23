@@ -112,9 +112,9 @@ class Helpers extends Model
         return asset('storage/'.(json_decode($item->$column)->$type)[$index]);
     }
 
-    public static function dateFormat(string $date): string
+    public static function dateFormat(string $date, string $format = 'H:i d.m.Y'): string
     {
-        return date_create($date)->format('H:i d.m.Y');
+        return date_create($date)->format($format);
     }
 
     public static function counterTimeRead(string $string): int
@@ -128,5 +128,18 @@ class Helpers extends Model
     public static function spacesReplace(string $string): string
     {
         return preg_replace('/\s/i', '_', $string);
+    }
+
+    public static function validationMessage(string $fieldName, string $rule, array $options = []): string
+    {
+        $messages = [
+            'required' => "Поле \"{$fieldName}\" обязательно для заполнения!",
+            'string' => "Поле \"{$fieldName}\" должно быть строковым значением!",
+            'integer' => "Поле \"{$fieldName}\" должно быть числовым значением!",
+            'max' => "Поле \"{$fieldName}\" не должно быть длиннее ".($options['length'] ?? '')." символов!",
+            'exists' => "Поле \"{$fieldName}\" должно существовать!",
+            'date' => "Поле \"{$fieldName}\" должно быть датой!",
+        ];
+        return $messages[$rule];
     }
 }

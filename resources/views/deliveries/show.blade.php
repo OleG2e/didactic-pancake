@@ -23,7 +23,7 @@
                             <small>{{$delivery->updated_at->diffForHumans()}}</small>
                             <br><span>{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</span>
                             @isset($delivery->description)<br><span>Описание: {{$delivery->description}}</span>@endisset
-                            <br><span>Дата: {{$dateTime->format('d.m.Y')}}</span>
+                            <br><span>Дата: {{\App\Helpers::dateFormat($delivery->date_time,'d.m.Y')}}</span>
                             @auth
                                 <form method="post" action="{{route('delivery.link.request', $delivery)}}">
                                     @csrf

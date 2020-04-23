@@ -25,14 +25,12 @@
                 @foreach($deliveries as $delivery)
                     <div class="column is-narrow">
                         <div class="box" style="width: 250px">
-                            <h4 class="title is-size-4">{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</h4>
+                            <h4 class="title is-size-4">{{$delivery->startpoint->title}}
+                                - {{$delivery->endpoint->title}}</h4>
                             <p class="subtitle"><strong>{{$delivery->owner->username}}</strong>
                                 <small> {{$delivery->updated_at->diffForHumans()}}</small>
                             </p>
-                            @php
-                                $timestamp = new DateTime($delivery->timestamp);
-                            @endphp
-                            <span> Дата: {{$timestamp->format('d.m.Y')}}</span>
+                            <span> Дата: {{\App\Helpers::dateFormat($delivery->date_time,'d.m.Y')}}</span>
                             <br><span>Описание: {{$delivery->description}}</span>
                             <br><a href="{{route('delivery.show', $delivery)}}">
                                 Посмотреть

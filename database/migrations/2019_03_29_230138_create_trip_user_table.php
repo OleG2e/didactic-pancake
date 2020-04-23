@@ -14,9 +14,10 @@ class CreateTripUserTable extends Migration
     public function up()
     {
         Schema::create('trip_user', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('trip_id');
-            $table->integer('user_id');
+            $table->bigIncrements('id');
+            $table->unsignedInteger('trip_id')->index();
+            $table->unsignedInteger('user_id')->index();
+            $table->unique(['trip_id', 'user_id']);
             $table->timestamps();
         });
     }

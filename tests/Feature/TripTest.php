@@ -7,6 +7,7 @@ use App\Reply;
 use App\Town;
 use App\Trip;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -83,7 +84,7 @@ class TripTest extends TestCase
 
     public function testUserCanCreateTrip()
     {
-        $trip = factory(Trip::class)->make(['date' => '2020/03/13', 'time' => '16:30',]);
+        $trip = factory(Trip::class)->make(['date' => Carbon::tomorrow()->toDateString(), 'time' => '16:30',]);
         $this->actingAs($this->user)
             ->post(route('trip.store'), $trip->toArray())
             ->assertStatus(302)
@@ -106,8 +107,8 @@ class TripTest extends TestCase
             "endpoint_id" => 1,
             "passengers_count" => 4,
             "price" => "По-братски",
-            "date" => "2019-05-28",
-            "time" => "18:30:00",
+            "date" => Carbon::tomorrow()->toDateString(),
+            "time" => "18:30",
             "description" => "New Trip description"
         ];
 

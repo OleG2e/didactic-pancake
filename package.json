@@ -31,6 +31,7 @@
         "bulma-extensions": "^4.1.1",
         "chat-engine": "^0.9.21",
         "chat-engine-typing-indicator": "0.0.9",
+        "dropzone": "^5.7.0",
         "jquery-ui": "^1.12.1",
         "pickadate": "^3.6.4",
         "vue-chat-engine": "0.0.7",

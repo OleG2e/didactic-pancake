@@ -86,13 +86,13 @@
                 <div class="field-body">
                     <div class="field">
                         <p class="control is-expanded has-icons-left">
-                            <input class="input" type="date" id="datepicker" name="timestamp" placeholder="Дата"
-                                   value="{{ old('timestamp') }}" required>
+                            <input class="input" type="date" id="datepicker" name="date_time" placeholder="Дата"
+                                   value="{{ old('date_time') }}" required>
                             <span class="icon is-left">
                                 <i class="fa fa-calendar-alt"></i>
                             </span>
                         </p>
-                        @error('timestamp')
+                        @error('date_time')
                         <p class="help is-danger">{{ $message }}</p>
                         @enderror
                     </div>

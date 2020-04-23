@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReplyRequest extends FormRequest
@@ -26,6 +27,15 @@ class ReplyRequest extends FormRequest
         return [
             'attachment' => 'nullable|string',
             'description' => 'required|string|max:1024',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'description.required' => Helpers::validationMessage('Ответ', 'required'),
+            'description.string' => Helpers::validationMessage('Ответ', 'string'),
+            'description.max' => Helpers::validationMessage('Ответ', 'max', ['length' => 1024]),
         ];
     }
 }

@@ -20,6 +20,7 @@ class Reply extends Model
     ];
     protected $with = ['owner'];
     protected $touches = ['trip', 'post', 'delivery'];
+    protected $perPage = 30;
 
     public function owner(): BelongsTo
     {

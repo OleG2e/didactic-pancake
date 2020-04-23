@@ -20,7 +20,7 @@ class Delivery extends Model implements iReply
         'price',
         'relevance',
         'startpoint_id',
-        'timestamp',
+        'date_time',
     ];
 
     protected $with = ['category', 'owner', 'startpoint', 'endpoint'];

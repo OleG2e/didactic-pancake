@@ -39,6 +39,10 @@ class Post extends Model implements iReply
 
     public function countImages(): int
     {
-        return count(json_decode($this->images)->full);
+        $images = json_decode($this->images);
+        if (empty($images)) {
+            return false;
+        }
+        return count($images->full);
     }
 }
