@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Helpers\MapHelper;
 use App\Post;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class WelcomeController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $countCategoryPosts = Category::all()->count();
-        $allPosts = collect();
+        $posts = collect();
 
-        for ($i = 1; $i <= $countCategoryPosts; $i++) {
-            if (Post::where('relevance', true)->where('category_id', $i)->count() > 0) {
-                $allPosts->push(Post::where('relevance', true)->where('category_id', $i)->latest()->get());
+        $categoriesPosts = Category::whereSection(Post::MODEL_NAME)->get();
+        $categoriesPosts->each(
+            function ($category) use ($posts) {
+                $posts->push($category->posts()->get());
             }
-        }
+        );
+        $points = MapHelper::getPoints($posts);
 
-        return view('welcome', compact('allPosts'));
+        return view('welcome', compact(['posts', 'points']));
     }
 }

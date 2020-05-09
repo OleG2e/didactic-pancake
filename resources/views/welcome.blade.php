@@ -11,14 +11,15 @@
                 <h2 class="subtitle">
                     <a href="{{ route('register') }}" class="button is-primary is-inverted is-outlined">Зарегистрироваться</a>
                 </h2>
+                @include('components.ymap-points')
             </div>
         </div>
     </section>
-    @if($allPosts->isNotEmpty())
+    @if($posts->isNotEmpty())
         <div class="container box has-text-centered">
             <h4 class="title is-4 is-center">Последние 10 объявлений:</h4>
             <div class="columns">
-                @foreach($allPosts as $postsCategory)
+                @foreach($posts as $postsCategory)
                     <div class="column">
                         <div class="box">
                             @foreach($postsCategory as $post)

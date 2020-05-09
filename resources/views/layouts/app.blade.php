@@ -2,6 +2,7 @@
 <html lang="ru" prefix="og: http://ogp.me/ns#">
 <head>
     <link rel="icon" href=​"https://mikun.info/favicon.ico" type="image/x-icon">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=6319abd4-bea3-4ffa-8af2-8925eac4fa94&lang=ru_RU" type="text/javascript"></script>
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function (m, e, t, r, i, k, a) {
@@ -38,7 +39,7 @@
     <meta property="og:image" content="@yield('og:image', 'images/label.jpg')"/>
 
     <!-- Scripts -->
-    <script defer src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

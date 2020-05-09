@@ -6,6 +6,7 @@ use App\Interfaces\iReply;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model implements iReply
 {
@@ -16,15 +17,21 @@ class Post extends Model implements iReply
         'description',
         'images',
         'owner_id',
+        'point_id',
         'relevance',
         'title',
     ];
 
-    protected $with = ['category', 'owner'];
+    protected $with = ['category', 'owner', 'point'];
 
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id')->withDefault();
+    }
+
+    public function point(): BelongsTo
+    {
+        return $this->belongsTo(Point::class)->withDefault();
     }
 
     public function category(): BelongsTo

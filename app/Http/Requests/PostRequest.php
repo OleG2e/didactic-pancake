@@ -28,6 +28,7 @@ class PostRequest extends FormRequest
             'category_id' => 'required|integer|exists:categories,id',
             'title' => 'required|string|max:20',
             'description' => 'required|string|max:1024',
+            'coords' => 'nullable|string|max:255',
         ];
     }
 

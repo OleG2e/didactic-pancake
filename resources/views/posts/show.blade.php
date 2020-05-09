@@ -56,6 +56,17 @@
                             </span>
                             </a>
                         @endcan
+                        <div class="field">
+                            <script>
+                                $(function () {
+                                    window.ready = $('#map').css('display', 'none');
+                                });
+                            </script>
+                            <label class="checkbox">
+                                <input type="checkbox" id="checkbox" onclick="toggle()">Показать точку на карте
+                            </label>
+                            @include('components.ymap-points')
+                        </div>
                     </div>
                     @if ($post->countImages())
                         @for ($i = 0; $i < $post->countImages(); $i++)

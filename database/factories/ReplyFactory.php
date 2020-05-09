@@ -6,7 +6,7 @@ $factory->define(
     App\Reply::class,
     function (Faker $faker) {
         return [
-            'attachment' => $faker->imageUrl(),
+            'attachment' => json_encode($faker->imageUrl()),
             'description' => $faker->text,
             'model_id' => 1,
             'model_name' => \App\Post::MODEL_NAME,

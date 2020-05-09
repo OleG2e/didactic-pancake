@@ -13,18 +13,21 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('owner_id');
-            $table->unsignedInteger('category_id');
-            $table->string('title');
-            $table->json('images');
-            $table->text('description');
-            $table->boolean('relevance')->default(true);
-            $table->timestamps();
-
-            //$table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
-        });
+        Schema::create(
+            'posts',
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedInteger('owner_id');
+                $table->unsignedInteger('point_id')->nullable();
+                $table->unsignedInteger('category_id');
+                $table->string('title');
+                $table->json('images');
+                $table->text('description');
+                $table->boolean('relevance')->default(true);
+                $table->timestamps();
+                //$table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            }
+        );
     }
 
     /**

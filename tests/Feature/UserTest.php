@@ -185,7 +185,7 @@ class UserTest extends TestCase
         $this->assertGuest();
 
         $this->get('/')
-            ->assertSee($this->post->title);
+            ->assertOk();
     }
 
     public function testUserCanChangeRelevancePost()

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Helpers;
+use App\Helpers\MapHelper;
 use App\Http\Requests\PostRequest;
 use App\Mail\RequestLinkFromUser;
+use App\Point;
 use App\Post;
 use App\Category;
 use App\Reply;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
-use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -64,6 +64,16 @@ class PostController extends Controller
         $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
         $attributes['images'] = $images;
+
+        if (!empty($attributes['coords'])) {
+            $point = [];
+            $coords = explode(',', $attributes['coords']);
+            $point['latitude'] = $coords[0];
+            $point['longitude'] = $coords[1];
+            $createdPoint = Point::create($point);
+            $attributes['point_id'] = $createdPoint->id;
+        }
+
         $createdPost = $post->create($attributes);
         Helpers::flash('Объявление создано');
 
@@ -79,7 +89,9 @@ class PostController extends Controller
      */
     public function show(string $category, Post $post): View
     {
-        return view('posts.show', compact(['post']));
+        $points = MapHelper::getPoints(collect()->push($post));
+
+        return view('posts.show', compact(['post', 'points']));
     }
 
     /**
@@ -115,6 +127,13 @@ class PostController extends Controller
         $images = Helpers::imageUpload();
         $attributes = $request->validated();
         $attributes['images'] = $images;
+        if (!empty($attributes['coords'])) {
+            $point = [];
+            $coords = explode(',', $attributes['coords']);
+            $point['latitude'] = $coords[0];
+            $point['longitude'] = $coords[1];
+            $updatedPoint = $post->point->update($point);
+        }
         $post->update($attributes);
         Helpers::flash('Объявление изменено');
         return redirect(route('post.show', [$category, $post->id]));
@@ -136,6 +155,7 @@ class PostController extends Controller
         foreach ($replies as $reply) {
             $reply->delete();
         }
+        $post->point()->delete();
         $post->delete();
         Helpers::flash('Объявление удалено');
 

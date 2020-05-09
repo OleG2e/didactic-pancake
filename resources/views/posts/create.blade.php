@@ -52,6 +52,9 @@
                     <p class="help is-danger">{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="field">
+                    @include('components.ymap')
+                </div>
                 <div class="field is-grouped">
                     <div class="control">
                         <button type="submit" class="button is-link" onclick="$(this).addClass('is-loading');">Создать
