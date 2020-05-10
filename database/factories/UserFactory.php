@@ -17,14 +17,17 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
-    return [
-        'username' => $faker->unique()->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => \Hash::make('1234'),
-        'remember_token' => Str::random(10),
-        'link' => 'UserLink',
-        'law' => true,
-    ];
-});
+$factory->define(
+    User::class,
+    function (Faker $faker) {
+        return [
+            'username' => $faker->unique()->name,
+            'email' => $faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password' => \Hash::make('1234'),
+            'remember_token' => Str::random(10),
+            'link' => 'UserLink',
+            'law' => true,
+        ];
+    }
+);

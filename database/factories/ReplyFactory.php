@@ -7,7 +7,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'attachment' => json_encode($faker->imageUrl()),
-            'description' => $faker->text,
+            'description' => $faker->realText(),
             'model_id' => 1,
             'model_name' => \App\Post::MODEL_NAME,
             'owner_id' => 1,
