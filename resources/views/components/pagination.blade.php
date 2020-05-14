@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <nav class="pagination is-right" role="navigation" aria-label="pagination">
+    <nav class="pagination is-rounded is-right" role="navigation" aria-label="pagination">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <a class="pagination-previous" disabled>Предыдущая</a>
@@ -27,11 +27,11 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li><a class="pagination-link is-current" aria-label="Goto page {{ $page }}">{{ $page }}</a>
+                            <li><a class="pagination-link is-current" aria-label="Перейти к странице {{ $page }}">{{ $page }}</a>
                             </li>
                         @else
                             <li><a href="{{ $url }}" class="pagination-link"
-                                   aria-label="Goto page {{ $page }}">{{ $page }}</a></li>
+                                   aria-label="Перейти к странице {{ $page }}">{{ $page }}</a></li>
                         @endif
                     @endforeach
                 @endif

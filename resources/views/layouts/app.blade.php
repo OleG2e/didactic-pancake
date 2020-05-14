@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru" prefix="og: http://ogp.me/ns#">
 <head>
-    <link rel="icon" href=​"https://mikun.info/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="yandex-verification" content="ae868d3a9193d7b4"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', config('app.name'))</title>
+    <meta property="og:title" content="@yield('og:title', config('app.name'))"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="@yield('og:url', url()->current())"/>
+    <meta property="og:image" content="@yield('og:image', 'images/label.jpg')"/>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=6319abd4-bea3-4ffa-8af2-8925eac4fa94&lang=ru_RU" type="text/javascript"></script>
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -24,26 +35,9 @@
         <div><img src="https://mc.yandex.ru/watch/54254332" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
     <!-- /Yandex.Metrika counter -->
-    <meta charset="utf-8">
-    <meta name="yandex-verification" content="ae868d3a9193d7b4"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>@yield('title', config('app.name'))</title>
-
-    <meta property="og:title" content="@yield('og:title', config('app.name'))"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="@yield('og:url', url()->current())"/>
-    <meta property="og:image" content="@yield('og:image', 'images/label.jpg')"/>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link rel="icon" href=​"https://mikun.info/favicon.ico" type="image/x-icon">
 </head>
 <body class="has-navbar-fixed-top">
 <div id="app">

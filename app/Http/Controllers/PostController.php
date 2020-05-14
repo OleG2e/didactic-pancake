@@ -31,9 +31,9 @@ class PostController extends Controller
     public function index(string $category): View
     {
         if ($category === 'all') {
-            $posts = Post::whereRelevance(true)->paginate(25);
+            $posts = Post::whereRelevance(true)->paginate();
         } else {
-            $posts = Category::where('slug', $category)->firstOrFail()->posts()->whereRelevance(true)->paginate(25);
+            $posts = Category::where('slug', $category)->firstOrFail()->posts()->whereRelevance(true)->paginate();
         }
 
         return view('posts.index', compact(['posts', 'category']));

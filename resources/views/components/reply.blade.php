@@ -9,46 +9,48 @@
         </figure>
         <div class="media-content">
             <div class="content">
-                <div style="white-space:pre-line">
+                <p>
                     <strong>{{$reply->owner->username}}</strong>
                     <small>{{\App\Helpers::dateFormat($reply->updated_at)}}</small>
-                    <br><span>{{$reply->description}}</span>
-                    @auth
-                        <form method="post"
-                              action="{{route('reply.link.request', $routeParameters)}}">
-                            @csrf
-                            <div class="field">
-                                <div class="control">
-                                    <button type="submit" title="Связаться" class="button is-small">
-                                            <span class="icon is-small">
-                                                <i class="fa fa-link"></i>
-                                            </span>
-                                        <span>Связаться</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    @endauth
-                </div>
+                    <br>
+                    {{$reply->description}}
+                </p>
             </div>
-            @can('update', $reply)
-                <div class="field is-grouped">
-                    <a class="button is-small" href="{{route('reply.edit', $routeParameters)}}">
-                        <span class="icon is-small">
-                            <i class="fa fa-edit"></i>
-                        </span>
-                    </a>
-                    <form method="post" action="{{route('reply.destroy', $routeParameters)}}">
-                        @method('delete')
-                        @csrf
-                        <button class="button is-small" type="submit">
+            @auth
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <a title="Связаться" class="level-item"
+                           onclick="preventDefault();$('#connect-reply-form-{{$reply->id}}').submit();">
                             <span class="icon is-small">
-                                <i class="fa fa-trash"></i>
+                                <i class="fa fa-link"></i>
                             </span>
-                        </button>
-                    </form>
-                </div>
-            @endcan
+                        </a>
+                        @can('update', $reply)
+                            <a title="Редактировать" class="level-item"
+                               href="{{route('reply.edit', $routeParameters)}}">
+                                <span class="icon is-small">
+                                    <i class="fa fa-edit"></i>
+                                </span>
+                            </a>
+                            <a title="Удалить" class="level-item"
+                               onclick="preventDefault();$('#delete-reply-form-{{$reply->id}}').submit();">
+                                <span class="icon is-small">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </a>
+                        @endcan
+                    </div>
+                </nav>
+            @endauth
         </div>
     </article>
+    <form id="delete-reply-form-{{$reply->id}}" method="post"
+          action="{{route('reply.destroy', $routeParameters)}}">
+        @method('delete')
+        @csrf
+    </form>
+    <form id="connect-reply-form-{{$reply->id}}" method="post"
+          action="{{route('reply.link.request', $routeParameters)}}">
+        @csrf
+    </form>
 @endforeach

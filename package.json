@@ -35,6 +35,7 @@
         "jquery-ui": "^1.12.1",
         "node": "^14.2.0",
         "pickadate": "^3.6.4",
+        "swiper": "^5.3.8",
         "vue-chat-engine": "0.0.7",
         "vue-yandex-maps": "^0.10.7",
         "vuejs-datepicker": "^1.6.2",

@@ -16,32 +16,37 @@
                 </div>
             </nav>
         @endauth
-        <div class="columns is-multiline">
-            @if(count($posts))
+        @if(count($posts))
+            <div class="columns is-multiline">
                 @foreach($posts as $post)
-                    <div class="column is-narrow">
-                        <div class="box" style="width: 250px">
+                    <div class="column is-narrow is-one-quarter">
+                        <div class="box">
                             @if (\App\Helpers::currentCategory() === 'all')
-                                <p class="title is-size-4">{{$post->category->title}}</p>
+                                <p class="title is-size-5">{{$post->category->title}}</p>
                             @endif
-                            <p class="subtitle"><strong>{{$post->owner->username}}</strong>
-                                <small> {{$post->updated_at->diffForHumans()}}</small>
+                            <p class="subtitle is-size-5"><strong>{{$post->owner->username}}</strong>
+                                <br>
+                                <small class="is-size-6">{{$post->updated_at->diffForHumans()}}</small>
                             </p>
                             <div class="content">
-                                <div class="more">{{$post->description}}</div>
-                                <a href="{{route('post.show', [$post->category->slug, $post])}}">
-                                    Обсудить
-                                </a>
+                                @if ($post->countImages())
+                                    <figure class="image is-4by3">
+                                        <img class="js-image" src="{{\App\Helpers::getImage($post, 'preview')}}">
+                                    </figure>
+                                @endif
+                                <span>{{\Illuminate\Support\Str::words($post->description, 10)}}</span>
+                                <br>
+                                <a href="{{route('post.show', [$post->category->slug, $post])}}">Подробнее</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
-                <footer class="container">{{ $posts->links() }}</footer>
-            @else
-                @component('components.empty-records')
-                    Объявлений нет...
-                @endcomponent
-            @endif
-        </div>
+            </div>
+            <footer class="container">{{ $posts->links() }}</footer>
+        @else
+            @component('components.empty-records')
+                Объявлений нет...
+            @endcomponent
+        @endif
     @endcomponent
 @endsection

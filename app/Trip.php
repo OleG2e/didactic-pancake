@@ -26,6 +26,7 @@ class Trip extends Model implements iReply
     ];
 
     protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];
+    protected $perPage = 12;
 
     public function owner(): BelongsTo
     {
@@ -39,7 +40,7 @@ class Trip extends Model implements iReply
 
     public function replies(): LengthAwarePaginator
     {
-        return $this->hasMany(Reply::class, 'model_id')->where('model_name', self::MODEL_NAME)->paginate(10);
+        return $this->hasMany(Reply::class, 'model_id')->where('model_name', self::MODEL_NAME)->paginate();
     }
 
     public function startpoint(): BelongsTo

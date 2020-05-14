@@ -30,5 +30,5 @@
     }
 </script>
 <label class="checkbox"><input type="checkbox" id="checkbox" onclick="toggle()">Выбрать точку на карте</label>
-<div id="map" style="width: 600px; height: 400px; display: none;"></div>
+<div id="map" style="display: none;"></div>
 <input id="coords" name="coords" type="hidden">

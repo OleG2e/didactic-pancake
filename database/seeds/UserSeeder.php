@@ -24,9 +24,9 @@ class UserSeeder extends Seeder
             ]
         );
 
-        DB::table('role_user')
-            ->where('user_id', 1)
-            ->update(['role_id' => 1]);
+        DB::table('roles')->insert(['title' => 'admin']);
+        DB::table('roles')->insert(['title' => 'user']);
+        DB::table('role_user')->insert(['user_id' => 1, 'role_id' => 1]);
 
         factory(App\User::class, 20)->create()->each(
             function ($user) {

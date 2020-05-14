@@ -6,10 +6,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-// import Toasted from 'vue-toasted';
-// Vue.use(Toasted);
-
+// window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,41 +19,21 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-//import AvatarForm from './components/AvatarForm';
-//import SaveImage from './components/SaveImage';
-const app = new Vue({
-    el: '#app',
-    //components:{AvatarForm,SaveImage}
-});
-require('jquery');
-require('jquery-ui');
+// const app = new Vue({
+//     el: '#app',
+// });
+// require('jquery-ui');
 require('pickadate/lib/compressed/picker');
 require('pickadate/lib/compressed/picker.date');
 require('pickadate/lib/compressed/picker.time');
 require('pickadate/lib/compressed/legacy');
-// import bulmaCalendar from '/Users/olegbiruk/Programming/forum/node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min';
-// // Initialize all input of date type.
-// const calendars = bulmaCalendar.attach('[type="date"]', options);
-//
-// // Loop on each calendar initialized
-// calendars.forEach(calendar => {
-//     // Add listener to date:selected event
-//     calendar.on('date:selected', date => {
-//         console.log(date);
-//     });
-// });
-
-//require('/Users/olegbiruk/Programming/forum/node_modules/pickadate/lib/picker.js');
-//require('/Users/olegbiruk/Programming/forum/node_modules/jquery-ui/ui/i18n/datepicker-ru');
-//require('/Users/olegbiruk/Programming/forum/node_modules/pickadate/lib/picker.date.js');
-//$('.datepicker').pickadate();
 
 /**
  * DateTimePicker
@@ -84,7 +61,6 @@ $(function () {
         clear: 'удалить'
     });
 });
-
 
 /**
  * More/less toggle
@@ -157,47 +133,48 @@ $(document).ready(function () {
  * Modal message
  */
 require('./bulma-modal');
-
+document.addEventListener('DOMContentLoaded', function () {
 // Close mobile & tablet menu on item click
-$('.navbar-item').each(function (e) {
-    $(this).click(function () {
+    $('.navbar-item').each(function (e) {
+        $(this).click(function () {
+            if ($('#navbar-burger-id').hasClass('is-active')) {
+                $('#navbar-burger-id').removeClass('is-active');
+                $('#navbar-menu-id').removeClass('is-active');
+            }
+        });
+    });
+
+// Open or Close mobile & tablet menu
+    $('#navbar-burger-id').click(function () {
         if ($('#navbar-burger-id').hasClass('is-active')) {
             $('#navbar-burger-id').removeClass('is-active');
             $('#navbar-menu-id').removeClass('is-active');
+        } else {
+            $('#navbar-burger-id').addClass('is-active');
+            $('#navbar-menu-id').addClass('is-active');
         }
     });
-});
-
-// Open or Close mobile & tablet menu
-$('#navbar-burger-id').click(function () {
-    if ($('#navbar-burger-id').hasClass('is-active')) {
-        $('#navbar-burger-id').removeClass('is-active');
-        $('#navbar-menu-id').removeClass('is-active');
-    } else {
-        $('#navbar-burger-id').addClass('is-active');
-        $('#navbar-menu-id').addClass('is-active');
-    }
-});
 
 // imgZoom
-$('img.js-image').css({cursor: 'zoom-in'}).addClass('img-enlargable').click(function(){
-    var src = $(this).attr('src').replace(/\/preview\//g, '/full/');
-    var fullImg = $('<div>').css({
-        background: 'RGBA(0,0,0,.5) url('+src+') no-repeat center',
-        backgroundSize: 'contain',
-        width:'100%', height:'100%',
-        position:'fixed',
-        zIndex:'10000',
-        top:'0', left:'0',
-        cursor: 'zoom-out'
-    });
-    fullImg.click(function(){
-        $(this).remove();
-    }).appendTo('body');
+    $('img.js-image').css({cursor: 'zoom-in'}).addClass('img-enlargable').click(function () {
+        var src = $(this).attr('src').replace(/\/preview\//g, '/full/');
+        var fullImg = $('<div>').css({
+            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+            backgroundSize: 'contain',
+            width: '100%', height: '100%',
+            position: 'fixed',
+            zIndex: '10000',
+            top: '0', left: '0',
+            cursor: 'zoom-out'
+        });
+        fullImg.click(function () {
+            $(this).remove();
+        }).appendTo('body');
 
-    $(document).on('keydown', function(event) {
-        if (event.key == "Escape") {
-            fullImg.remove();
-        }
-    }).appendTo('body');
+        $(document).on('keydown', function (event) {
+            if (event.key == "Escape") {
+                fullImg.remove();
+            }
+        }).appendTo('body');
+    });
 });

@@ -18,58 +18,53 @@
                 </figure>
                 <div class="media-content">
                     <div class="content">
-                        <div style="white-space:pre-line">
+                        <p>
                             <strong>{{$delivery->owner->username}}</strong>
                             <small>{{$delivery->updated_at->diffForHumans()}}</small>
                             <br><span>{{$delivery->startpoint->title}} - {{$delivery->endpoint->title}}</span>
                             @isset($delivery->description)<br><span>Описание: {{$delivery->description}}</span>@endisset
                             <br><span>Дата: {{\App\Helpers::dateFormat($delivery->date_time,'d.m.Y')}}</span>
-                            @auth
-                                <form method="post" action="{{route('delivery.link.request', $delivery)}}">
-                                    @csrf
-                                    <div class="field">
-                                        <div class="control">
-                                            <button type="submit" title="Связаться" class="button is-small">
-                                            <span class="icon is-small">
-                                                <i class="fa fa-link"></i>
-                                            </span>
-                                                <span>Связаться</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            @endauth
-                        </div>
+                        </p>
                     </div>
-                    @can('update', $delivery)
+                    @auth
                         <nav class="level is-mobile">
                             <div class="level-left">
-                                <div class="buttons are-small">
-                                    <a class="button" href="{{route('delivery.edit',$delivery)}}">
+                                <a title="Связаться" class="level-item"
+                                   onclick="preventDefault();$('#connect-delivery-form').submit();">
                                     <span class="icon is-small">
-                                        <i class="fa fa-edit"></i>
+                                        <i class="fa fa-link"></i>
                                     </span>
+                                </a>
+                                @can('update', $delivery)
+                                    <a title="Редактировать" class="level-item"
+                                       href="{{route('delivery.edit',$delivery)}}">
+                                        <span class="icon is-small">
+                                            <i class="fa fa-edit"></i>
+                                        </span>
                                     </a>
-                                    <a class="button" onclick="event.preventDefault();
-                                        document.getElementById('delete-delivery-form').submit();">
-                                    <span class="icon is-small">
-                                        <i class="fa fa-trash"></i>
-                                    </span>
+                                    <a title="Удалить" class="level-item"
+                                       onclick="preventDefault();$('#delete-delivery-form').submit();">
+                                        <span class="icon is-small">
+                                            <i class="fa fa-trash"></i>
+                                        </span>
                                     </a>
-                                </div>
+                                @endcan
                             </div>
                         </nav>
-                    @endcan
+                    @endauth
                     @include('components.reply', ['model_name' => \App\Delivery::MODEL_NAME, 'model_id' => $delivery->id])
                 </div>
             </article>
-            @include('components.reply-form', ['model_name' => \App\Delivery::MODEL_NAME, 'model_id' => $delivery->id])
-            <br>
-            <a class="button is-info is-hovered" href="{{route('delivery.all')}}">Назад</a>
         </div>
+        @include('components.links', ['model' => $delivery])
+        @include('components.reply-form', ['model_name' => \App\Delivery::MODEL_NAME, 'model_id' => $delivery->id])
+        <a class="button is-info is-hovered" href="{{route('delivery.all')}}">Все доставки</a>
     @endcomponent
     <form id="delete-delivery-form" method="post" action="{{route('delivery.destroy',$delivery)}}">
         @method('delete')
+        @csrf
+    </form>
+    <form id="connect-delivery-form" method="post" action="{{route('delivery.link.request', $delivery)}}">
         @csrf
     </form>
 @endsection
