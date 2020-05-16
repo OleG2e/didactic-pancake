@@ -57,11 +57,17 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Кабинет', route('home'));
 });
 
-//// Home > Post
-//Breadcrumbs::for('post.all', function ($trail) {
-//    $trail->parent('main');
-//    $trail->push('Объявления', route('post.all'));
-//});
+// Home > Post
+Breadcrumbs::for('post.all', function ($trail) {
+    $trail->parent('main');
+    $trail->push('Объявления', route('post.all', 'all'));
+});
+
+// Home > Post > Category
+Breadcrumbs::for('post.category', function ($trail, $category) {
+    $trail->parent('post.all');
+    $trail->push($category->title, route('post.all', $category->slug));
+});
 
 // Home > Post > Create
 Breadcrumbs::for('post.create', function ($trail) {
@@ -77,7 +83,7 @@ Breadcrumbs::for('post.edit', function ($trail, $category, $post) {
 
 // Home > Post > Show
 Breadcrumbs::for('post.show', function ($trail, $category, $post) {
-    $trail->parent('main');
+    $trail->parent('post.category', $category);
     $trail->push('Детали объявления', route('post.show', [$category, $post]));
 });
 
@@ -110,15 +116,3 @@ Breadcrumbs::for('how_much', function ($trail) {
     $trail->parent('main');
     $trail->push('Узнать сколько времени осталось', route('how_much'));
 });
-
-//// Home > Blog > [Category]
-//Breadcrumbs::for('category', function ($trail, $category) {
-//    $trail->parent('blog');
-//    $trail->push($category->title, route('category', $category->id));
-//});
-//
-//// Home > Blog > [Category] > [Post]
-//Breadcrumbs::for('post', function ($trail, $post) {
-//    $trail->parent('category', $post->category);
-//    $trail->push($post->title, route('post', $post->id));
-//});

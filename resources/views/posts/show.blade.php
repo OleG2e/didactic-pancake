@@ -6,7 +6,7 @@
 @endif
 @section('content')
     @component('components.hero')
-        {{ Breadcrumbs::render('post.show', $post->category->slug, $post) }}
+        {{ Breadcrumbs::render('post.show', $post->category, $post) }}
         @if (session('message'))
             @component('components.flash-message', ['type'=>'is-success'])
                 {{ session('message') }}
