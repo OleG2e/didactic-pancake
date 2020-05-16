@@ -54,12 +54,12 @@
                                     @endif
                                 @endif
                                 @can('update', $trip)
-                                    <a class="button is-small" href="{{route('trip.edit',$trip)}}">
+                                    <a class="level-item" href="{{route('trip.edit',$trip)}}">
                                         <span class="icon is-small">
                                             <i class="fa fa-edit"></i>
                                         </span>
                                     </a>
-                                    <a class="button is-small" onclick="event.preventDefault();
+                                    <a class="level-item" onclick="event.preventDefault();
                               document.getElementById('delete-trip-form').submit();">
                                         <span class="icon is-small">
                                             <i class="fa fa-trash"></i>
