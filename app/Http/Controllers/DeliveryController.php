@@ -34,7 +34,7 @@ class DeliveryController extends Controller
      */
     public function index(): View
     {
-        $deliveries = Delivery::whereRelevance(true)->oldest()->get();
+        $deliveries = Delivery::whereRelevance(true)->where('date_time', '>', now())->oldest()->get();
 
         return view('deliveries.index', compact('deliveries'));
     }
