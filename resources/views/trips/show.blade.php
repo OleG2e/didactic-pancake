@@ -43,7 +43,7 @@
                                 @elseif(count($trip->users) and $trip->owner->id !== auth()->id())
                                     @if (count($trip->users()->where('user_id',auth()->id())->get()))
                                         <a title="Не поеду!" class="level-item button is-danger"
-                                           onclick="event.preventDefault();$('#add-user-form').submit();">
+                                           onclick="event.preventDefault();$('#remove-user-form').submit();">
                                             Я передумал ехать!
                                         </a>
                                     @else
