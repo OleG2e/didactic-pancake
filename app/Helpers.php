@@ -25,8 +25,8 @@ class Helpers extends Model
 
     public static function countAds(): array
     {
-        $trips = Category::where('slug', 'trip')->firstOrFail()->trips()->whereRelevance(true)->count();
-        $deliveries = Category::where('slug', 'delivery')->firstOrFail()->trips()->whereRelevance(true)->count();
+        $trips = Trip::whereRelevance(true)->where('date_time', '>', now())->count();
+        $deliveries = Delivery::whereRelevance(true)->where('date_time', '>', now())->count();
         $all = Post::whereRelevance(true)->count();
         $buys = Category::where('slug', 'buy')->firstOrFail()->posts()->whereRelevance(true)->count();
         $sells = Category::where('slug', 'sell')->firstOrFail()->posts()->whereRelevance(true)->count();
