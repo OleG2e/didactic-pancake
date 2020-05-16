@@ -30,7 +30,7 @@
                         <nav class="level is-mobile">
                             <div class="level-left">
                                 <a title="Связаться" class="level-item"
-                                   onclick="preventDefault();$('#connect-delivery-form').submit();">
+                                   onclick="event.preventDefault();$('#connect-delivery-form').submit();">
                                     <span class="icon is-small">
                                         <i class="fa fa-link"></i>
                                     </span>
@@ -43,7 +43,7 @@
                                         </span>
                                     </a>
                                     <a title="Удалить" class="level-item"
-                                       onclick="preventDefault();$('#delete-delivery-form').submit();">
+                                       onclick="event.preventDefault();$('#delete-delivery-form').submit();">
                                         <span class="icon is-small">
                                             <i class="fa fa-trash"></i>
                                         </span>

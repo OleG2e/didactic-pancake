@@ -37,18 +37,18 @@
                             <div class="level-left">
                                 @if (count($trip->users)==false and $trip->owner->id !== auth()->id())
                                     <a title="Поеду!" class="level-item button is-primary"
-                                       onclick="preventDefault();$('#add-user-form').submit();">
+                                       onclick="event.preventDefault();$('#add-user-form').submit();">
                                         Я поеду!
                                     </a>
                                 @elseif(count($trip->users) and $trip->owner->id !== auth()->id())
                                     @if (count($trip->users()->where('user_id',auth()->id())->get()))
                                         <a title="Не поеду!" class="level-item button is-danger"
-                                           onclick="preventDefault();$('#add-user-form').submit();">
+                                           onclick="event.preventDefault();$('#add-user-form').submit();">
                                             Я передумал ехать!
                                         </a>
                                     @else
                                         <a title="Поеду!" class="level-item button is-primary"
-                                           onclick="preventDefault();$('#add-user-form').submit();">
+                                           onclick="event.preventDefault();$('#add-user-form').submit();">
                                             Я поеду!
                                         </a>
                                     @endif
@@ -59,8 +59,7 @@
                                             <i class="fa fa-edit"></i>
                                         </span>
                                     </a>
-                                    <a class="level-item" onclick="event.preventDefault();
-                              document.getElementById('delete-trip-form').submit();">
+                                    <a class="level-item" onclick="event.preventDefault();$('#delete-trip-form').submit();">
                                         <span class="icon is-small">
                                             <i class="fa fa-trash"></i>
                                         </span>
