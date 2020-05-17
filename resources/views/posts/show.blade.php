@@ -31,12 +31,38 @@
                     @auth
                         <nav class="level is-mobile">
                             <div class="level-left">
-                                <a title="Связаться" class="level-item"
-                                   onclick="event.preventDefault();$('#connect-post-form').submit();">
+                                <a title="Связаться" class="level-item modal-button"
+                                   data-target="modal-bis-connect-{{$post->id}}">
                                     <span class="icon is-small">
                                         <i class="fa fa-link"></i>
                                     </span>
                                 </a>
+                                <div class="modal" id="modal-bis-connect-{{$post->id}}">
+                                    <div class="modal-background"></div>
+                                    <div class="modal-card">
+                                        <header class="modal-card-head">
+                                            <p class="modal-card-title">Связаться с {{$post->owner->username}}?</p>
+                                            <button class="delete" aria-label="close"></button>
+                                        </header>
+                                        <section class="modal-card-body">
+                                            Отправить ваши анкетные данные для связи
+                                            пользователю {{$post->owner->username}}?
+                                        </section>
+                                        <footer class="modal-card-foot">
+                                            <form method="post"
+                                                  action="{{route('post.link.request', [$post->category->slug, $post])}}">
+                                                @csrf
+                                                <button class="button is-primary" type="submit">
+                        <span class="icon is-small">
+                            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                        </span>
+                                                    <span>Отправить</span>
+                                                </button>
+                                                <a class="button is-info">Отмена</a>
+                                            </form>
+                                        </footer>
+                                    </div>
+                                </div>
                                 @can('update', $post)
                                     <a title="Редактировать" class="level-item"
                                        href="{{route('post.edit', [$post->category->slug, $post])}}">
@@ -44,12 +70,38 @@
                                             <i class="fa fa-edit"></i>
                                         </span>
                                     </a>
-                                    <a title="Удалить" class="level-item"
-                                       onclick="event.preventDefault();$('#delete-post-form').submit();">
+                                    <a title="Удалить" class="level-item modal-button"
+                                       data-target="modal-bis-remove-{{$post->id}}">
                                         <span class="icon is-small">
                                             <i class="fa fa-trash"></i>
                                         </span>
                                     </a>
+                                    <div class="modal" id="modal-bis-remove-{{$post->id}}">
+                                        <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                                <p class="modal-card-title">Подтверди удаление</p>
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                                Удалить пост {{$post->description}}?
+                                            </section>
+                                            <footer class="modal-card-foot">
+                                                <form method="post"
+                                                      action="{{route('post.destroy', [$post->category->slug, $post])}}">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="button is-danger" type="submit">
+                        <span class="icon is-small">
+                            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </span>
+                                                        <span>Удалить!</span>
+                                                    </button>
+                                                    <a class="button is-info">Отмена</a>
+                                                </form>
+                                            </footer>
+                                        </div>
+                                    </div>
                                 @endcan
                             </div>
                         </nav>
@@ -115,15 +167,8 @@
                 </div>
             </article>
         </div>
-        @include('components.links', ['model' => $post])
+        @include('components.links', ['model' => $post->replies()])
         @include('components.reply-form', ['model_name' => \App\Post::MODEL_NAME, 'model_id' => $post->id])
         <a class="button is-info is-hovered" href="{{route('post.all', 'all')}}">Все объявления</a>
     @endcomponent
-    <form id="delete-post-form" method="post" action="{{route('post.destroy', [$post->category->slug, $post])}}">
-        @method('delete')
-        @csrf
-    </form>
-    <form id="connect-post-form" method="post" action="{{route('post.link.request', [$post->category->slug, $post])}}">
-        @csrf
-    </form>
 @endsection

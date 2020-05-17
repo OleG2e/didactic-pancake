@@ -9,25 +9,25 @@
             @endcomponent
         @endif
         @include('components.home-nav')
-        <nav class="level">
+        <nav class="level is-mobile">
             <div class="level-item level-left">
                 <div class="control">
                     <h4 class="title is-size-4">Мои поездки:</h4>
                 </div>
             </div>
-            <div class="level-item" style="padding-bottom: 10px">
+            <div class="level-item">
                 <a class="button is-primary is-rounded" href="{{route('trip.create')}}">Создать поездку</a>
             </div>
         </nav>
         <div class="columns is-multiline">
             @if(count($myTrips))
                 @foreach($myTrips as $trip)
-                    <div class="column is-narrow">
+                    <div class="column is-narrow is-one-quarter">
                         <div class="box">
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <h4 class="title is-size-4">{{$trip->category->title}}</h4>
+                                        <p class="title is-size-4">{{$trip->category->title}}</p>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -65,11 +65,12 @@
                                     </div>
                                 </div>
                             @endcan
-                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
-                            <h6 class="subtitle is-size-6">Дата:
-                                <br>{{$trip->created_at}}</h6>
+                            <p class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
+                            <p class="subtitle is-size-6">Дата:
+                                <br>{{$trip->created_at}}</p>
                             <div class="content">
-                                <div class="more">{{$trip->description}}</div>
+                                {{$trip->description}}
+                                <br>
                                 <a href="{{route('trip.show', $trip)}}">
                                     Обсудить
                                 </a>

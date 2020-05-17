@@ -54,38 +54,62 @@
                                     @endif
                                 @endif
                                 @can('update', $trip)
-                                    <a class="level-item" href="{{route('trip.edit',$trip)}}">
+                                    <a title="Редактировать" class="level-item" href="{{route('trip.edit',$trip)}}">
                                         <span class="icon is-small">
                                             <i class="fa fa-edit"></i>
                                         </span>
                                     </a>
-                                    <a class="level-item" onclick="event.preventDefault();$('#delete-trip-form').submit();">
+                                    <a title="Удалить" class="level-item modal-button"
+                                       data-target="modal-bis-remove-{{$trip->id}}">
                                         <span class="icon is-small">
                                             <i class="fa fa-trash"></i>
                                         </span>
                                     </a>
+                                    <div class="modal" id="modal-bis-remove-{{$trip->id}}">
+                                        <div class="modal-background"></div>
+                                        <div class="modal-card">
+                                            <header class="modal-card-head">
+                                                <p class="modal-card-title">Подтверди удаление</p>
+                                                <button class="delete" aria-label="close"></button>
+                                            </header>
+                                            <section class="modal-card-body">
+                                                Удалить поездку {{$trip->startpoint->title}}
+                                                - {{$trip->endpoint->title}} {{$dateTime}}?
+                                            </section>
+                                            <footer class="modal-card-foot">
+                                                <form method="post"
+                                                      action="{{route('trip.destroy',$trip)}}">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="button is-danger" type="submit">
+                                                            <span class="icon is-small">
+                                                                <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                                            </span>
+                                                        <span>Удалить!</span>
+                                                    </button>
+                                                    <a class="button is-info">Отмена</a>
+                                                </form>
+                                            </footer>
+                                        </div>
+                                    </div>
                                 @endcan
                             </div>
                         </nav>
+                        <form id="add-user-form" method="post" action="{{route('trip.add.user', $trip)}}">
+                            @method('patch')
+                            @csrf
+                        </form>
+                        <form id="remove-user-form" method="post" action="{{route('trip.remove.user', $trip)}}">
+                            @method('delete')
+                            @csrf
+                        </form>
                     @endauth
                     @include('components.reply', ['model_name' => \App\Trip::MODEL_NAME, 'model_id' => $trip->id])
                 </div>
             </article>
         </div>
-        @include('components.links', ['model' => $trip])
+        @include('components.links', ['model' => $trip->replies()])
         @include('components.reply-form', ['model_name' => \App\Trip::MODEL_NAME, 'model_id' => $trip->id])
         <a class="button is-info is-hovered" href="{{route('trip.all')}}">Все поездки</a>
     @endcomponent
-    <form id="delete-trip-form" method="post" action="{{route('trip.destroy',$trip)}}">
-        @method('delete')
-        @csrf
-    </form>
-    <form id="add-user-form" method="post" action="{{route('trip.add.user', $trip)}}">
-        @method('patch')
-        @csrf
-    </form>
-    <form id="remove-user-form" method="post" action="{{route('trip.remove.user', $trip)}}">
-        @method('delete')
-        @csrf
-    </form>
 @endsection

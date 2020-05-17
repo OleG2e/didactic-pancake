@@ -1,3 +1,3 @@
-@if($model->replies()->hasPages())
-    <footer class="container">{{ $model->replies()->links() }}</footer>
+@if($model->hasPages())
+    <footer class="container">{{ $model->links() }}</footer>
 @endif

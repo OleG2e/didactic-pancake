@@ -17,10 +17,11 @@ class Reply extends Model
         'model_id',
         'model_name',
         'owner_id',
+        'edited',
     ];
     protected $with = ['owner'];
     protected $touches = ['trip', 'post', 'delivery'];
-    protected $perPage = 1;
+    protected $perPage = 10;
 
     public function owner(): BelongsTo
     {
@@ -40,6 +41,11 @@ class Reply extends Model
     public function delivery(): BelongsTo
     {
         return $this->belongsTo(Delivery::class, 'model_id')->withDefault();
+    }
+
+    public function markAsEdited()
+    {
+        return $this->update(['edited' => true]);
     }
 
     public function parent(string $model_name): object

@@ -22,6 +22,7 @@ class CreateRepliesTable extends Migration
                 $table->char('model_name', 16);
                 $table->json('attachment')->nullable();
                 $table->text('description');
+                $table->boolean('edited')->default(false);
                 $table->timestamps();
             }
         );

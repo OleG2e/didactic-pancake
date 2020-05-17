@@ -195,6 +195,13 @@
                                             </span>
                                             </a>
                                         </li>
+                                        <li>
+                                            <a class="navbar-item" href="{{route('my.replies')}}">
+                                            <span class="has-badge-inline" data-badge="{{$myReplies}}">
+                                                Мои ответы
+                                            </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     <a class="navbar-item" href="{{ route('feedback.form') }}">
                                         <div>

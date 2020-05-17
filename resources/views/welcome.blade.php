@@ -8,9 +8,11 @@
                 <h1 class="title">
                     Микуньский информационный сайт
                 </h1>
-                <h2 class="subtitle">
-                    <a href="{{ route('register') }}" class="button is-primary is-inverted is-outlined">Зарегистрироваться</a>
-                </h2>
+                @guest
+                    <h2 class="subtitle">
+                        <a href="{{ route('register') }}" class="button is-primary is-inverted is-outlined">Зарегистрироваться</a>
+                    </h2>
+                @endguest
                 @include('components.ymap-points')
             </div>
         </div>

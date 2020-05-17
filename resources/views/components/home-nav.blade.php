@@ -27,6 +27,11 @@
                 <span class="has-badge-inline" data-badge="{{$myPosts}}">Мои объявления</span>
             </a>
         </li>
+        <li class="{{(Request::route()->getName() == 'my.replies') ? 'is-active' : ''}}">
+            <a href="{{route('my.replies')}}">
+                <span class="has-badge-inline" data-badge="{{$myReplies}}">Мои ответы</span>
+            </a>
+        </li>
         <li class="{{(Request::route()->getName() == 'my.deliveries') ? 'is-active' : ''}}">
             <a href="{{route('my.deliveries')}}">
                 <span class="has-badge-inline" data-badge="{{$myDeliveries}}">

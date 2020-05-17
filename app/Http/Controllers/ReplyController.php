@@ -81,6 +81,7 @@ class ReplyController extends Controller
         $this->authorize('update', $reply);
 
         $reply->update($request->validated());
+        $reply->markAsEdited();
 
         return redirect($this->routeSwitcher($model_name, $reply));
     }

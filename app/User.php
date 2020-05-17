@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Interfaces\iReply;
 use App\Notifications\CustomResetPasswordNotification;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,8 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, iReply
 {
     use Notifiable;
 
@@ -53,9 +55,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class, 'owner_id');
     }
 
-    public function replies(): HasMany
+    public function replies(): LengthAwarePaginator
     {
-        return $this->hasMany(Reply::class, 'owner_id');
+        return $this->hasMany(Reply::class, 'owner_id')->paginate();
     }
 
     public function trips(): BelongsToMany

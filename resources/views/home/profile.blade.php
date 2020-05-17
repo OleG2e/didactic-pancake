@@ -30,7 +30,7 @@
         </article>
         <div class="media">
             <div class="columns">
-                <div class="column is-narrow">
+                <div class="column is-narrow is-one-quarter">
                     <form method="post" action="{{route('home.store')}}">
                         @csrf
                         <div class="field">
@@ -50,7 +50,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="column">
+                <div class="column is-narrow is-one-quarter">
                     <form method="post" action="{{route('home.image.upload')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="field">

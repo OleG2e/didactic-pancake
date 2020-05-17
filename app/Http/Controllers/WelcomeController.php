@@ -16,7 +16,10 @@ class WelcomeController extends Controller
         $categoriesPosts = Category::whereSection(Post::MODEL_NAME)->get();
         $categoriesPosts->each(
             function ($category) use ($posts) {
-                $posts->push($category->posts()->get());
+                $categoryPosts = $category->posts()->get();
+                if ($categoryPosts->isNotEmpty()){
+                    $posts->push($categoryPosts);
+                }
             }
         );
         $points = MapHelper::getPoints($posts);

@@ -27,6 +27,7 @@ Route::group(
         Route::post('/', 'HomeController@store')->name('home.store');
         Route::get('/posts', 'HomeController@myPosts')->name('my.posts');
         Route::get('/trips', 'HomeController@myTrips')->name('my.trips');
+        Route::get('/replies', 'HomeController@myReplies')->name('my.replies');
         Route::get('/deliveries', 'HomeController@myDeliveries')->name('my.deliveries');
         Route::get('/feedback', 'HomeController@feedbackForm')->name('feedback.form');
         Route::post('/feedback', 'HomeController@feedbackSubmit')->name('feedback.submit');

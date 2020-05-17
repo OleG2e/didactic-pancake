@@ -42,7 +42,7 @@
                     </div>
                 @endforeach
             </div>
-            <footer class="container">{{ $posts->links() }}</footer>
+            @include('components.links', ['model' => $posts])
         @else
             @component('components.empty-records')
                 Объявлений нет...

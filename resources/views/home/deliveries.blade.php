@@ -9,25 +9,25 @@
             @endcomponent
         @endif
         @include('components.home-nav')
-        <nav class="level">
+        <nav class="level is-mobile">
             <div class="level-item level-left">
                 <div class="control">
-                    <h4 class="title is-size-4">Мои передачки:</h4>
+                    <p class="title is-size-4">Мои передачки:</p>
                 </div>
             </div>
-            <div class="level-item" style="padding-bottom: 10px">
+            <div class="level-item level-right">
                 <a class="button is-primary is-rounded" href="{{route('delivery.create')}}">Создать передачку</a>
             </div>
         </nav>
         <div class="columns is-multiline">
             @if(count($myDeliveries))
                 @foreach($myDeliveries as $trip)
-                    <div class="column is-narrow">
+                    <div class="column is-narrow is-one-quarter">
                         <div class="box">
-                            <div class="level">
+                            <div class="level is-mobile">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title">{{$trip->category->title}}</p>
+                                        <p class="title is-size-5">{{$trip->category->title}}</p>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -46,7 +46,7 @@
                                         <button class="delete" aria-label="close"></button>
                                     </header>
                                     <section class="modal-card-body">
-                                        Удалить пост от {{$trip->created_at}}?
+                                        Удалить передачку от {{$trip->created_at}}?
                                     </section>
                                     <footer class="modal-card-foot">
                                         <form method="post" action="{{route('delivery.destroy', $trip)}}">
@@ -63,12 +63,13 @@
                                     </footer>
                                 </div>
                             </div>
-                            <h4 class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</h4>
+                            <p class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
                             <p class="subtitle"><strong>{{$trip->owner->username}}</strong>
                                 <small> {{$trip->created_at}}</small>
                             </p>
                             <div class="content">
-                                <div class="more">{{$trip->description}}</div>
+                                {{\Illuminate\Support\Str::words($trip->description, 20)}}
+                                <br>
                                 <a href="{{route('delivery.show', $trip)}}">
                                     Обсудить
                                 </a>

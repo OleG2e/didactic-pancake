@@ -9,38 +9,35 @@
             @endcomponent
         @endif
         @include('components.home-nav')
-        <nav class="level is-mobile">
+        <nav class="level">
             <div class="level-item level-left">
                 <div class="control">
-                    <p class="title is-size-4">Мои объявления:</p>
+                    <p class="title is-size-4">Мои ответы:</p>
                 </div>
-            </div>
-            <div class="level-item">
-                <a class="button is-primary is-rounded" href="{{route('post.create')}}">Создать объявление</a>
             </div>
         </nav>
         <div class="columns is-multiline">
-            @php
-                //$category = \App\Helpers::currentCategory();
-                //$route = route('post.all', $category);
-            @endphp
-            @if(count($myPosts))
-                @foreach($myPosts as $post)
+            @if($myReplies->count())
+                @foreach($myReplies as $reply)
+                    @php
+                        $parent = $reply->parent($reply->model_name);
+                        $routeParameters = [$reply->model_name, $parent->id, $reply];
+                    @endphp
                     <div class="column is-narrow is-one-quarter">
                         <div class="box">
-                            <div class="level">
+                            <div class="level is-mobile">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title is-size-4">{{$post->category->title}}</p>
+                                        <p class="title is-size-5">{{$parent->category->title}}</p>
                                     </div>
                                 </div>
                                 <div class="level-right">
                                     <div class="level-item">
-                                        <a class="delete modal-button" data-target="modal-bis-{{$post->id}}"></a>
+                                        <a class="delete modal-button" data-target="modal-bis-{{$parent->id}}"></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal" id="modal-bis-{{$post->id}}">
+                            <div class="modal" id="modal-bis-{{$parent->id}}">
                                 <div class="modal-background"></div>
                                 <div class="modal-card">
                                     <header class="modal-card-head">
@@ -48,10 +45,11 @@
                                         <button class="delete" aria-label="close"></button>
                                     </header>
                                     <section class="modal-card-body">
-                                        Удалить пост от {{$post->created_at}}?
+                                        Удалить ответ {{$reply->description}}?
                                     </section>
                                     <footer class="modal-card-foot">
-                                        <form method="post" action="{{route('post.destroy', [$post->category, $post])}}">
+                                        <form method="post"
+                                              action="{{route('reply.destroy', $routeParameters)}}">
                                             @method('delete')
                                             @csrf
                                             <button class="button is-danger" type="submit">
@@ -66,29 +64,27 @@
                                 </div>
                             </div>
                             <p class="subtitle is-6">Дата:
-                                <br>{{$post->created_at}}</p>
+                                <br>{{$reply->created_at}}</p>
                             <div class="content">
-                                {{\Illuminate\Support\Str::words($post->description, 20)}}
-                                <br>
-                                <a href="{{route('post.show', [$post->category, $post])}}">
-                                    Обсудить
-                                </a>
-                                <form method="post" action="{{route('update.relevance.post', $post)}}">
-                                    @method('patch')
-                                    @csrf
-                                    <div class="field">
-                                        <input id="switch-{{$post->id}}" type="checkbox" name="relevance" class="switch"
-                                               onchange="this.form.submit()" {{$post->relevance ? 'checked' : ''}}>
-                                        <label for="switch-{{$post->id}}">Показ</label>
-                                    </div>
-                                </form>
+                                {{\Illuminate\Support\Str::words($reply->description, 20)}}
+                                @if($parent instanceof \App\Post)
+                                    <br>
+                                    <a href="{{route("{$reply->model_name}.show", [$parent->category->slug, $parent])}}">
+                                        Перейти к объявлению
+                                    </a>
+                                @else
+                                    <br>
+                                    <a href="{{route("{$reply->model_name}.show", $parent)}}">
+                                        Перейти к объявлению
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
                 @endforeach
             @else
                 @component('components.empty-records')
-                    Объявлений, размещённых вами, нет
+                    Ответов, размещённых вами, нет
                 @endcomponent
             @endif
         </div>

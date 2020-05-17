@@ -13,9 +13,10 @@ class Helpers extends Model
         $user = auth()->user();
         $myTrips = $user->trips()->count();
         $myPosts = $user->posts()->count();
+        $myReplies = $user->replies()->count();
         $myDeliveries = $user->deliveries()->count();
 
-        return compact(['myTrips', 'myPosts', 'myDeliveries']);
+        return compact(['myTrips', 'myPosts', 'myDeliveries', 'myReplies']);
     }
 
     public static function currentCategory(): string

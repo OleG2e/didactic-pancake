@@ -50,6 +50,13 @@ class HomeController extends Controller
         return view('home.posts', compact('myPosts'));
     }
 
+    public function myReplies()
+    {
+        $myReplies = Auth::user()->replies();
+
+        return view('home.replies', compact('myReplies'));
+    }
+
     public function updateRelevancePost(Post $post, Request $request)
     {
         $post->update(
