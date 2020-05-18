@@ -28,19 +28,19 @@
                 <p class="help is-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="field">
-                <label class="label" for="price">Цена:</label>
-                <p class="control is-expanded has-icons-left">
-                    <input class="input" type="text" name="price" placeholder="Цена"
-                           value="{{ old('price') }}" required>
-                    <span class="icon is-left">
-                                <i class="fa fa-dollar-sign"></i>
-                            </span>
-                </p>
-                @error('price')
-                <p class="help is-danger">{{ $message }}</p>
-                @enderror
-            </div>
+{{--            <div class="field">--}}
+{{--                <label class="label" for="price">Цена:</label>--}}
+{{--                <p class="control is-expanded has-icons-left">--}}
+{{--                    <input class="input" type="text" name="price" placeholder="Цена"--}}
+{{--                           value="{{ old('price') }}" required>--}}
+{{--                    <span class="icon is-left">--}}
+{{--                                <i class="fa fa-dollar-sign"></i>--}}
+{{--                            </span>--}}
+{{--                </p>--}}
+{{--                @error('price')--}}
+{{--                <p class="help is-danger">{{ $message }}</p>--}}
+{{--                @enderror--}}
+{{--            </div>--}}
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
@@ -102,7 +102,7 @@
                 <label class="label">Описание:</label>
                 <p class="control">
                     <textarea class="textarea" name="description"
-                              placeholder="Комментарий">{{ old('description') }}</textarea>
+                              placeholder="Комментарий" required>{{ old('description') }}</textarea>
                 </p>
                 @error('description')
                 <p class="help is-danger">{{ $message }}</p>

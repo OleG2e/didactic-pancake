@@ -15,45 +15,47 @@
                     @if ($reply->edited)
                         <small class="is-size-7">(ответ отредактирован)</small>
                     @endif
-                    <br>
-                    {{$reply->description}}
-                </p>
-            </div>
-            @auth
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a title="Связаться" class="level-item modal-button"
+                    @auth
+                        <a title="Связаться" class="modal-button"
                            data-target="modal-bis-reply-connect-{{$reply->id}}">
                             <span class="icon is-small">
                                 <i class="fa fa-link"></i>
                             </span>
                         </a>
-                        <div class="modal" id="modal-bis-reply-connect-{{$reply->id}}">
-                            <div class="modal-background"></div>
-                            <div class="modal-card">
-                                <header class="modal-card-head">
-                                    <p class="modal-card-title">Связаться с {{$reply->owner->username}}?</p>
-                                    <button class="delete" aria-label="close"></button>
-                                </header>
-                                <section class="modal-card-body">
-                                    Отправить ваши анкетные данные для связи пользователю {{$reply->owner->username}}?
-                                </section>
-                                <footer class="modal-card-foot">
-                                    <form method="post"
-                                          action="{{route('reply.link.request', $routeParameters)}}">
-                                        @csrf
-                                        <button class="button is-primary" type="submit">
-                        <span class="icon is-small">
-                            <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                        </span>
-                                            <span>Отправить</span>
-                                        </button>
-                                        <a class="button is-info">Отмена</a>
-                                    </form>
-                                </footer>
-                            </div>
-                        </div>
-                        @can('update', $reply)
+                    @endauth
+                    <br>
+                    {{$reply->description}}
+                </p>
+            </div>
+            @auth
+                <div class="modal" id="modal-bis-reply-connect-{{$reply->id}}">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Связаться с {{$reply->owner->username}}?</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            Отправить ваши анкетные данные для связи пользователю {{$reply->owner->username}}?
+                        </section>
+                        <footer class="modal-card-foot">
+                            <form method="post"
+                                  action="{{route('reply.link.request', $routeParameters)}}">
+                                @csrf
+                                <button class="button is-primary" type="submit">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                                            </span>
+                                    <span>Отправить</span>
+                                </button>
+                                <a class="button is-info">Отмена</a>
+                            </form>
+                        </footer>
+                    </div>
+                </div>
+                @can('update', $reply)
+                    <nav class="level is-mobile">
+                        <div class="level-left">
                             <a title="Редактировать" class="level-item"
                                href="{{route('reply.edit', $routeParameters)}}">
                                 <span class="icon is-small">
@@ -82,9 +84,9 @@
                                             @method('delete')
                                             @csrf
                                             <button class="button is-danger" type="submit">
-                        <span class="icon is-small">
-                            <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </span>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                                                </span>
                                                 <span>Удалить!</span>
                                             </button>
                                             <a class="button is-info">Отмена</a>
@@ -92,10 +94,10 @@
                                     </footer>
                                 </div>
                             </div>
-                        @endcan
-                    </div>
-                </nav>
-            @endauth
+                            @endcan
+                        </div>
+                    </nav>
+                @endauth
         </div>
     </article>
 @endforeach
