@@ -29,19 +29,19 @@
                 <p class="help is-danger">{{ $message }}</p>
                 @enderror
             </div>
-            <div class="field">
-                <label class="label" for="price">Цена:</label>
-                <p class="control is-expanded has-icons-left">
-                    <input class="input" type="text" name="price" placeholder="Цена"
-                           value="{{ $delivery->price }}" required>
-                    <span class="icon is-left">
-                                <i class="fa fa-dollar-sign"></i>
-                            </span>
-                </p>
-                @error('price')
-                <p class="help is-danger">{{ $message }}</p>
-                @enderror
-            </div>
+{{--            <div class="field">--}}
+{{--                <label class="label" for="price">Цена:</label>--}}
+{{--                <p class="control is-expanded has-icons-left">--}}
+{{--                    <input class="input" type="text" name="price" placeholder="Цена"--}}
+{{--                           value="{{ $delivery->price }}" required>--}}
+{{--                    <span class="icon is-left">--}}
+{{--                                <i class="fa fa-dollar-sign"></i>--}}
+{{--                            </span>--}}
+{{--                </p>--}}
+{{--                @error('price')--}}
+{{--                <p class="help is-danger">{{ $message }}</p>--}}
+{{--                @enderror--}}
+{{--            </div>--}}
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">

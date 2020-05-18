@@ -21,7 +21,7 @@ class CreateDeliveriesTable extends Migration
             $table->unsignedInteger('endpoint_id');
             $table->dateTime('date_time');
             $table->text('description')->nullable();
-            $table->string('price')->nullable();
+//            $table->string('price')->nullable();
             $table->boolean('relevance')->default(true);
             $table->timestamps();
         });

@@ -10,6 +10,6 @@ $factory->define(App\Delivery::class, function (Faker $faker) {
         'endpoint_id' => 1,
         'date_time' => $faker->dateTimeInInterval('now', '+10 days'),
         'description' => $faker->text,
-        'price' => $faker->word,
+//        'price' => $faker->word,
     ];
 });

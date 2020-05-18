@@ -17,7 +17,7 @@ class Delivery extends Model implements iReply
         'description',
         'endpoint_id',
         'owner_id',
-        'price',
+//        'price',
         'relevance',
         'startpoint_id',
         'date_time',
