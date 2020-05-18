@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
         factory(App\User::class, 20)->create()->each(
             function ($user) {
                 $user->posts()->save(factory(App\Post::class)->make());
-                $user->replies()->save(factory(App\Reply::class)->make(['model_id' => rand(1, 9)]));
+                $user->hasMany(App\Reply::class, 'owner_id')->save(factory(App\Reply::class)->make(['model_id' => rand(1, 9)]));
                 $user->trips()->save(factory(App\Trip::class)->make());
             }
         );
