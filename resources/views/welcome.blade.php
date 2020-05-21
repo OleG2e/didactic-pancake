@@ -19,15 +19,15 @@
     </section>
     @if($posts->isNotEmpty())
         <div class="container box has-text-centered">
-            <h4 class="title is-4 is-center">Последние 10 объявлений:</h4>
-            <div class="columns">
+            <p class="title is-4 is-center">Новые объявления:</p>
+            <div class="columns is-multiline">
                 @foreach($posts as $postsCategory)
-                    <div class="column">
+                    <div class="column is-one-quarter">
                         <div class="box">
                             @foreach($postsCategory as $post)
-                                @break($loop->iteration == 11)
+                                @break($loop->iteration == 6)
                                 @if($loop->first)
-                                    <h5 class="title is-5">{{$post->category->title}}</h5>
+                                    <p class="title is-5">{{$post->category->title}}</p>
                                 @endif
                                 <p>
                                     <strong>{{$loop->iteration}}.</strong>
