@@ -4,12 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::get(
-    '/bus-schedule',
-    function () {
-        return view('entries.bus-schedule');
-    }
-)->name('bus.schedule');
+Route::view('/bus-schedule', 'entries.bus-schedule')->name('bus.schedule');
 
 Route::group(
     ['prefix' => 'admin', 'middleware' => 'admin'],
