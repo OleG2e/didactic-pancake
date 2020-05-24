@@ -94,7 +94,6 @@
                     </div>
                 </div>
             </div>
-            <span>Текущая дата: {{\App\Helpers::dateFormat($trip->date_time)}}</span>
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
@@ -120,6 +119,9 @@
                         @enderror
                     </div>
                 </div>
+                <input id="currentDate" type="hidden" value="{{\App\Helpers::dateFormat($trip->date_time,'Y/m/d')}}">
+                <input id="currentTime" type="hidden" value="{{\App\Helpers::dateFormat($trip->date_time,'H:i')}}">
+                @include('components.js-date-time-set')
             </div>
             <div class="field">
                 <label class="label">Описание:</label>

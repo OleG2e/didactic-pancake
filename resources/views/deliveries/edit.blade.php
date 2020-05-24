@@ -54,7 +54,6 @@
                     </div>
                 </div>
             </div>
-            <span>Текущая дата: {{\App\Helpers::dateFormat($delivery->date_time,'d.m.Y')}}</span>
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">
@@ -69,6 +68,8 @@
                         <p class="help is-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <input id="currentDate" type="hidden" value="{{\App\Helpers::dateFormat($delivery->date_time,'Y/m/d')}}">
+                    @include('components.js-date-time-set')
                 </div>
             </div>
             <div class="field">
