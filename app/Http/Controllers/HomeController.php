@@ -45,7 +45,7 @@ class HomeController extends Controller
 
     public function myPosts()
     {
-        $myPosts = Post::where('owner_id', auth()->id())->latest()->get();
+        $myPosts = Auth::user()->posts()->get();
 
         return view('home.posts', compact('myPosts'));
     }
@@ -104,15 +104,14 @@ class HomeController extends Controller
 
     public function myTrips()
     {
-        $user = auth()->user();
-        $myTrips = $user->trips;
+        $myTrips = Auth::user()->trips()->get();
 
         return view('home.trips', compact('myTrips'));
     }
 
     public function myDeliveries()
     {
-        $myDeliveries = Trip::where('owner_id', auth()->id())->where('category_id', 3)->latest()->get();
+        $myDeliveries = Auth::user()->deliveries()->get();
         return view('home.deliveries', compact('myDeliveries'));
     }
 
