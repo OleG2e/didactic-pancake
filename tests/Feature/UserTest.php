@@ -110,10 +110,8 @@ class UserTest extends TestCase
     public function testUserCanSeeOwnDeliveries()
     {
         $user = factory(User::class)->create(['id' => 256]);
-        $trip = factory(Trip::class)->create([
-            'category_id' => 3, 'owner_id' => 256, 'description' => 'Delivery Description'
-        ]);
-        $tripAnotherUser = factory(Trip::class)->create(['category_id' => 3, 'description' => 'Another Description']);
+        $trip = factory(Trip::class)->create(['owner_id' => 256, 'description' => 'Delivery Description']);
+        $tripAnotherUser = factory(Trip::class)->create(['description' => 'Another Description']);
 
         $this->actingAs($user)
             ->get(route('my.deliveries'))
