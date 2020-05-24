@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Delivery;
 use App\Mail\FeedbackFromUser;
 use App\Post;
 use App\Trip;
@@ -53,8 +54,15 @@ class HomeController extends Controller
     public function myReplies()
     {
         $myReplies = Auth::user()->replies();
+        $titles = collect(
+            [
+                Post::MODEL_NAME => 'Объявления',
+                Trip::MODEL_NAME => 'Поездки',
+                Delivery::MODEL_NAME => 'Передачки',
+            ]
+        );
 
-        return view('home.replies', compact('myReplies'));
+        return view('home.replies', compact(['myReplies', 'titles']));
     }
 
     public function updateRelevancePost(Post $post, Request $request)

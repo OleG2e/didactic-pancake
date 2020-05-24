@@ -28,7 +28,7 @@
                             <div class="level is-mobile">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title is-size-5">{{$parent->category->title}}</p>
+                                        <p class="title is-size-5">{{$titles->get($reply->model_name)}}</p>
                                     </div>
                                 </div>
                                 <div class="level-right">
