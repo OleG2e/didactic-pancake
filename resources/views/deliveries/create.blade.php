@@ -7,40 +7,6 @@
         <h4 class="title is-size-4">Создать передачку</h4>
         <form method="post" action="{{route('delivery.store')}}">
             @csrf
-            <div class="field">
-                <label class="label" for="category_id">Категория:</label>
-                <div class="control has-icons-left">
-                    <div class="select is-rounded">
-                        <select name="category_id" id="category_id" required>
-                            <option value="" disabled>Выберете одну...</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->title }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="icon is-small is-left">
-                        <i class="fa fa-list"></i>
-                    </div>
-                </div>
-                @error('category_id')
-                <p class="help is-danger">{{ $message }}</p>
-                @enderror
-            </div>
-{{--            <div class="field">--}}
-{{--                <label class="label" for="price">Цена:</label>--}}
-{{--                <p class="control is-expanded has-icons-left">--}}
-{{--                    <input class="input" type="text" name="price" placeholder="Цена"--}}
-{{--                           value="{{ old('price') }}" required>--}}
-{{--                    <span class="icon is-left">--}}
-{{--                                <i class="fa fa-dollar-sign"></i>--}}
-{{--                            </span>--}}
-{{--                </p>--}}
-{{--                @error('price')--}}
-{{--                <p class="help is-danger">{{ $message }}</p>--}}
-{{--                @enderror--}}
-{{--            </div>--}}
             <div class="field is-horizontal">
                 <div class="field-body">
                     <div class="field">

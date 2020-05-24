@@ -13,27 +13,20 @@ class Delivery extends Model implements iReply
     const MODEL_NAME = 'delivery';
 
     protected $fillable = [
-        'category_id',
         'description',
         'endpoint_id',
         'owner_id',
-//        'price',
         'relevance',
         'startpoint_id',
         'date_time',
     ];
 
-    protected $with = ['category', 'owner', 'startpoint', 'endpoint'];
+    protected $with = ['owner', 'startpoint', 'endpoint'];
     protected $perPage = 12;
 
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id')->withDefault();
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class)->withDefault();
     }
 
     public function replies(): LengthAwarePaginator

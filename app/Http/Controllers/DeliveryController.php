@@ -17,13 +17,11 @@ use App\Helpers;
 
 class DeliveryController extends Controller
 {
-    private object $categories;
     private object $towns;
 
     public function __construct()
     {
         $this->middleware(['auth', 'verified'])->except(['index', 'show']);
-        $this->categories = Category::whereSection(Delivery::MODEL_NAME)->get();
         $this->towns = Town::all();
     }
 
@@ -46,7 +44,7 @@ class DeliveryController extends Controller
      */
     public function create(): View
     {
-        return view('deliveries.create', ['towns' => $this->towns, 'categories' => $this->categories]);
+        return view('deliveries.create', ['towns' => $this->towns]);
     }
 
     /**
@@ -94,7 +92,6 @@ class DeliveryController extends Controller
         return view(
             'deliveries.edit',
             [
-                'categories' => $this->categories,
                 'delivery' => $delivery,
                 'towns' => $this->towns,
             ]

@@ -16,12 +16,10 @@ class CreateDeliveriesTable extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('owner_id');
-            $table->unsignedInteger('category_id');
             $table->unsignedInteger('startpoint_id');
             $table->unsignedInteger('endpoint_id');
             $table->dateTime('date_time');
             $table->text('description')->nullable();
-//            $table->string('price')->nullable();
             $table->boolean('relevance')->default(true);
             $table->timestamps();
         });

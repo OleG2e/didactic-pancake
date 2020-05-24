@@ -27,10 +27,8 @@ class DeliveryRequest extends FormRequest
         return [
             'startpoint_id' => 'required|integer|exists:towns,id',
             'endpoint_id' => 'required|integer|exists:towns,id',
-            'category_id' => 'required|integer|exists:categories,id',
             'date_time' => 'required|date|after:now',
             'description' => 'required|string|max:1024',
-//            'price' => 'required|string|alpha_dash',
         ];
     }
 
@@ -46,14 +44,9 @@ class DeliveryRequest extends FormRequest
             'endpoint_id.required' => Helpers::validationMessage('Пункт назначения', 'required'),
             'endpoint_id.integer' => Helpers::validationMessage('id пункта назначения', 'integer'),
             'endpoint_id.exists' => 'Некорректно задан пункт назначения',
-            'category_id.required' => Helpers::validationMessage('Категория', 'required'),
-            'category_id.integer' => Helpers::validationMessage('Категория', 'integer'),
-            'category_id.exists' => Helpers::validationMessage('Категория', 'exists'),
             'description.required' => Helpers::validationMessage('Описание', 'required'),
             'description.string' => Helpers::validationMessage('Описание', 'string'),
             'description.max' => Helpers::validationMessage('Описание', 'max', ['max' => 1024]),
-//            'price.required' => Helpers::validationMessage('Стоимость', 'required'),
-//            'price.string' => Helpers::validationMessage('Стоимость', 'string'),
         ];
     }
 }
