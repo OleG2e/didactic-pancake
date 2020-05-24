@@ -61,7 +61,6 @@ class TripController extends Controller
         $attributes = $request->validated();
         $attributes['date_time'] = new DateTime($attributes['date'].' '.$attributes['time']);
         $attributes['owner_id'] = auth()->id();
-        $attributes['category_id'] = 2;
         $createdTrip = $trip->create($attributes);
         $user = auth()->user();
         $user->trips()->attach($createdTrip);

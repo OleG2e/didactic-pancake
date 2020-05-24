@@ -16,14 +16,12 @@ class CreateTripsTable extends Migration
         Schema::create('trips', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('owner_id');
-            $table->unsignedInteger('category_id');
             $table->unsignedInteger('startpoint_id');
             $table->unsignedInteger('endpoint_id');
             $table->unsignedInteger('passengers_count');
             $table->dateTime('date_time');
             $table->text('description')->nullable();
             $table->text('price');
-            $table->boolean('load')->default(false);
             $table->boolean('relevance')->default(true);
             $table->timestamps();
 

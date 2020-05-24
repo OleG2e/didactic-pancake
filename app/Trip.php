@@ -13,11 +13,9 @@ class Trip extends Model implements iReply
     const MODEL_NAME = 'trip';
 
     protected $fillable = [
-        'category_id',
         'date_time',
         'description',
         'endpoint_id',
-        'load',
         'owner_id',
         'passengers_count',
         'price',
@@ -25,17 +23,12 @@ class Trip extends Model implements iReply
         'startpoint_id',
     ];
 
-    protected $with = ['category', 'owner', 'startpoint', 'endpoint', 'users'];
+    protected $with = ['owner', 'startpoint', 'endpoint', 'users'];
     protected $perPage = 12;
 
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id')->withDefault();
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class)->withDefault();
     }
 
     public function replies(): LengthAwarePaginator
