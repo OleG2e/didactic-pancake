@@ -27,7 +27,8 @@
                             <div class="level">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title is-size-4">{{$trip->category->title}}</p>
+                                        <p class="title is-size-5">{{$trip->startpoint->title}}
+                                            - {{$trip->endpoint->title}}</p>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -65,9 +66,8 @@
                                     </div>
                                 </div>
                             @endcan
-                            <p class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
                             <p class="subtitle is-size-6">Дата:
-                                <br>{{$trip->created_at}}</p>
+                                <br>{{\App\Helpers::dateFormat($trip->created_at)}}</p>
                             <div class="content">
                                 {{$trip->description}}
                                 <br>

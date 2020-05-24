@@ -27,7 +27,7 @@
                             <div class="level is-mobile">
                                 <div class="level-left">
                                     <div class="level-item">
-                                        <p class="title is-size-5">{{$trip->category->title}}</p>
+                                        <p class="title is-size-5">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
                                     </div>
                                 </div>
                                 @can('delete', $trip)
@@ -63,10 +63,7 @@
                                     </footer>
                                 </div>
                             </div>
-                            <p class="title is-size-4">{{$trip->startpoint->title}} - {{$trip->endpoint->title}}</p>
-                            <p class="subtitle"><strong>{{$trip->owner->username}}</strong>
-                                <small> {{$trip->created_at}}</small>
-                            </p>
+                            <p class="subtitle"><small>{{\App\Helpers::dateFormat($trip->created_at)}}</small></p>
                             <div class="content">
                                 {{\Illuminate\Support\Str::words($trip->description, 20)}}
                                 <br>

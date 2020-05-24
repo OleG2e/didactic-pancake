@@ -20,10 +20,6 @@
             </div>
         </nav>
         <div class="columns is-multiline">
-            @php
-                //$category = \App\Helpers::currentCategory();
-                //$route = route('post.all', $category);
-            @endphp
             @if(count($myPosts))
                 @foreach($myPosts as $post)
                     <div class="column is-narrow is-one-quarter">
@@ -66,7 +62,7 @@
                                 </div>
                             </div>
                             <p class="subtitle is-6">Дата:
-                                <br>{{$post->created_at}}</p>
+                                <br>{{\App\Helpers::dateFormat($post->created_at)}}</p>
                             <div class="content">
                                 {{\Illuminate\Support\Str::words($post->description, 20)}}
                                 <br>
