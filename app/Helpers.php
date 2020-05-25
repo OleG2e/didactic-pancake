@@ -83,8 +83,9 @@ class Helpers extends Model
                         public_path('storage/'.$pathImagesPreview),
                         70
                     );
-                    $pathAllFiles['full'][] = $pathImagesFull;//in production use 'public/'.$pathImagesFull
-                    $pathAllFiles['preview'][] = $pathImagesPreview;//in production use 'public/'.$pathImagesPreview
+
+                    $pathAllFiles['full'][] = $pathImagesFull;
+                    $pathAllFiles['preview'][] = $pathImagesPreview;
                     $i--;
                 }
             }
@@ -110,7 +111,9 @@ class Helpers extends Model
         int $index = 0,
         string $column = 'images'
     ): string {
-        return asset('storage/'.(json_decode($item->$column)->$type)[$index]);
+        (env('APP_ENV') === 'local') ? $prefix = 'storage/' : $prefix = 'public/';
+        
+        return asset($prefix.(json_decode($item->$column)->$type)[$index]);
     }
 
     public static function dateFormat(string $date, string $format = 'H:i d.m.Y'): string
