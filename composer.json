@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.4",
+    "ext-json": "*",
     "davejamesmiller/laravel-breadcrumbs": "^5.3",
     "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.2",
@@ -20,11 +21,12 @@
     "laravel/ui": "^2.0",
     "rollbar/rollbar-laravel": "^6.0.0",
     "spatie/calendar-links": "^1.2",
-    "spatie/laravel-sitemap": "^5.6",
-    "ext-json": "*"
+    "spatie/laravel-backup": "6.10.0",
+    "spatie/laravel-sitemap": "^5.6"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.6",
+    "barryvdh/laravel-debugbar": "^3.2",
     "facade/ignition": "^2.0",
     "fzaninotto/faker": "^1.9.1",
     "laravel/telescope": "^3.1",
