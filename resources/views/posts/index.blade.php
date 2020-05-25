@@ -21,9 +21,7 @@
                 @foreach($posts as $post)
                     <div class="column is-narrow is-one-quarter">
                         <div class="box">
-                            @if (\App\Helpers::currentCategory() === 'all')
-                                <p class="title is-size-5">{{$post->category->title}}</p>
-                            @endif
+                            <p class="title is-size-5">{{$post->title}}</p>
                             <p class="subtitle is-size-5"><strong>{{$post->owner->username}}</strong>
                                 <br>
                                 <small class="is-size-6">{{$post->updated_at->diffForHumans()}}</small>
