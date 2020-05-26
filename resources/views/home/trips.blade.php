@@ -67,7 +67,7 @@
                                 </div>
                             @endcan
                             <p class="subtitle is-size-6">Дата:
-                                <br>{{\App\Helpers::dateFormat($trip->created_at)}}</p>
+                                <br>{{\App\Helpers::dateFormat($trip->created_at, 'd.m.Y')}}</p>
                             <div class="content">
                                 {{$trip->description}}
                                 <br>

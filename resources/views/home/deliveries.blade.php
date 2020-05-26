@@ -63,7 +63,7 @@
                                     </footer>
                                 </div>
                             </div>
-                            <p class="subtitle"><small>{{\App\Helpers::dateFormat($trip->created_at)}}</small></p>
+                            <p class="subtitle"><small>{{\App\Helpers::dateFormat($trip->created_at, 'd.m.Y')}}</small></p>
                             <div class="content">
                                 {{\Illuminate\Support\Str::words($trip->description, 20)}}
                                 <br>
