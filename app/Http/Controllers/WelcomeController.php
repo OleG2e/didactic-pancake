@@ -13,12 +13,11 @@ class WelcomeController extends Controller
     {
         $posts = collect();
 
-        $categoriesPosts = Category::whereSection(Post::MODEL_NAME)->get();
+        $categoriesPosts = Category::whereSection(Post::MODEL_NAME)->with('posts')->get();
         $categoriesPosts->each(
             function ($category) use ($posts) {
-                $categoryPosts = $category->posts()->get();
-                if ($categoryPosts->isNotEmpty()){
-                    $posts->push($categoryPosts);
+                if ($category->posts->isNotEmpty()) {
+                    $posts->push($category->posts);
                 }
             }
         );
