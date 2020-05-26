@@ -72,9 +72,10 @@ class User extends Authenticatable implements MustVerifyEmail, iReply
 
     public function avatar(): string
     {
-        $path = 'storage/avatars/'.$this->id.'/avatar.jpg';//in production use 'public/avatars/'.$this->id.'/avatar.jpg'
+        (env('APP_ENV') === 'local') ? $prefix = 'storage/' : $prefix = 'public/';
+        $path = $prefix.'avatars/'.$this->id.'/avatar.jpg';
 
-        return asset(file_exists($path) ? $path : 'storage/avatars/user-circle-solid.svg');
+        return asset(file_exists($path) ? $path : $prefix.'avatars/user-circle-solid.svg');
     }
 
     public function roles(): BelongsToMany
