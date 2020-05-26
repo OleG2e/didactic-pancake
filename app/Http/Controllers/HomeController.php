@@ -103,10 +103,9 @@ class HomeController extends Controller
      */
     public function updateAvatar(Request $request)
     {
+        (env('APP_ENV') === 'local') ? $prefix = 'storage/' : $prefix = 'public/';
         $path = $request->file('avatar')->storeAs('avatars/'.auth()->id(), 'avatar.jpg', 'public');
-        Image::make($request->file('avatar'))->fit(512)->save(
-            'storage/'.$path
-        );// in production use save('public/'.$path)
+        Image::make($request->file('avatar'))->fit(512)->save($prefix.$path);
         return back();
     }
 
