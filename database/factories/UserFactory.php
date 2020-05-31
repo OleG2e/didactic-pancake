@@ -27,7 +27,6 @@ $factory->define(
             'password' => \Hash::make('1234'),
             'remember_token' => Str::random(10),
             'link' => 'UserLink',
-            'law' => true,
         ];
     }
 );

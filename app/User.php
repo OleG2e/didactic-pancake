@@ -28,7 +28,6 @@ class User extends Authenticatable implements MustVerifyEmail, iReply
         'email',
         'password',
         'link',
-        'law',
     ];
 
     /**
