@@ -55,7 +55,7 @@
                                 <small class="is-size-6"> {{$trip->updated_at->diffForHumans()}}</small>
                             </p>
                             <div class="content">
-                                Дата поездки: {{\App\Helpers::dateFormat($trip->date_time)}}
+                                Дата поездки: {{\App\Helpers::dateFormat($trip->date_time,'d.m.Y')}}
                                 <br>Осталось мест:<strong> {{$trip->passengers_count}}</strong>
                                 <br><a href="{{route('trip.show', $trip)}}">Обсудить</a>
                             </div>
