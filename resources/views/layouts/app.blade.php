@@ -31,6 +31,20 @@
             accurateTrackBounce: true
         });
     </script>
+    <script type="text/javascript">
+        function callbackThen(response){
+            // read HTTP status
+            console.log(response.status);
+
+            // read Promise object
+            response.json().then(function(data){
+                console.log(data);
+            });
+        }
+        function callbackCatch(error){
+            console.error('Error:', error)
+        }
+    </script>
     <noscript>
         <div><img src="https://mc.yandex.ru/watch/54254332" style="position:absolute; left:-9999px;" alt=""/></div>
     </noscript>
@@ -38,6 +52,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href=​"https://mikun.info/favicon.ico" type="image/x-icon">
+    {!! htmlScriptTagJsApi([
+            'action' => 'homepage',
+            'callback_then' => 'callbackThen',
+            'callback_catch' => 'callbackCatch'
+        ]) !!}
+    @csrf
 </head>
 <body class="has-navbar-fixed-top">
 <div id="app">
