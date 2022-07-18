@@ -29,7 +29,7 @@
     "dependencies": {
         "bulma-badge": "^3.0.1",
         "bulma-extensions": "^4.1.1",
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "^1.13.2",
         "node": "^14.2.0",
         "pickadate": "^3.6.4",
         "vuex": "^3.3.0"
